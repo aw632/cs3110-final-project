@@ -1,0 +1,10 @@
+### Starting build.
+# Target: author.mli.depends, tags: { extension:mli, file:author.mli, ocaml, ocamldep, quiet }
+/home/aw632/.opam/cs3110-2021sp/bin/ocamldep.opt -modules author.mli > author.mli.depends
+# Target: author.cmi, tags: { byte, compile, extension:mli, file:author.mli, interf, ocaml, quiet }
+/home/aw632/.opam/cs3110-2021sp/bin/ocamlc.opt -c -o author.cmi author.mli
+# Target: author.ml.depends, tags: { extension:ml, file:author.ml, ocaml, ocamldep, quiet }
+/home/aw632/.opam/cs3110-2021sp/bin/ocamldep.opt -modules author.ml > author.ml.depends
+# Target: author.cmo, tags: { byte, compile, extension:cmo, extension:ml, file:author.cmo, file:author.ml, implem, ocaml, quiet }
+/home/aw632/.opam/cs3110-2021sp/bin/ocamlc.opt -c -o author.cmo author.ml
+# Compilation successful.

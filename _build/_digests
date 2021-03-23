@@ -1,0 +1,6 @@
+"Rule: ocaml dependencies mli (%=author )": "\242\206=\020\201{Lox\162}G~e\237\235"
+"Resource: /home/aw632/cs3110-final-project/author.ml": "\219\135\178*\tw\241Tt\252\236h\160\231\144o"
+"Resource: /home/aw632/cs3110-final-project/author.mli": "\171l\143[{$\014\228\015-\012\23847\245\168"
+"Rule: ocaml: ml & cmi -> cmo (%=author )": "\2344\210\131\207\179\003\243\195\196\238\211\014\246C\014"
+"Rule: ocaml dependencies ml (%=author )": "\006\027\177\130n\030\247\148\180\240\185\220\159\168S$"
+"Rule: ocaml: mli -> cmi (%=author )": "\189\193b\159dga\241\001\005)G\226\160\195c"
