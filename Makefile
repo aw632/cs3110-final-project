@@ -1,4 +1,4 @@
-MODULES=author
+MODULES=author dummy_file
 OBJECTS=$(MODULES:=.cmo)
 TEST=test.byte
 OCAMLBUILD=ocamlbuild -use-ocamlfind
@@ -11,12 +11,6 @@ build:
 
 test:
 	$(OCAMLBUILD) -tag 'debug' $(TEST) && ./$(TEST) -runner sequential
-
-check:
-	@bash check.sh
-	
-finalcheck:
-	@bash check.sh final
 
 clean:
 	ocamlbuild -clean
