@@ -1,4 +1,4 @@
-MODULES=author dummy_file
+MODULES=author
 OBJECTS=$(MODULES:=.cmo)
 TEST=test.byte
 OCAMLBUILD=ocamlbuild -use-ocamlfind
