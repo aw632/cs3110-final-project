@@ -11,11 +11,15 @@ exception Empty
 
 exception Malformed
 
+(** [supported_ops] is a list of every operation a user can use. Each
+    element corresponds to a specific command*)
 let supported_ops = [ "add"; "divide"; "multiply"; "subtract" ]
 
+(** [check_supported str] checks if the input is a supported operation*)
 let check_supported str =
   List.exists (fun element -> str = element) supported_ops
 
+(** Matches the input with the correct command *)
 let check_op str args =
   if str = "add" then Add args
   else if str = "divide" then Divide args
