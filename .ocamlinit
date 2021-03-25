@@ -1,2 +1,5 @@
 #require "ounit2";;
 #directory "_build";;
+#load "author.cmo";;
+#load "commands.cmo";;
+#load "basic_op.cmo";;

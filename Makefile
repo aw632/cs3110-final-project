@@ -1,4 +1,4 @@
-MODULES=author
+MODULES=author commands basic_op main
 OBJECTS=$(MODULES:=.cmo)
 TEST=test.byte
 OCAMLBUILD=ocamlbuild -use-ocamlfind

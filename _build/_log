@@ -1,10 +1,10 @@
 ### Starting build.
-# Target: commands.mli.depends, tags: { extension:mli, file:commands.mli, ocaml, ocamldep, quiet }
-/home/aw632/.opam/cs3110-2021sp/bin/ocamldep.opt -modules commands.mli > commands.mli.depends
-# Target: commands.cmi, tags: { byte, compile, extension:mli, file:commands.mli, interf, ocaml, quiet }
-/home/aw632/.opam/cs3110-2021sp/bin/ocamlc.opt -c -o commands.cmi commands.mli
-# Target: commands.ml.depends, tags: { extension:ml, file:commands.ml, ocaml, ocamldep, quiet }
-/home/aw632/.opam/cs3110-2021sp/bin/ocamldep.opt -modules commands.ml > commands.ml.depends
-# Target: commands.cmo, tags: { byte, compile, extension:cmo, extension:ml, file:commands.cmo, file:commands.ml, implem, ocaml, quiet }
-/home/aw632/.opam/cs3110-2021sp/bin/ocamlc.opt -c -o commands.cmo commands.ml
+# Target: main.mli.depends, tags: { extension:mli, file:main.mli, ocaml, ocamldep, quiet }
+/home/aw632/.opam/cs3110-2021sp/bin/ocamldep.opt -modules main.mli > main.mli.depends
+# Target: main.cmi, tags: { byte, compile, extension:mli, file:main.mli, interf, ocaml, quiet }
+/home/aw632/.opam/cs3110-2021sp/bin/ocamlc.opt -c -o main.cmi main.mli
+# Target: main.ml.depends, tags: { extension:ml, file:main.ml, ocaml, ocamldep, quiet }
+/home/aw632/.opam/cs3110-2021sp/bin/ocamldep.opt -modules main.ml > main.ml.depends
+# Target: main.cmo, tags: { byte, compile, extension:cmo, extension:ml, file:main.cmo, file:main.ml, implem, ocaml, quiet }
+/home/aw632/.opam/cs3110-2021sp/bin/ocamlc.opt -c -o main.cmo main.ml
 # Compilation successful.
