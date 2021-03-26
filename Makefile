@@ -16,7 +16,7 @@ test:
 clean:
 	ocamlbuild -clean
 
-play:
+calc:
 	$(OCAMLBUILD) -tag 'debug' $(MAIN) && OCAMLRUNPARAM=b ./$(MAIN)
 
 zip:

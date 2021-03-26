@@ -20,7 +20,7 @@ let start_calc x = failwith "unimplemented"
 
 (** [main ()] prompts for the game to play, then starts it. *)
 let main () =
-  ANSITerminal.print_string [ ANSITerminal.red ]
+  ANSITerminal.print_string [ ANSITerminal.green ]
     "\n\nWelcome to the Caml Calculator.\n";
   print_endline
     "Please enter a command to start, or enter Exit to quit.";
