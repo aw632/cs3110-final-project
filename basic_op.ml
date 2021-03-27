@@ -1,9 +1,11 @@
-let add num1 num2 = num1 +. num2
+let rec add_tr (lst : float list) (acc : float) : float =
+  match lst with [] -> acc | hd :: tl -> add_tr tl (acc +. hd)
 
-let minus num1 num2 = failwith "unimplemented"
+let rec subtract_tr (lst : float list) (acc : float) : float =
+  match lst with [] -> acc | hd :: tl -> add_tr tl (acc -. hd)
 
-let subtract num1 num2 = num1 -. num2
+let rec divide_tr (lst : float list) (acc : float) : float =
+  match lst with [] -> acc | hd :: tl -> add_tr tl (acc /. hd)
 
-let divide num1 num2 = num1 /. num2
-
-let multiply num1 num2 = num1 *. num2
+let rec multiply_tr (lst : float list) (acc : float) : float =
+  match lst with [] -> acc | hd :: tl -> add_tr tl (acc *. hd)

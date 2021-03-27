@@ -1,15 +1,20 @@
 (** This module consists of basic operations for the calculator *)
 
-(** [add num1 num2] sums [num1] with [num2].*)
-val add : float -> float -> float
+(** [add_tr acc numlist] sums all elements in [numlist]. Ex: add 0.
+    [1.0;4.0;5.0] = 1.0 +. 4.0 +. 5.0 = 10.0. *)
+val add_tr : float list -> float -> float
 
-(** [minus num1 num2] substracts [num2] from [num1]. *)
-val minus : float -> float -> float
+(** [subtract_tr acc numlist] substracts each element from its previous
+    elements in [numlist]. Ex: substract 0. [3.4; 6.0; 2.2] = 3.4 -. 6.0
+    \-. 2.2 = -4.8.*)
+val subtract_tr : float list -> float -> float
 
-(** [divide num1 num2] divides [num1] by [num2]. *)
-val divide : float -> float -> float
+(** [divide_tr acc numlist] divides each element from its previous
+    elements in [numlist]. Ex: divide_tr 1.0 [3.0; 2.0; 3.0] = 3.0 /.
+    2.0 /. 3.0 = 0.5.*)
+val divide_tr : float list -> float -> float
 
-(** [multiply num1 num2] multiplies [num1] with [num2]. *)
-val multiply : float -> float -> float
-
-
+(** [multiply_tr acc numlist] multiplies all elements in [numlist]. Ex:
+    multiply_tr 1.0 [3.0; 2.0; 4.0; 2.0] = 3.0 *. 2.0 *. 4.0 *. 2.0 =
+    48.0. *)
+val multiply_tr : float list -> float -> float
