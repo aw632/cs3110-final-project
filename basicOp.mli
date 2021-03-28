@@ -10,8 +10,11 @@ val add_tr : float list -> float -> float
 val subtract_tr : float list -> float -> float
 
 (** [divide_tr acc numlist] divides each element from its previous
-    elements in [numlist]. Ex: divide_tr 1.0 [3.0; 2.0; 3.0] = 3.0 /.
-    2.0 /. 3.0 = 0.5.*)
+    elements in [numlist]. Function is left associative.
+
+    Raises [Division_by_zero] if any element except for the first is 0.
+
+    Ex: divide_tr 1.0 [3.0; 2.0; 3.0] = (3.0 /. 2.0) /. 3.0 = 0.5.*)
 val divide_tr : float list -> float -> float
 
 (** [multiply_tr acc numlist] multiplies all elements in [numlist]. Ex:
