@@ -16,7 +16,7 @@ type command =
 
 (** [supported_ops] is a list of every operation a user can use. Each
     element corresponds to a specific command*)
-type supported_ops = string list
+val supported_ops : string list
 
 (** raised when the command is empty*)
 exception Empty
