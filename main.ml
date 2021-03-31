@@ -1,6 +1,10 @@
 open Basic_op
 open Commands
 
+(** [match_command x] matches a command with an operation, and then
+    prints the appropriate result.*)
+let match_command = function _ -> assert false
+
 (** [ask_for_commands x] performs a calcuation for an inputted command.. *)
 let rec ask_for_commands () =
   (* The arguments of ask_for_commands can be edited to support
@@ -16,7 +20,10 @@ let rec ask_for_commands () =
     ask_for_commands ()
 
 (** [start_calc x] starts the calculator with initial command [x]. *)
-let start_calc x = failwith "unimplemented"
+let start_calc x =
+  (* Fill in this function later; its intention is to be used as an
+     intermediate loading screen when more complex operations are added. *)
+  failwith "unimplemented"
 
 (** [main ()] prompts for the game to play, then starts it. *)
 let main () =
