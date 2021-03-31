@@ -40,6 +40,6 @@ let parse str =
       else if not (check_supported h) then raise Malformed
       else raise Malformed
   | h :: t ->
-      let args = t |> List.map int_of_string |> List.map float_of_int in
+      let args = t |> List.map float_of_string in
       check_op h args
   | [] -> raise Empty

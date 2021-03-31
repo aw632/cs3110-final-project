@@ -21,7 +21,7 @@ and ask_for_commands () =
      history/accumulation *)
   ANSITerminal.print_string [ ANSITerminal.green ]
     "Please enter an operation (or Exit), followed by a space, \
-     followed by the numbers you want to operate on.\n\n\
+     followed by the numbers you want to operate on.\n\
      For example, the input 'Add 5 6 1' (without quotes) means 'Add 5 \
      and 6, then Add 1 to that sum.'\n";
   print_string "> ";

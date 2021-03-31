@@ -1,5 +1,6 @@
 open OUnit2
 open BasicOp
+open Commands
 
 let basic_op_test name expected_output f input_list acc =
   name >:: fun info ->
@@ -44,7 +45,43 @@ let basic_op_tests =
       (-10.) subtract_tr [ -60.; -90.; 40. ] 0.;
   ]
 
+let print_cmd_args lst =
+  " [" ^ String.concat ", " (lst |> List.map string_of_float) ^ " ]"
+
+let print_command cmd =
+  match cmd with
+  | Add t -> "Add" ^ print_cmd_args t
+  | Multiply t -> "Multiply" ^ print_cmd_args t
+  | Subtract t -> "Subtract" ^ print_cmd_args t
+  | Divide t -> "Divide" ^ print_cmd_args t
+  | Exit -> "Exit"
+
+let parse_test name expected_output input =
+  name >:: fun info ->
+  assert_equal expected_output (parse input) ~printer:print_command
+
+let command_tests =
+  [
+    parse_test "the command add 3 4 parses to the command Add [3.;4.]"
+      (Add [ 3.; 4. ])
+      "add 3 4";
+    parse_test "the command add 3 4. parses to the command Add [3.;4.]"
+      (Add [ 3.; 4. ])
+      "add 3 4.";
+    parse_test
+      "the command divide 3 4 4.5 parses to the command Divide \
+       [3.;4.;4.5]"
+      (Divide [ 3.; 4.; 4.5 ])
+      "divide 3 4 4.5";
+    parse_test
+      "the command subtract 3 4 4.5 parses to the command Divide \
+       [3.;4.;4.5]"
+      (Subtract [ 3.; 4.; 4.5 ])
+      "subtract 3 4 4.5";
+  ]
+
 let suite =
-  "test suite for operations" >::: List.flatten [ basic_op_tests ]
+  "test suite for operations"
+  >::: List.flatten [ basic_op_tests; command_tests ]
 
 let _ = run_test_tt_main suite
