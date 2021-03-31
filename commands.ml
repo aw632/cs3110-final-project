@@ -34,7 +34,7 @@ let parse str =
   in
   match str_list with
   | [ h ] ->
-      if h = "Exit" then Exit
+      if h |> String.lowercase_ascii = "exit" then Exit
         (* debugging statement: Note that in the below line, hardcoding
            add works... *)
         (* else if h = "Add" then Add [ 0.; 1. ] *)

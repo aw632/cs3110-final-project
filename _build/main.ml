@@ -9,10 +9,10 @@ let rec new_command_query () =
   match read_line () with
   | "Y" -> ask_for_commands ()
   | "N" ->
-      print_endline "Goodbye!";
+      ANSITerminal.print_string [ ANSITerminal.green ] "Goodbye!\n";
       exit 0
   | _ ->
-      print_endline
+      ANSITerminal.print_string [ ANSITerminal.red ]
         "You did not enter a valid value. Make sure you type Y or N \
          exactly. \n";
       new_command_query ()
@@ -42,7 +42,7 @@ and ask_for_commands () =
         print_endline (divide_tr arguments 1. |> Float.to_string);
         new_command_query ()
     | Exit ->
-        ANSITerminal.print_string [ ANSITerminal.green ] "Goodbye!";
+        ANSITerminal.print_string [ ANSITerminal.green ] "Goodbye!\n";
         exit 0
   with Malformed ->
     ANSITerminal.print_string [ ANSITerminal.red ]
