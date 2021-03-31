@@ -19,6 +19,7 @@ let check_supported str =
 
 (** Matches the input with the correct command *)
 let check_op str args =
+  let str = String.lowercase_ascii str in
   if str = "add" then Add args
   else if str = "divide" then Divide args
   else if str = "multiply" then Multiply args
