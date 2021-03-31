@@ -3,7 +3,8 @@ open Commands
 
 (** [new_command_query ()] prints the lines below to the console. *)
 let rec new_command_query () =
-  print_endline "Do you want to enter a new operation? (Y/N)";
+  ANSITerminal.print_string [ ANSITerminal.green ]
+    "Do you want to enter a new operation? (Y/N)";
   print_string "> ";
   match read_line () with
   | "Y" -> ask_for_commands ()
@@ -20,7 +21,7 @@ and ask_for_commands () =
      history/accumulation *)
   ANSITerminal.print_string [ ANSITerminal.green ]
     "Please enter an operation (or Exit), followed by a space, \
-     followed by the numbers you want to operate on.\n\
+     followed by the numbers you want to operate on.\n\n\
      For example, the input 'Add 5 6 1' (without quotes) means 'Add 5 \
      and 6, then Add 1 to that sum.'\n";
   print_string "> ";

@@ -34,6 +34,9 @@ let parse str =
   match str_list with
   | [ h ] ->
       if h = "Exit" then Exit
+        (* debugging statement: Note that in the below line, hardcoding
+           add works... *)
+        (* else if h = "Add" then Add [ 0.; 1. ] *)
       else if not (check_supported h) then raise Malformed
       else raise Malformed
   | h :: t ->

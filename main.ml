@@ -3,7 +3,8 @@ open Commands
 
 (** [new_command_query ()] prints the lines below to the console. *)
 let rec new_command_query () =
-  print_endline "Do you want to enter a new operation? (Y/N)";
+  ANSITerminal.print_string [ ANSITerminal.green ]
+    "Do you want to enter a new operation? (Y/N)";
   print_string "> ";
   match read_line () with
   | "Y" -> ask_for_commands ()
