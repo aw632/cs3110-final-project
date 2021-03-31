@@ -11,8 +11,6 @@ exception Empty
 
 exception Malformed
 
-(** [supported_ops] is a list of every operation a user can use. Each
-    element corresponds to a specific command*)
 let supported_ops = [ "add"; "divide"; "multiply"; "subtract" ]
 
 (** [check_supported str] checks if the input is a supported operation*)

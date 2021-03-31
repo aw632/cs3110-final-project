@@ -1,0 +1,82 @@
+2021-03-28T00:30:29+00:00 DESKTOP-MJHA1S2#00 I: Runner: sequential
+2021-03-28T00:30:29+00:00 DESKTOP-MJHA1S2#00 I: Chooser: simple
+2021-03-28T00:30:29+00:00 DESKTOP-MJHA1S2#00 I: Configuration suite_name = "test suite for operations"
+2021-03-28T00:30:29+00:00 DESKTOP-MJHA1S2#00 I: Configuration cache_filename = "/home/hcn9/CS3110/final/cs3110-final-project/_build/oUnit-$(suite_name).cache"
+2021-03-28T00:30:29+00:00 DESKTOP-MJHA1S2#00 I: Configuration run_gc_full_major = "true"
+2021-03-28T00:30:29+00:00 DESKTOP-MJHA1S2#00 I: Configuration display = "true"
+2021-03-28T00:30:29+00:00 DESKTOP-MJHA1S2#00 I: Configuration results_style_1_X = "false"
+2021-03-28T00:30:29+00:00 DESKTOP-MJHA1S2#00 I: Configuration testdata_dir = "none"
+2021-03-28T00:30:29+00:00 DESKTOP-MJHA1S2#00 I: Configuration health_check_interval = "1."
+2021-03-28T00:30:29+00:00 DESKTOP-MJHA1S2#00 I: Configuration verbose = "false"
+2021-03-28T00:30:29+00:00 DESKTOP-MJHA1S2#00 I: Configuration chooser = "simple"
+2021-03-28T00:30:29+00:00 DESKTOP-MJHA1S2#00 I: Configuration output_html_dir = "none"
+2021-03-28T00:30:29+00:00 DESKTOP-MJHA1S2#00 I: Configuration processes_kill_period = "5."
+2021-03-28T00:30:29+00:00 DESKTOP-MJHA1S2#00 I: Configuration runner = "sequential"
+2021-03-28T00:30:29+00:00 DESKTOP-MJHA1S2#00 I: Configuration shards = "4"
+2021-03-28T00:30:29+00:00 DESKTOP-MJHA1S2#00 I: Configuration processes_grace_period = "5."
+2021-03-28T00:30:29+00:00 DESKTOP-MJHA1S2#00 I: Configuration log_encoding = "utf-8"
+2021-03-28T00:30:29+00:00 DESKTOP-MJHA1S2#00 I: Configuration output_junit_file = "none"
+2021-03-28T00:30:29+00:00 DESKTOP-MJHA1S2#00 I: Configuration ci = "false"
+2021-03-28T00:30:29+00:00 DESKTOP-MJHA1S2#00 I: Configuration output_file = "/home/hcn9/CS3110/final/cs3110-final-project/_build/oUnit-$(suite_name)-$(shard_id).log"
+2021-03-28T00:30:29+00:00 DESKTOP-MJHA1S2#00 I: Start test test suite for operations:0:the sum of the list [2.;3.;4.] is 9..
+2021-03-28T00:30:29+00:00 DESKTOP-MJHA1S2#00 I: Test test suite for operations:0:the sum of the list [2.;3.;4.] is 9. is successful.
+2021-03-28T00:30:29+00:00 DESKTOP-MJHA1S2#00 I: End test test suite for operations:0:the sum of the list [2.;3.;4.] is 9..
+2021-03-28T00:30:29+00:00 DESKTOP-MJHA1S2#00 I: Start test test suite for operations:1:the sum of the list [-2.;-3.;4.] is -1..
+2021-03-28T00:30:29+00:00 DESKTOP-MJHA1S2#00 I: Test test suite for operations:1:the sum of the list [-2.;-3.;4.] is -1. is successful.
+2021-03-28T00:30:29+00:00 DESKTOP-MJHA1S2#00 I: End test test suite for operations:1:the sum of the list [-2.;-3.;4.] is -1..
+2021-03-28T00:30:29+00:00 DESKTOP-MJHA1S2#00 I: Start test test suite for operations:2:the result of multiplying all floats in the list [2.;3.;4.] is 24..
+2021-03-28T00:30:29+00:00 DESKTOP-MJHA1S2#00 I: Test test suite for operations:2:the result of multiplying all floats in the list [2.;3.;4.] is 24. is successful.
+2021-03-28T00:30:29+00:00 DESKTOP-MJHA1S2#00 I: End test test suite for operations:2:the result of multiplying all floats in the list [2.;3.;4.] is 24..
+2021-03-28T00:30:29+00:00 DESKTOP-MJHA1S2#00 I: Start test test suite for operations:3:the result of dividing 6 and 3 is 2..
+2021-03-28T00:30:29+00:00 DESKTOP-MJHA1S2#00 I: Test test suite for operations:3:the result of dividing 6 and 3 is 2. is successful.
+2021-03-28T00:30:29+00:00 DESKTOP-MJHA1S2#00 I: End test test suite for operations:3:the result of dividing 6 and 3 is 2..
+2021-03-28T00:30:29+00:00 DESKTOP-MJHA1S2#00 I: Start test test suite for operations:4:the result of dividing (3/2)/3 is .5.
+2021-03-28T00:30:29+00:00 DESKTOP-MJHA1S2#00 I: Test test suite for operations:4:the result of dividing (3/2)/3 is .5 is successful.
+2021-03-28T00:30:29+00:00 DESKTOP-MJHA1S2#00 I: End test test suite for operations:4:the result of dividing (3/2)/3 is .5.
+2021-03-28T00:30:29+00:00 DESKTOP-MJHA1S2#00 I: Start test test suite for operations:5:the result of dividing (3/2) is 1.5..
+2021-03-28T00:30:29+00:00 DESKTOP-MJHA1S2#00 I: Test test suite for operations:5:the result of dividing (3/2) is 1.5. is successful.
+2021-03-28T00:30:29+00:00 DESKTOP-MJHA1S2#00 I: End test test suite for operations:5:the result of dividing (3/2) is 1.5..
+2021-03-28T00:30:29+00:00 DESKTOP-MJHA1S2#00 I: Start test test suite for operations:6:Trying to divide by zero results in a Divide_by_zero exception.
+2021-03-28T00:30:29+00:00 DESKTOP-MJHA1S2#00 I: Test test suite for operations:6:Trying to divide by zero results in a Divide_by_zero exception is successful.
+2021-03-28T00:30:29+00:00 DESKTOP-MJHA1S2#00 I: End test test suite for operations:6:Trying to divide by zero results in a Divide_by_zero exception.
+2021-03-28T00:30:29+00:00 DESKTOP-MJHA1S2#00 I: Start test test suite for operations:7:Trying to divide by zero results in a Divide_by_zero exception.
+2021-03-28T00:30:29+00:00 DESKTOP-MJHA1S2#00 I: Test test suite for operations:7:Trying to divide by zero results in a Divide_by_zero exception is successful.
+2021-03-28T00:30:29+00:00 DESKTOP-MJHA1S2#00 I: End test test suite for operations:7:Trying to divide by zero results in a Divide_by_zero exception.
+2021-03-28T00:30:29+00:00 DESKTOP-MJHA1S2#00 I: Start test test suite for operations:8:Dividing 0. by any integer is always 0.
+2021-03-28T00:30:29+00:00 DESKTOP-MJHA1S2#00 I: Test test suite for operations:8:Dividing 0. by any integer is always 0 is successful.
+2021-03-28T00:30:29+00:00 DESKTOP-MJHA1S2#00 I: End test test suite for operations:8:Dividing 0. by any integer is always 0.
+2021-03-28T00:30:29+00:00 DESKTOP-MJHA1S2#00 I: Start test test suite for operations:9:Subtracting the list [60.;90.;40.] equals 60. -. 90. -. 40. = -70. ;.
+2021-03-28T00:30:29+00:00 DESKTOP-MJHA1S2#00 I: Test test suite for operations:9:Subtracting the list [60.;90.;40.] equals 60. -. 90. -. 40. = -70. ; is successful.
+2021-03-28T00:30:29+00:00 DESKTOP-MJHA1S2#00 I: End test test suite for operations:9:Subtracting the list [60.;90.;40.] equals 60. -. 90. -. 40. = -70. ;.
+2021-03-28T00:30:29+00:00 DESKTOP-MJHA1S2#00 I: Start test test suite for operations:10:Subtracting the list [-60.;-90.;40.] equals 60. -. 90. -. 40. = -70. ;.
+2021-03-28T00:30:29+00:00 DESKTOP-MJHA1S2#00 E: Test test suite for operations:10:Subtracting the list [-60.;-90.;40.] equals 60. -. 90. -. 40. = -70. ; has failed.
+2021-03-28T00:30:29+00:00 DESKTOP-MJHA1S2#00 E: expected: 70. but got: -10. in test test suite for operations:10:Subtracting the list [-60.;-90.;40.] equals 60. -. 90. -. 40. = -70. ;.
+2021-03-28T00:30:29+00:00 DESKTOP-MJHA1S2#00 E: Raised at OUnitAssert.assert_failure in file "src/lib/ounit2/advanced/oUnitAssert.ml", line 45, characters 2-27
+2021-03-28T00:30:29+00:00 DESKTOP-MJHA1S2#00 E: Called from OUnitRunner.run_one_test.(fun) in file "src/lib/ounit2/advanced/oUnitRunner.ml", line 83, characters 13-26
+2021-03-28T00:30:29+00:00 DESKTOP-MJHA1S2#00 E: 
+2021-03-28T00:30:29+00:00 DESKTOP-MJHA1S2#00 I: End test test suite for operations:10:Subtracting the list [-60.;-90.;40.] equals 60. -. 90. -. 40. = -70. ;.
+2021-03-28T00:30:29+00:00 DESKTOP-MJHA1S2#00 I: ==============
+2021-03-28T00:30:29+00:00 DESKTOP-MJHA1S2#00 I: Summary:
+2021-03-28T00:30:29+00:00 DESKTOP-MJHA1S2#00 E: Test test suite for operations:10:Subtracting the list [-60.;-90.;40.] equals 60. -. 90. -. 40. = -70. ; has failed.
+2021-03-28T00:30:29+00:00 DESKTOP-MJHA1S2#00 E: expected: 70. but got: -10. in test test suite for operations:10:Subtracting the list [-60.;-90.;40.] equals 60. -. 90. -. 40. = -70. ;.
+2021-03-28T00:30:29+00:00 DESKTOP-MJHA1S2#00 E: Raised at OUnitAssert.assert_failure in file "src/lib/ounit2/advanced/oUnitAssert.ml", line 45, characters 2-27
+2021-03-28T00:30:29+00:00 DESKTOP-MJHA1S2#00 E: Called from OUnitRunner.run_one_test.(fun) in file "src/lib/ounit2/advanced/oUnitRunner.ml", line 83, characters 13-26
+2021-03-28T00:30:29+00:00 DESKTOP-MJHA1S2#00 E: 
+2021-03-28T00:30:29+00:00 DESKTOP-MJHA1S2#00 I: Test test suite for operations:9:Subtracting the list [60.;90.;40.] equals 60. -. 90. -. 40. = -70. ; is successful.
+2021-03-28T00:30:29+00:00 DESKTOP-MJHA1S2#00 I: Test test suite for operations:8:Dividing 0. by any integer is always 0 is successful.
+2021-03-28T00:30:29+00:00 DESKTOP-MJHA1S2#00 I: Test test suite for operations:7:Trying to divide by zero results in a Divide_by_zero exception is successful.
+2021-03-28T00:30:29+00:00 DESKTOP-MJHA1S2#00 I: Test test suite for operations:6:Trying to divide by zero results in a Divide_by_zero exception is successful.
+2021-03-28T00:30:29+00:00 DESKTOP-MJHA1S2#00 I: Test test suite for operations:5:the result of dividing (3/2) is 1.5. is successful.
+2021-03-28T00:30:29+00:00 DESKTOP-MJHA1S2#00 I: Test test suite for operations:4:the result of dividing (3/2)/3 is .5 is successful.
+2021-03-28T00:30:29+00:00 DESKTOP-MJHA1S2#00 I: Test test suite for operations:3:the result of dividing 6 and 3 is 2. is successful.
+2021-03-28T00:30:29+00:00 DESKTOP-MJHA1S2#00 I: Test test suite for operations:2:the result of multiplying all floats in the list [2.;3.;4.] is 24. is successful.
+2021-03-28T00:30:29+00:00 DESKTOP-MJHA1S2#00 I: Test test suite for operations:1:the sum of the list [-2.;-3.;4.] is -1. is successful.
+2021-03-28T00:30:29+00:00 DESKTOP-MJHA1S2#00 I: Test test suite for operations:0:the sum of the list [2.;3.;4.] is 9. is successful.
+2021-03-28T00:30:29+00:00 DESKTOP-MJHA1S2#00 I: Ran: 11 tests in: 0.05 seconds.
+2021-03-28T00:30:29+00:00 DESKTOP-MJHA1S2#00 I: Cases: 11.
+2021-03-28T00:30:29+00:00 DESKTOP-MJHA1S2#00 I: Tried: 11.
+2021-03-28T00:30:29+00:00 DESKTOP-MJHA1S2#00 I: Errors: 0.
+2021-03-28T00:30:29+00:00 DESKTOP-MJHA1S2#00 I: Failures: 1.
+2021-03-28T00:30:29+00:00 DESKTOP-MJHA1S2#00 I: Skip: 0.
+2021-03-28T00:30:29+00:00 DESKTOP-MJHA1S2#00 I: Todo: 0.
+2021-03-28T00:30:29+00:00 DESKTOP-MJHA1S2#00 I: Timeout: 0.

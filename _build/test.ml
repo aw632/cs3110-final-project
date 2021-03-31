@@ -39,9 +39,9 @@ let basic_op_tests =
        -70. ;"
       (-70.) subtract_tr [ 60.; 90.; 40. ] 0.;
     basic_op_test
-      "Subtracting the list [-60.;-90.;40.] equals -60. +. 90. -. 40. \
-       = -70. ;"
-      (-10.) subtract_tr [ -60.; -90.; 40. ] 0.;
+      "Subtracting the list [-60.;-90.;40.] equals 60. -. 90. -. 40. = \
+       -70. ;"
+      70. subtract_tr [ -60.; -90.; 40. ] 0.;
   ]
 
 let suite =

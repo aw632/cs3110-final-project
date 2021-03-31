@@ -1,4 +1,4 @@
-MODULES=author commands basic_op main
+MODULES=author commands basicOp main
 OBJECTS=$(MODULES:=.cmo)
 TEST=test.byte
 MAIN=main.byte
