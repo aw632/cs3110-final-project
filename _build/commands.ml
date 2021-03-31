@@ -33,7 +33,7 @@ let parse str =
   in
   match str_list with
   | [ h ] ->
-      if h = "exit" then Exit
+      if h = "Exit" then Exit
       else if not (check_supported h) then raise Malformed
       else raise Malformed
   | h :: t ->

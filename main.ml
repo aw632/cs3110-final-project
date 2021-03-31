@@ -18,14 +18,14 @@ let rec new_command_query () =
 and ask_for_commands () =
   (* The arguments of ask_for_commands can be edited to support
      history/accumulation *)
-  print_endline
+  ANSITerminal.print_string [ ANSITerminal.green ]
     "Please enter an operation (or Exit), followed by a space, \
-     followed by the numbers you want to operate on.\n\n\
+     followed by the numbers you want to operate on.\n\
      For example, the input 'Add 5 6 1' (without quotes) means 'Add 5 \
      and 6, then Add 1 to that sum.'\n";
   print_string "> ";
   try
-    match Commands.parse (read_line ()) with
+    match read_line () |> parse with
     | Add arguments ->
         print_endline (add_tr arguments 0. |> Float.to_string);
         new_command_query ()
