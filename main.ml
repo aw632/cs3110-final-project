@@ -22,10 +22,16 @@ and ask_for_commands () =
   (* The arguments of ask_for_commands can be edited to support
      history/accumulation *)
   ANSITerminal.print_string [ ANSITerminal.green ]
-    "Please enter an operation (or Exit), followed by a space, \
-     followed by the numbers you want to operate on.\n\
-     For example, the input 'Add 5 6 1' (without quotes) means 'Add 5 \
-     and 6, then Add 1 to that sum.' \n";
+    "Please enter an operation, followed by a space,  followed by the\n\
+    \    \n\
+    \     numbers you want to operate on.\n\
+     Functions available:\n\n\
+    \     Add \n\n\
+    \     Subtract \n\n\
+    \     Divide \n\n\
+    \     Multiply \n\n\n\
+    \     Enter Exit at any time to exit from the program\n";
+
   print_string "> ";
   try
     match read_line () |> parse with
