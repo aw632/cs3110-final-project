@@ -54,6 +54,7 @@ let print_command cmd =
   | Multiply t -> "Multiply" ^ print_cmd_args t
   | Subtract t -> "Subtract" ^ print_cmd_args t
   | Divide t -> "Divide" ^ print_cmd_args t
+  | Factorial t -> "Factorial" ^ string_of_int t
   | Exit -> "Exit"
 
 let parse_test name expected_output input =
