@@ -1,18 +1,11 @@
 type basic_arguments = float list
 
 type command =
-<<<<<<< HEAD
   | Add of basic_arguments
   | Multiply of basic_arguments
   | Subtract of basic_arguments
   | Divide of basic_arguments
-=======
-  | Add of arguments
-  | Multiply of arguments
-  | Subtract of arguments
-  | Divide of arguments
   | Factorial of int
->>>>>>> 95bfd643cfa9b6d10824ae2d00562357aba010a6
   | Exit
 
 exception Empty
