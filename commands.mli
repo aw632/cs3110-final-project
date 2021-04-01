@@ -12,6 +12,7 @@ type command =
   | Multiply of arguments
   | Subtract of arguments
   | Divide of arguments
+  | Factorial of int
   | Exit
 
 (** [supported_ops] is a list of every operation a user can use. Each
