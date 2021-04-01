@@ -3,6 +3,9 @@
 (** raised when a command input is not in domain of function*)
 exception Undefined_Input
 
+(** raised when a command ouput is too large*)
+exception Integer_Overflow
+
 (** [add_tr numlist] sums all elements in [numlist].
 
     Ex: add [1.0;4.0;5.0] = 1.0 +. 4.0 +. 5.0 = 10.0. *)
@@ -30,7 +33,8 @@ val multiply_tr : float list -> float
 
 (** [factorial_tr num acc] returns the factorial of [num].
 
-    Raises [Undefined_Input] if [num] is negative.
+    Raises: [Undefined_Input] if [num] is negative. [Integer_Overflow]
+    if output is out of range
 
     Ex: factorial_tr 3 1 = 6. *)
 val factorial_tr : int -> int -> int

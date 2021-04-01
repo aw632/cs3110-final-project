@@ -15,16 +15,23 @@ let basic_op_test_exception name exception_raised f input_list =
   name >:: fun info ->
   assert_raises exception_raised (fun () -> f input_list)
 
+let factorial_test_exception name exception_raised num acc =
+  name >:: fun info ->
+  assert_raises exception_raised (fun () -> factorial_tr num acc)
+
 let basic_op_tests =
   [
+    (* add_tr function*)
     basic_op_test "the sum of the list [2.;3.;4.] is 9." 9. add_tr
       [ 2.; 3.; 4. ];
     basic_op_test "the sum of the list [-2.;-3.;4.] is -1." (-1.) add_tr
       [ -2.; -3.; 4. ];
+    (* multiply_tr function*)
     basic_op_test
       "the result of multiplying all floats in the list [2.;3.;4.] is \
        24."
       24. multiply_tr [ 2.; 3.; 4. ];
+    (* divide_tr function*)
     basic_op_test "the result of dividing 6 and 3 is 2." 2. divide_tr
       [ 6.; 3. ];
     basic_op_test "the result of dividing (3/2)/3 is .5" 0.5 divide_tr
@@ -39,14 +46,25 @@ let basic_op_tests =
       Division_by_zero divide_tr [ 0.; 3.; 2.; 0. ];
     basic_op_test "Dividing 0. by any integer is always 0" 0. divide_tr
       [ 0.; 2.; 3. ];
+    (* subtract_tr function*)
     basic_op_test
       "Subtracting the list [60.;90.;40.] equals 60. -. 90. -. 40. = \
-       -70. ;"
+       -70."
       (-70.) subtract_tr [ 60.; 90.; 40. ];
     basic_op_test
       "Subtracting the list [-60.;-90.;40.] equals -60. +. 90. -. 40. \
-       = -70. ;"
+       = -70."
       (-10.) subtract_tr [ -60.; -90.; 40. ];
+    (* factorial_tr function*)
+    factorial_test "Factorial of 7 equals 5040" 5040 7 1;
+    factorial_test "Factorial of 0 equals 1" 1 0 1;
+    factorial_test_exception
+      "Factorial of negative numbers raises an Undefined_Input \
+       exception"
+      Undefined_Input (-4) 1;
+    factorial_test_exception
+      "Factorial of 23 raises an Integer_Overflow exception"
+      Integer_Overflow 23 1;
   ]
 
 let print_cmd_args lst =

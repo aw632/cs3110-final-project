@@ -1,5 +1,7 @@
 exception Undefined_Input
 
+exception Integer_Overflow
+
 let rec basic_op_tr op (lst : float list) (acc : float) : float =
   match lst with [] -> acc | hd :: tl -> basic_op_tr op tl (op acc hd)
 
@@ -21,5 +23,6 @@ let multiply_tr (lst : float list) : float = basic_op_tr ( *. ) lst 1.
 
 let rec factorial_tr (num : int) (acc : int) : int =
   if num < 0 then raise Undefined_Input
+  else if num > 20 then raise Integer_Overflow
   else if num = 0 then acc
   else factorial_tr (num - 1) acc * num
