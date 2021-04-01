@@ -12,7 +12,7 @@ exception Empty
 
 exception Malformed
 
-exception Undefined_Input
+exception Undefined_Input of string
 
 let supported_ops =
   [ "add"; "divide"; "multiply"; "subtract"; "factorial" ]
@@ -48,8 +48,16 @@ let parse str =
         (* else if h = "Add" then Add [ 0.; 1. ] *)
       else if not (check_supported h) then raise Malformed
       else raise Malformed
-  | [ h; t ] -> check_fact h (int_of_string t)
+  | [ h; t ] ->
+      check_fact h
+        (try match int_of_string t with i -> i
+         with Failure s ->
+           raise (Undefined_Input "invalid factorial input"))
   | h :: t ->
-      let args = t |> List.map float_of_string in
+      let args =
+        try match t |> List.map float_of_string with lst -> lst
+        with Failure s ->
+          raise (Undefined_Input "invalid list of arguments")
+      in
       check_basic_op h args
   | [] -> raise Empty

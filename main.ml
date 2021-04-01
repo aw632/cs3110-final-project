@@ -85,6 +85,11 @@ and ask_for_commands () =
         [ ANSITerminal.red; ANSITerminal.Bold ]
         "\n You cannot divide by zero. Please try again!\n";
       ask_for_commands ()
+  | Empty ->
+      ANSITerminal.print_string
+        [ ANSITerminal.red; ANSITerminal.Bold ]
+        "\n This command is empty. Please try again!\n";
+      ask_for_commands ()
 
 (** [start_calc x] starts the calculator with initial command [x]. *)
 let start_calc x =
