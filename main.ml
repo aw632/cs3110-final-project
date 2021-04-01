@@ -47,6 +47,9 @@ and ask_for_commands () =
     | Divide arguments ->
         print_endline (divide_tr arguments |> Float.to_string);
         new_command_query ()
+    | Factorial arguments ->
+        print_endline (factorial_tr arguments 1 |> string_of_int);
+        new_command_query ()
     | Exit ->
         ANSITerminal.print_string [ ANSITerminal.green ] "Goodbye!\n";
         exit 0

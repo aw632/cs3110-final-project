@@ -12,6 +12,8 @@ exception Empty
 
 exception Malformed
 
+exception Undefined_Input
+
 let supported_ops =
   [ "add"; "divide"; "multiply"; "subtract"; "factorial" ]
 

@@ -6,6 +6,11 @@ let basic_op_test name expected_output f input_list =
   name >:: fun info ->
   assert_equal expected_output (f input_list) ~printer:string_of_float
 
+let factorial_test name expected_output (num : int) (acc : int) =
+  name >:: fun info ->
+  assert_equal expected_output (factorial_tr num acc)
+    ~printer:string_of_int
+
 let basic_op_test_exception name exception_raised f input_list =
   name >:: fun info ->
   assert_raises exception_raised (fun () -> f input_list)
