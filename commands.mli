@@ -3,15 +3,15 @@
     list represents a number. Elements are dilineated in the user input
     by spaces. The list is in the same order as the original user input. *)
 
-type arguments = float list
+type basic_arguments = float list
 
 (** The type [command] represents a user input consisting of a
     mathematical operation and the arguments passed it *)
 type command =
-  | Add of arguments
-  | Multiply of arguments
-  | Subtract of arguments
-  | Divide of arguments
+  | Add of basic_arguments
+  | Multiply of basic_arguments
+  | Subtract of basic_arguments
+  | Divide of basic_arguments
   | Exit
 
 (** [supported_ops] is a list of every operation a user can use. Each

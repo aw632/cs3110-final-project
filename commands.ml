@@ -1,10 +1,10 @@
-type arguments = float list
+type basic_arguments = float list
 
 type command =
-  | Add of arguments
-  | Multiply of arguments
-  | Subtract of arguments
-  | Divide of arguments
+  | Add of basic_arguments
+  | Multiply of basic_arguments
+  | Subtract of basic_arguments
+  | Divide of basic_arguments
   | Exit
 
 exception Empty

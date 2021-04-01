@@ -30,16 +30,16 @@ and ask_for_commands () =
   try
     match read_line () |> parse with
     | Add arguments ->
-        print_endline (add_tr arguments 0. |> Float.to_string);
+        print_endline (add_tr arguments |> Float.to_string);
         new_command_query ()
     | Multiply arguments ->
-        print_endline (multiply_tr arguments 1. |> Float.to_string);
+        print_endline (multiply_tr arguments |> Float.to_string);
         new_command_query ()
     | Subtract arguments ->
-        print_endline (subtract_tr arguments 0. |> Float.to_string);
+        print_endline (subtract_tr arguments |> Float.to_string);
         new_command_query ()
     | Divide arguments ->
-        print_endline (divide_tr arguments 1. |> Float.to_string);
+        print_endline (divide_tr arguments |> Float.to_string);
         new_command_query ()
     | Exit ->
         ANSITerminal.print_string [ ANSITerminal.green ] "Goodbye!\n";
