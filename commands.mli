@@ -25,6 +25,9 @@ exception Empty
 (** raised when a command is malformed*)
 exception Malformed
 
+(** raised when input is not well-defined *)
+exception Undefined_Input
+
 (** [parse str] takes the user input and makes it a command. The first
     word (the first consecutive sequence of non-space characters)
     indicates the mathematical operation to be performed. The rest of

@@ -12,7 +12,7 @@ exception Empty
 
 exception Malformed
 
-exception Undefined_Input of string
+exception Undefined_Input
 
 let supported_ops =
   [ "add"; "divide"; "multiply"; "subtract"; "factorial" ]
@@ -43,21 +43,13 @@ let parse str =
   match str_list with
   | [ h ] ->
       if h |> String.lowercase_ascii = "exit" then Exit
-        (* debugging statement: Note that in the below line, hardcoding
-           add works... *)
-        (* else if h = "Add" then Add [ 0.; 1. ] *)
       else if not (check_supported h) then raise Malformed
       else raise Malformed
   | [ h; t ] ->
       check_fact h
-        (try match int_of_string t with i -> i
-         with Failure s ->
-           raise (Undefined_Input "invalid factorial input"))
-  | h :: t ->
-      let args =
-        try match t |> List.map float_of_string with lst -> lst
-        with Failure s ->
-          raise (Undefined_Input "invalid list of arguments")
-      in
-      check_basic_op h args
+        ( try match int_of_string t with i -> i
+          with Failure s -> raise Undefined_Input )
+  | h :: t -> (
+      try check_basic_op h (t |> List.map float_of_string)
+      with Failure s -> raise Undefined_Input )
   | [] -> raise Empty
