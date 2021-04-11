@@ -86,6 +86,9 @@ let basic_op_tests =
 let print_cmd_args lst =
   " [" ^ String.concat ", " (lst |> List.map string_of_float) ^ " ]"
 
+let print_int_lst lst =
+  " [" ^ String.concat ", " (lst |> List.map string_of_int) ^ " ]"
+
 let print_command cmd =
   match cmd with
   | Add t -> "Add" ^ print_cmd_args t
@@ -94,7 +97,8 @@ let print_command cmd =
   | Divide t -> "Divide" ^ print_cmd_args t
   | Factorial t -> "Factorial" ^ string_of_int t
   | FastExp (m, n, bin_list) ->
-      "FastExp " ^ string_of_int m ^ " " ^ string_of_int n
+      "FastExp " ^ string_of_int m ^ " " ^ string_of_int n ^ " "
+      ^ print_int_lst bin_list
   | Exit -> "Exit"
 
 let parse_test name expected_output input =
