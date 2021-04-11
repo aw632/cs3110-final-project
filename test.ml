@@ -1,6 +1,7 @@
 open OUnit2
 open BasicOp
 open Commands
+open EuclideanAlg
 
 let basic_op_test name expected_output f input_list =
   name >:: fun info ->
@@ -9,6 +10,17 @@ let basic_op_test name expected_output f input_list =
 let factorial_test name expected_output (num : int) (acc : int) =
   name >:: fun info ->
   assert_equal expected_output (factorial_tr num acc)
+    ~printer:string_of_int
+
+let fast_exp_test
+    name
+    expected_output
+    (m : int)
+    (n : int)
+    (bin_list : int list) =
+  name >:: fun info ->
+  assert_equal expected_output
+    (fast_exp m n bin_list 1)
     ~printer:string_of_int
 
 let basic_op_test_exception name exception_raised f input_list =
@@ -61,10 +73,14 @@ let basic_op_tests =
     factorial_test_exception
       "Factorial of negative numbers raises an Undefined_Input \
        exception"
-      Undefined_Input (-4) 1;
+      BasicOp.Undefined_Input (-4) 1;
     factorial_test_exception
       "Factorial of 23 raises an Integer_Overflow exception"
       Integer_Overflow 23 1;
+    fast_exp_test "480272 ^ 293 mod 487001 is 2024" 2024 480272 487001
+      [ 1; 0; 0; 1; 0; 0; 1; 0; 1 ];
+    fast_exp_test "7 ^ 64 mod 2399 is 763" 763 7 2399
+      [ 1; 0; 0; 0; 0; 0; 0 ];
   ]
 
 let print_cmd_args lst =
@@ -77,6 +93,8 @@ let print_command cmd =
   | Subtract t -> "Subtract" ^ print_cmd_args t
   | Divide t -> "Divide" ^ print_cmd_args t
   | Factorial t -> "Factorial" ^ string_of_int t
+  | FastExp (m, n, bin_list) ->
+      "FastExp " ^ string_of_int m ^ " " ^ string_of_int n
   | Exit -> "Exit"
 
 let parse_test name expected_output input =
@@ -101,6 +119,11 @@ let command_tests =
        [3.;4.;4.5]"
       (Subtract [ 3.; 4.; 4.5 ])
       "subtract 3 4 4.5";
+    parse_test
+      "The command fastexp 21 2 1101 parses to FastExp (21,2, \
+       [1;1;0;1]) "
+      (FastExp (21, 2, [ 1; 1; 0; 1 ]))
+      "fastexp 21 2 1101";
   ]
 
 let suite =

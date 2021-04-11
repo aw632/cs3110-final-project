@@ -13,6 +13,7 @@ type command =
   | Subtract of basic_arguments
   | Divide of basic_arguments
   | Factorial of int
+  | FastExp of (int * int * int list)
   | Exit
 
 (** [supported_ops] is a list of every operation a user can use. Each
