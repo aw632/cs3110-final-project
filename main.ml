@@ -1,5 +1,6 @@
 open BasicOp
 open Commands
+open EuclideanAlg
 
 (** [new_command_query ()] prints the lines below to the console. *)
 let rec new_command_query () =
@@ -38,6 +39,8 @@ and ask_for_commands () =
     \   Divide (takes in multiple inputs, returns float)\n\
     \   Multiply (takes in multiple inputs, returns float)\n\
     \   Factorial (takes in one input, returns integer)\n\
+    \   FastExp (takes in 3 inputs (2 decimal integers and an integer \
+     in binary), returns integer)\n\
     \ Enter Exit at any time to exit from the program\n\
     \ ";
 
@@ -59,6 +62,9 @@ and ask_for_commands () =
     | Factorial arguments ->
         print_endline
           ("\n" ^ (factorial_tr arguments 1 |> string_of_int));
+        new_command_query ()
+    | FastExp (m, n, bin_list) ->
+        print_endline ("\n" ^ (fast_exp m n bin_list 1 |> string_of_int));
         new_command_query ()
     | Exit ->
         ANSITerminal.print_string [ ANSITerminal.green ] "\nGoodbye!\n";
