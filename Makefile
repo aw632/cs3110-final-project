@@ -1,5 +1,6 @@
-MODULES=author commands basicOp main
+MODULES=author commands basicOp main dual
 OBJECTS=$(MODULES:=.cmo)
+MLIS=$(MODULES:=.mli)
 TEST=test.byte
 MAIN=main.byte
 OCAMLBUILD=ocamlbuild -use-ocamlfind
@@ -21,3 +22,10 @@ calc:
 
 zip:
 	zip final_project.zip *.ml* *.json *.sh _tags .merlin .ocamlformat .ocamlinit Makefile *.md	
+
+docs: docs-public
+	
+docs-public: build
+	mkdir -p _doc.public
+	ocamlfind ocamldoc -I _build -package ANSITerminal \
+		-html -stars -d _doc.public $(MLIS)
