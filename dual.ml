@@ -12,7 +12,7 @@ module Dual = struct
     let b = get_dual t1 in
     let c = get_real t2 in
     let d = get_dual t2 in
-    make_t (a *. c, (b *. c) +. (a *. d))
+    make_t (a *. c) ((b *. c) +. (a *. d))
 
   let add t1 t2 =
     make_t (get_real t1 +. get_dual t2) (get_dual t1 +. get_dual t2)
