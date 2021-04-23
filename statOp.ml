@@ -1,5 +1,25 @@
 open BasicOp
 
+let mean list = BasicOp.add_tr list /. float_of_int (List.length list)
+
+let median list =
+  let sorted_lst = List.sort compare list in
+  let middle_spot = (List.length list + 1) / 2 in
+  let even_odd = List.length list mod 2 in
+  if even_odd = 0 then
+    (List.nth sorted_lst middle_spot
+    +. List.nth sorted_lst (middle_spot - 1))
+    /. 2.
+  else List.nth sorted_lst (middle_spot - 1)
+
+let standard_deviation list =
+  let mean = mean list in
+  let n = float_of_int (List.length list) in
+  sqrt
+    (BasicOp.add_tr
+       (List.map (fun x -> (x -. mean) *. (x -. mean)) list))
+  /. (n -. 1.)
+
 let linear_regression list1 list2 =
   let lst1_length = List.length list1 in
   let lst2_length = List.length list2 in

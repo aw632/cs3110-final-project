@@ -41,6 +41,9 @@ and ask_for_commands () =
     \   Multiply (takes in multiple inputs, returns float)\n\
     \   Factorial (takes in one input, returns integer)\n\
     \   FastExp (takes in three inputs, returns integer)\n\
+    \   Mean (takes in multiple input, returns float)\n\
+    \   Median (takes in multiple input, returns float)\n\
+    \   StdDev (takes in multiple input, returns float)\n\
     \   LinReg (takes in two lists, returns linear regression)\n\
     \ Enter Exit at any time to exit from the program\n\
     \ ";
@@ -66,6 +69,16 @@ and ask_for_commands () =
         new_command_query ()
     | FastExp (m, n, bin_list) ->
         print_endline ("\n" ^ (fast_exp m n bin_list 1 |> string_of_int));
+        new_command_query ()
+    | Mean arguments ->
+        print_endline ("\n" ^ (mean arguments |> Float.to_string));
+        new_command_query ()
+    | Median arguments ->
+        print_endline ("\n" ^ (median arguments |> Float.to_string));
+        new_command_query ()
+    | Standard_Dev arguments ->
+        print_endline
+          ("\n" ^ (standard_deviation arguments |> Float.to_string));
         new_command_query ()
     | Lin_Reg ->
         print_string "First list:";

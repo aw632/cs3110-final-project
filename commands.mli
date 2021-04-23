@@ -14,6 +14,9 @@ type command =
   | Divide of basic_arguments
   | Factorial of int
   | FastExp of (int * int * int list)
+  | Mean of basic_arguments
+  | Median of basic_arguments
+  | Standard_Dev of basic_arguments
   | Lin_Reg
   | Exit
 
@@ -48,4 +51,11 @@ val check_linear_regression : float list -> float list -> unit
     input is a mathematical operation with no arguments.*)
 val parse : string -> command
 
+(** [parse_list str] takes the user input and makes it a float list. Any
+    integers passed as agruments are automatically converted to floats.
+
+    Raises: [Malformed] if the command is malformed. A command is
+    malformed if the mathematical operation is not supported, or if the
+    input is "exit" and there are arguments following it, or if the
+    input is a mathematical operation with no arguments.*)
 val parse_list : string -> float list
