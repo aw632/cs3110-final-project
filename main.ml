@@ -1,6 +1,7 @@
 open BasicOp
 open Commands
 open EuclideanAlg
+open StatOp
 
 (** [new_command_query ()] prints the lines below to the console. *)
 let rec new_command_query () =
@@ -39,8 +40,8 @@ and ask_for_commands () =
     \   Divide (takes in multiple inputs, returns float)\n\
     \   Multiply (takes in multiple inputs, returns float)\n\
     \   Factorial (takes in one input, returns integer)\n\
-    \   FastExp (takes in 3 inputs (2 decimal integers and an integer \
-     in binary), returns integer)\n\
+    \   FastExp (takes in three inputs, returns integer)\n\
+    \   LinReg (takes in two lists, returns linear regression)\n\
     \ Enter Exit at any time to exit from the program\n\
     \ ";
 
@@ -65,6 +66,22 @@ and ask_for_commands () =
         new_command_query ()
     | FastExp (m, n, bin_list) ->
         print_endline ("\n" ^ (fast_exp m n bin_list 1 |> string_of_int));
+        new_command_query ()
+    | Lin_Reg ->
+        print_string "First list:";
+        print_string "> ";
+        let input1 = read_line () in
+        let list1 = Commands.parse_list input1 in
+        print_string "Second list:";
+        print_string "> ";
+        let input2 = read_line () in
+        let list2 = Commands.parse_list input2 in
+        let tuple = linear_regression list1 list2 in
+        print_endline
+          ("\n In the form y=ax+b, a = "
+          ^ string_of_float (fst tuple)
+          ^ " and b = "
+          ^ string_of_float (snd tuple));
         new_command_query ()
     | Exit ->
         ANSITerminal.print_string [ ANSITerminal.green ] "\nGoodbye!\n";

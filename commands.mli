@@ -14,6 +14,7 @@ type command =
   | Divide of basic_arguments
   | Factorial of int
   | FastExp of (int * int * int list)
+  | Lin_Reg
   | Exit
 
 (** [supported_ops] is a list of every operation a user can use. Each
@@ -28,6 +29,8 @@ exception Malformed
 
 (** raised when input is not well-defined *)
 exception Undefined_Input
+
+val check_linear_regression : float list -> float list -> unit
 
 (** [parse str] takes the user input and makes it a command. The first
     word (the first consecutive sequence of non-space characters)
@@ -44,3 +47,5 @@ exception Undefined_Input
     input is "exit" and there are arguments following it, or if the
     input is a mathematical operation with no arguments.*)
 val parse : string -> command
+
+val parse_list : string -> float list
