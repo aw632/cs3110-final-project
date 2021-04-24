@@ -2,6 +2,7 @@ open OUnit2
 open BasicOp
 open Commands
 open EuclideanAlg
+open FrontEnd
 
 let basic_op_test name expected_output f input_list =
   name >:: fun info ->
@@ -103,7 +104,12 @@ let print_command cmd =
 
 let parse_test name expected_output input =
   name >:: fun info ->
-  assert_equal expected_output (parse input) ~printer:print_command
+  assert_equal expected_output (Commands.parse input)
+    ~printer:print_command
+
+let function_parse_test n i s = n >:: fun _ -> assert_equal i (interp s)
+
+let function_parse_tests = []
 
 let command_tests =
   [

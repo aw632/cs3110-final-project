@@ -3,13 +3,16 @@ OBJECTS=$(MODULES:=.cmo)
 MLIS=$(MODULES:=.mli)
 TEST=test.byte
 MAIN=main.byte
-OCAMLBUILD=ocamlbuild -use-ocamlfind
+OCAMLBUILD=ocamlbuild -use-ocamlfind 
 
 default: build
 	OCAMLRUNPARAM=b utop
 
 build:
 	$(OCAMLBUILD) $(OBJECTS)
+
+frontend:
+	ocamlbuild -use-ocamlfind frontEnd.byte
 
 test:
 	$(OCAMLBUILD) -tag 'debug' $(TEST) && ./$(TEST) -runner sequential

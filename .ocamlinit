@@ -3,3 +3,8 @@
 #load "author.cmo";;
 #load "commands.cmo";;
 #load "basic_op.cmo";;
+#load "lexer.cmo";;
+#load "parser.cmo";;
+#load "frontend.cmo";;
+open Ast;;
+open Main;;
