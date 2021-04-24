@@ -7,6 +7,10 @@ type command =
   | Divide of basic_arguments
   | Factorial of int
   | FastExp of (int * int * int list)
+  | Mean of basic_arguments
+  | Median of basic_arguments
+  | Standard_Dev of basic_arguments
+  | Lin_Reg
   | Exit
 
 exception Empty
@@ -16,19 +20,33 @@ exception Malformed
 exception Undefined_Input
 
 let supported_ops =
-  [ "add"; "divide"; "multiply"; "subtract"; "factorial"; "fast_exp" ]
+  [
+    "add";
+    "divide";
+    "multiply";
+    "subtract";
+    "factorial";
+    "fast_exp";
+    "mean";
+    "median";
+    "standard_dev";
+    "lin_reg";
+  ]
 
 (** [check_supported str] checks if the input is a supported operation*)
 let check_supported str =
   List.exists (fun element -> str = element) supported_ops
 
 (** Matches the input with the correct command *)
-let check_basic_op str args =
+let check_string_input str args =
   let str = String.lowercase_ascii str in
   if str = "add" then Add args
   else if str = "divide" then Divide args
   else if str = "multiply" then Multiply args
   else if str = "subtract" then Subtract args
+  else if str = "mean" then Mean args
+  else if str = "median" then Median args
+  else if str = "stddev" then Standard_Dev args
   else raise Malformed
 
 let check_fact str arg =
@@ -36,6 +54,13 @@ let check_fact str arg =
   if str = "factorial" && arg > 0 then Factorial arg
   else if arg < 0 then raise Undefined_Input
   else raise Malformed
+
+let check_linear_regression lst1 lst2 =
+  let lst1_length = List.length lst1 in
+  let lst2_length = List.length lst2 in
+  if
+    lst1_length < 2 || lst2_length < 2 || not (lst1_length = lst2_length)
+  then raise Undefined_Input
 
 let bin_to_list str =
   let rec to_list num acc =
@@ -58,7 +83,9 @@ let parse str =
   in
   match str_list with
   | [ h ] ->
-      if h |> String.lowercase_ascii = "exit" then Exit
+      let str = String.lowercase_ascii h in
+      if str = "exit" then Exit
+      else if str = "linreg" then Lin_Reg
       else if not (check_supported h) then raise Malformed
       else raise Malformed
   | [ h; t ] ->
@@ -70,6 +97,15 @@ let parse str =
       if str = "fastexp" then
         try check_fast_exp t with Failure s -> raise Undefined_Input
       else
-        try check_basic_op h (t |> List.map float_of_string)
+        try check_string_input h (t |> List.map float_of_string)
         with Failure s -> raise Undefined_Input)
   | [] -> raise Empty
+
+let parse_list str =
+  let str_list =
+    List.filter
+      (function "" -> false | _ -> true)
+      (String.split_on_char ' ' str)
+  in
+  try match str_list |> List.map float_of_string with list -> list
+  with Failure s -> raise Undefined_Input
