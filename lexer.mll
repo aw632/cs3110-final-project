@@ -21,6 +21,6 @@ rule read =
   | ")" { RPAREN }
   | exp { EXP (let str = Lexing.lexeme lexbuf in float_of_string (String.sub (str) 1 
   (String.length str - 1) )) }
-  | float { FLOAT (float_of_string (Lexing.lexeme lexbuf)) }
+   | float { FLOAT (float_of_string (Lexing.lexeme lexbuf)) }
   | variable { VARIABLE (Lexing.lexeme lexbuf) }
   | eof { EOF }
