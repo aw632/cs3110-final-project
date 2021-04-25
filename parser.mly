@@ -11,7 +11,6 @@
 %left PLUS
 %left SUB
 %left TIMES
-%left EXP
 
 %start <Ast.expr> prog
 

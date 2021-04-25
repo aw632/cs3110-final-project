@@ -36,6 +36,6 @@ let get_fun = function
   | PolyFun f -> f
   | _ -> failwith "precondition violated"
 
-let fun1 = parse "5x^2 +3x +6+7x+34x^3"
+let fun1 = parse "5x^2 + 3x + 6+ 7x + 34x^3"
 
 let get_fun1 = fun1 |> make_polynomial |> get_fun
