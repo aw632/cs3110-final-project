@@ -12,6 +12,7 @@ type command =
   | Standard_Dev of basic_arguments
   | Lin_Reg
   | Poly
+  | Sigma
   | Help
   | Exit
 
@@ -91,6 +92,7 @@ let parse str =
       else if str = "help" then Help
       else if str = "linreg" then Lin_Reg
       else if str = "poly" then Poly
+      else if str = "sigma" then Sigma
       else if not (check_supported h) then raise Malformed
       else raise Undefined_Input
   | [ h; t ] ->

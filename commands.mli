@@ -19,6 +19,7 @@ type command =
   | Standard_Dev of basic_arguments
   | Lin_Reg
   | Poly
+  | Sigma
   | Help
   | Exit
 

@@ -32,9 +32,9 @@ let factorial_test_exception name exception_raised num acc =
   name >:: fun info ->
   assert_raises exception_raised (fun () -> factorial_tr num acc)
 
-let summation_test name expected_output floor ceiling f =
+let summation_test name expected_output first last f =
   name >:: fun info ->
-  assert_equal expected_output (summation_tr floor ceiling f)
+  assert_equal expected_output (summation_tr first last f)
 
 let basic_op_tests =
   [
