@@ -13,12 +13,29 @@ let get_bop = function
   | Sub -> ( -. )
   | _ -> failwith "not add or sub"
 
+(** [poly_linear_combo (exp1,exp2) bop] is the linear combination (using
+    bop) of the two polynomial functions of exp1 and exp2
+
+    Example: exp1 = PolyFun (fun x-> 3. *. x) and exp2 = PolyFun (fun
+    x-> x**2.) and bop = Add then the combined polynomial is PolyFun
+    (fun x -> (+.) ((fun x-> 3. *. x) x) ((fun x -> x ** 2.) x)
+    Abstractly, the linaer combination of 3x and x^2 is 3x + x^2
+
+    Requires: exp1 and exp2 are PolyFun variants i.e represent some
+    polynomial function*)
 let poly_linear_combo (exp1, exp2) bop =
   match (exp1, exp2) with
   | PolyFun f1, PolyFun f2 ->
       fun variable -> (get_bop bop) (f1 variable) (f2 variable)
   | _ -> failwith "not valid"
 
+(** [make_polynomial poly_node] creates an ocaml function to represent
+    the polynomial expressed by poly_node
+
+    Example: Poly (3.,x,5.) returns PolyFun (fun x-> 3. *. x ** 5.)
+    which is equivalent to 3x^5
+
+    Requires: poly_node is a Var, Float, or Poly(_,_,_)*)
 let rec make_polynomial poly_node =
   match poly_node with
   | Poly (coeff, variable, exp) ->

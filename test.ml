@@ -111,6 +111,7 @@ let function_parse_test name expected_output str num =
   name >:: fun _ ->
   assert_equal expected_output
     ((str |> parse |> make_polynomial |> get_fun) num)
+    ~printer:string_of_float
 
 let function_parse_tests =
   [
@@ -122,6 +123,15 @@ let function_parse_tests =
     function_parse_test
       "the string 'x+6' where x = 100000 results in 100006" 100006.
       "x+6" 100000.;
+    function_parse_test
+      "the string 'x+x+13-x^5+7x' where x = 0 results in 13" 13.
+      "x+x+13-x^5+7x" 0.;
+    function_parse_test
+      "the string 'x+x+13-x^5+7x' where x = 2 results in -1" (-1.)
+      "x+x+13-x^5+7x" 2.;
+    function_parse_test
+      "the string 'x+x+13-x^5+7x' where x = -3 results in 229" 229.
+      "x+x+13-x^5+7x" (-3.);
   ]
 
 let command_tests =
