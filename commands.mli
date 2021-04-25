@@ -19,6 +19,7 @@ type command =
   | Standard_Dev of basic_arguments
   | Lin_Reg
   | Poly
+  | Help
   | Exit
 
 (** [supported_ops] is a list of every operation a user can use. Each

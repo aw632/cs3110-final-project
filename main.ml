@@ -3,6 +3,25 @@ open Commands
 open EuclideanAlg
 open StatOp
 
+let help_msg =
+  "\n\
+  \ \n\
+  \ Please enter an operation, followed by a space, followed by \n\
+  \ the numbers you want to operate on.\n\
+  \   Functions available:\n\
+  \   Add (takes in multiple inputs, returns float) \n\
+  \   Subtract (takes in multiple inputs, returns float) \n\
+  \   Divide (takes in multiple inputs, returns float)\n\
+  \   Multiply (takes in multiple inputs, returns float)\n\
+  \   Factorial (takes in one input, returns integer)\n\
+  \   FastExp (takes in three inputs, returns integer)\n\
+  \   Mean (takes in multiple input, returns float)\n\
+  \   Median (takes in multiple input, returns float)\n\
+  \   StdDev (takes in multiple input, returns float)\n\
+  \   LinReg (takes in two lists, returns linear regression)\n\
+  \ Enter Exit at any time to exit from the program\n\
+  \ "
+
 (** [new_command_query ()] prints the lines below to the console. *)
 let rec new_command_query () =
   ANSITerminal.print_string [ ANSITerminal.green ]
@@ -18,6 +37,9 @@ let rec new_command_query () =
   | "Exit" ->
       print_endline "\n\n Goodbye!";
       exit 0
+  | "Help" ->
+      ANSITerminal.print_string [ ANSITerminal.green ] help_msg;
+      ask_for_commands ()
   | _ ->
       ANSITerminal.print_string [ ANSITerminal.red ]
         "\n\n\
@@ -29,25 +51,6 @@ let rec new_command_query () =
 and ask_for_commands () =
   (* The arguments of ask_for_commands can be edited to support
      history/accumulation *)
-  ANSITerminal.print_string [ ANSITerminal.green ]
-    "\n\
-    \ \n\
-    \ Please enter an operation, followed by a space, followed by \n\
-    \ the numbers you want to operate on.\n\
-    \   Functions available:\n\
-    \   Add (takes in multiple inputs, returns float) \n\
-    \   Subtract (takes in multiple inputs, returns float) \n\
-    \   Divide (takes in multiple inputs, returns float)\n\
-    \   Multiply (takes in multiple inputs, returns float)\n\
-    \   Factorial (takes in one input, returns integer)\n\
-    \   FastExp (takes in three inputs, returns integer)\n\
-    \   Mean (takes in multiple input, returns float)\n\
-    \   Median (takes in multiple input, returns float)\n\
-    \   StdDev (takes in multiple input, returns float)\n\
-    \   LinReg (takes in two lists, returns linear regression)\n\
-    \ Enter Exit at any time to exit from the program\n\
-    \ ";
-
   print_string "\n > ";
   try
     match read_line () |> parse with
@@ -108,6 +111,9 @@ and ask_for_commands () =
         print_string "> ";
         let value = read_line () |> float_of_string in
         print_endline (value |> polyFun |> string_of_float);
+        new_command_query ()
+    | Help ->
+        ANSITerminal.print_string [ ANSITerminal.green ] help_msg;
         ask_for_commands ()
     | Exit ->
         ANSITerminal.print_string [ ANSITerminal.green ] "\nGoodbye!\n";

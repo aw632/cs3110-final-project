@@ -12,6 +12,7 @@ type command =
   | Standard_Dev of basic_arguments
   | Lin_Reg
   | Poly
+  | Help
   | Exit
 
 exception Empty
@@ -87,6 +88,7 @@ let parse str =
   | [ h ] ->
       let str = String.lowercase_ascii h in
       if str = "exit" then Exit
+      else if str = "help" then Help
       else if str = "linreg" then Lin_Reg
       else if str = "poly" then Poly
       else if not (check_supported h) then raise Malformed
