@@ -107,9 +107,17 @@ let parse_test name expected_output input =
   assert_equal expected_output (Commands.parse input)
     ~printer:print_command
 
-let function_parse_test n i s = n >:: fun _ -> assert_equal i (interp s)
+let function_parse_test name expected_output str num =
+  name >:: fun _ ->
+  assert_equal expected_output
+    ((str |> parse |> make_polynomial |> get_fun) num)
 
-let function_parse_tests = []
+let function_parse_tests =
+  [
+    function_parse_test
+      "the string 5x^2 + 3x + 6+ 7x + 34x^3 where x = 1 results in 55"
+      55. "5x^2 + 3x + 6+ 7x + 34x^3" 1.;
+  ]
 
 let command_tests =
   [
