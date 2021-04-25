@@ -96,6 +96,19 @@ and ask_for_commands () =
           ^ " and b = "
           ^ string_of_float (snd tuple));
         new_command_query ()
+    | Poly ->
+        print_endline "Function: ";
+        print_string "> ";
+        let user_input = read_line () in
+        let polyFun =
+          user_input |> FrontEnd.parse |> FrontEnd.make_polynomial
+          |> FrontEnd.get_fun
+        in
+        print_endline "Value to evaluate: ";
+        print_string "> ";
+        let value = read_line () |> float_of_string in
+        print_endline (value |> polyFun |> string_of_float);
+        ask_for_commands ()
     | Exit ->
         ANSITerminal.print_string [ ANSITerminal.green ] "\nGoodbye!\n";
         exit 0

@@ -11,6 +11,7 @@ type command =
   | Median of basic_arguments
   | Standard_Dev of basic_arguments
   | Lin_Reg
+  | Poly
   | Exit
 
 exception Empty
@@ -31,6 +32,7 @@ let supported_ops =
     "median";
     "standard_dev";
     "lin_reg";
+    "poly";
   ]
 
 (** [check_supported str] checks if the input is a supported operation*)
@@ -86,8 +88,9 @@ let parse str =
       let str = String.lowercase_ascii h in
       if str = "exit" then Exit
       else if str = "linreg" then Lin_Reg
+      else if str = "poly" then Poly
       else if not (check_supported h) then raise Malformed
-      else raise Malformed
+      else raise Undefined_Input
   | [ h; t ] ->
       check_fact h
         (try match int_of_string t with i -> i
