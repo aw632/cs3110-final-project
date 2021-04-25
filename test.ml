@@ -32,6 +32,10 @@ let factorial_test_exception name exception_raised num acc =
   name >:: fun info ->
   assert_raises exception_raised (fun () -> factorial_tr num acc)
 
+let summation_test name expected_output floor ceiling f =
+  name >:: fun info ->
+  assert_equal expected_output (summation_tr floor ceiling f)
+
 let basic_op_tests =
   [
     (* add_tr function*)
@@ -82,6 +86,15 @@ let basic_op_tests =
       [ 1; 0; 0; 1; 0; 0; 1; 0; 1 ];
     fast_exp_test "7 ^ 64 mod 2399 is 763" 763 7 2399
       [ 1; 0; 0; 0; 0; 0; 0 ];
+    (*summation function*)
+    summation_test "summation (y = 2*x) 0 to 10 is 110" 110. 0. 10.
+      (fun x -> 2. *. x);
+    summation_test "summation (f = x) 0 to 1 million" 500000500000. 0.
+      1_000_000. (fun x -> x);
+    summation_test "summation (y = x) 3. to 0. is 0." 0. 3. 0. (fun x ->
+        x /. 4.);
+    summation_test "summation (y = x^2) -1 to 9. is 286." 286. (-1.) 9.
+      (fun x -> x *. x);
   ]
 
 let print_cmd_args lst =
