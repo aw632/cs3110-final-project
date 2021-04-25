@@ -24,6 +24,7 @@ let rec make_polynomial poly_node =
   | Poly (coeff, variable, exp) ->
       PolyFun (fun variable -> coeff *. (variable ** exp))
   | Float constant -> PolyFun (fun variable -> constant)
+  | Var variable -> PolyFun (fun variable -> variable)
   | Binop (bop, exp1, exp2) ->
       if not (is_poly exp1) then
         make_polynomial (Binop (bop, make_polynomial exp1, exp2))
@@ -35,7 +36,3 @@ let rec make_polynomial poly_node =
 let get_fun = function
   | PolyFun f -> f
   | _ -> failwith "precondition violated"
-
-let fun1 = parse "5x^2 + 3x + 6+ 7x + 34x^3"
-
-let get_fun1 = fun1 |> make_polynomial |> get_fun

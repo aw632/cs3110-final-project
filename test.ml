@@ -115,8 +115,13 @@ let function_parse_test name expected_output str num =
 let function_parse_tests =
   [
     function_parse_test
-      "the string 5x^2 + 3x + 6+ 7x + 34x^3 where x = 1 results in 55"
+      "the string '5x^2 + 3x + 6+ 7x + 34x^3' where x = 1 results in 55"
       55. "5x^2 + 3x + 6+ 7x + 34x^3" 1.;
+    function_parse_test "the string '6' where x = 100000 results in 6"
+      6. "6" 100000.;
+    function_parse_test
+      "the string 'x+6' where x = 100000 results in 100006" 100006.
+      "x+6" 100000.;
   ]
 
 let command_tests =
@@ -146,6 +151,7 @@ let command_tests =
 
 let suite =
   "test suite for operations"
-  >::: List.flatten [ basic_op_tests; command_tests ]
+  >::: List.flatten
+         [ basic_op_tests; command_tests; function_parse_tests ]
 
 let _ = run_test_tt_main suite
