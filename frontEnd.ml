@@ -1,9 +1,15 @@
 open Ast
 
+exception Undefined_Polynomial
+
 (** [parse s] parses [s] into an AST. *)
 let parse (s : string) : expr =
   let lexbuf = Lexing.from_string s in
-  let ast = Parser.prog Lexer.read lexbuf in
+  let ast =
+    try Parser.prog Lexer.read lexbuf with
+    | Lexer.SyntaxError msg -> raise Undefined_Polynomial
+    | Parser.Error -> raise Undefined_Polynomial
+  in
   ast
 
 let is_poly = function PolyFun _ -> true | _ -> false
@@ -11,7 +17,8 @@ let is_poly = function PolyFun _ -> true | _ -> false
 let get_bop = function
   | Add -> ( +. )
   | Sub -> ( -. )
-  | _ -> failwith "not add or sub"
+  | Mult -> ( *. )
+  | Divide -> ( /. )
 
 (** [poly_linear_combo (exp1,exp2) bop] is the linear combination (using
     bop) of the two polynomial functions of exp1 and exp2
@@ -27,7 +34,7 @@ let poly_linear_combo (exp1, exp2) bop =
   match (exp1, exp2) with
   | PolyFun f1, PolyFun f2 ->
       fun variable -> (get_bop bop) (f1 variable) (f2 variable)
-  | _ -> failwith "not valid"
+  | _ -> failwith "precondition violated"
 
 (** [make_polynomial poly_node] creates an ocaml function to represent
     the polynomial expressed by poly_node
@@ -48,7 +55,7 @@ let rec make_polynomial poly_node =
       else if not (is_poly exp2) then
         make_polynomial (Binop (bop, exp1, make_polynomial exp2))
       else PolyFun (poly_linear_combo (exp1, exp2) bop)
-  | _ -> failwith "precondition violated"
+  | _ -> raise Undefined_Polynomial
 
 let get_fun = function
   | PolyFun f -> f

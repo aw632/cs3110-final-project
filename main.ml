@@ -3,6 +3,8 @@ open Commands
 open EuclideanAlg
 open StatOp
 
+(** This help message will be printed when the user types 'help' into
+    the terminal*)
 let help_msg =
   "\n\
   \ \n\
@@ -21,6 +23,14 @@ let help_msg =
   \   LinReg (takes in two lists, returns linear regression)\n\
   \ Enter Exit at any time to exit from the program\n\
   \ "
+
+(** [read_float] takes a string input from the user and makes it a
+    float.
+
+    Raises Undefined_Input if the string cannot be made a float*)
+let read_float () =
+  try read_line () |> String.trim |> float_of_string
+  with Failure s -> raise Undefined_Input
 
 (** [new_command_query ()] prints the lines below to the console. *)
 let rec new_command_query () =
@@ -109,17 +119,17 @@ and ask_for_commands () =
         in
         print_endline "Value to evaluate: ";
         print_string "> ";
-        let value = read_line () |> String.trim |> float_of_string in
+        let value = read_float () in
         print_endline
           ("Answer: " ^ (value |> polyFun |> string_of_float));
         new_command_query ()
     | Sigma ->
         print_endline "First: ";
         print_string "> ";
-        let a = read_line () |> String.trim |> float_of_string in
+        let a = read_float () in
         print_endline "Second: ";
         print_string "> ";
-        let b = read_line () |> String.trim |> float_of_string in
+        let b = read_float () in
         print_endline "Function: ";
         print_string "> ";
         let user_input = read_line () in
@@ -146,6 +156,11 @@ and ask_for_commands () =
       ANSITerminal.print_string
         [ ANSITerminal.red; ANSITerminal.Bold ]
         "\n Input is undefined for this operation! Please try again!\n";
+      ask_for_commands ()
+  | FrontEnd.Undefined_Polynomial ->
+      ANSITerminal.print_string
+        [ ANSITerminal.red; ANSITerminal.Bold ]
+        "\n This is not a valid polynomial function. Try again. \n";
       ask_for_commands ()
   | Integer_Overflow ->
       ANSITerminal.print_string
@@ -181,7 +196,7 @@ let main () =
   | "Exit" ->
       print_endline "Goodbye!";
       exit 0
-  | x -> ask_for_commands ()
+  | _ -> ask_for_commands ()
 
 (** Execute the game engine. *)
 let () = main ()
