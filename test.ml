@@ -147,6 +147,30 @@ let function_parse_tests =
       "x+x+13-x^5+7x" (-3.);
   ]
 
+let binop_parse_test name expected_output str =
+  name >:: fun _ ->
+  assert_equal expected_output
+    (str |> parse |> reduce_bin_op |> get_float)
+    ~printer:string_of_float
+
+let binop_test_exception name exception_raised str =
+  name >:: fun info ->
+  assert_raises exception_raised (fun () ->
+      str |> parse |> reduce_bin_op |> get_float)
+
+let binop_parse_tests =
+  [
+    binop_parse_test "5*(7+3)*5 is 250" 250. "5*(7+3)*5";
+    binop_parse_test "5*7+3 *  5 is 50" 50. "5*7+3 *  5";
+    binop_parse_test "5/2+2 *  5 is 12.5" 12.5 "5/2+2 *  5";
+    binop_parse_test " (5/2) + 2 ^ 5 is 34.5" 34.5 "(5 / 2) + 2 ^ 5";
+    binop_test_exception
+      "5/0+2 *  5 raises Invalid_Calculation exception"
+      Invalid_Calculation "5/0+2 *  5";
+    binop_test_exception "5++++ raises Undefined_Parse exception"
+      Undefined_Parse "5++++";
+  ]
+
 let command_tests =
   [
     parse_test "the command add 3 4 parses to the command Add [3.;4.]"
@@ -175,6 +199,11 @@ let command_tests =
 let suite =
   "test suite for operations"
   >::: List.flatten
-         [ basic_op_tests; command_tests; function_parse_tests ]
+         [
+           basic_op_tests;
+           command_tests;
+           function_parse_tests;
+           binop_parse_tests;
+         ]
 
 let _ = run_test_tt_main suite

@@ -157,10 +157,12 @@ and ask_for_commands () =
         [ ANSITerminal.red; ANSITerminal.Bold ]
         "\n Input is undefined for this operation! Please try again!\n";
       ask_for_commands ()
-  | FrontEnd.Undefined_Polynomial ->
+  | FrontEnd.Undefined_Parse ->
       ANSITerminal.print_string
         [ ANSITerminal.red; ANSITerminal.Bold ]
-        "\n This is not a valid polynomial function. Try again. \n";
+        "\n\
+        \ This is not a valid polynomial function or binary operation. \
+         Try again. \n";
       ask_for_commands ()
   | Integer_Overflow ->
       ANSITerminal.print_string
