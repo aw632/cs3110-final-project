@@ -1,4 +1,4 @@
-MODULES=author commands basicOp main dual field tupleDuals derivative
+MODULES=author commands basicOp main dual tupleDuals derivative
 OBJECTS=$(MODULES:=.cmo)
 MLIS=$(MODULES:=.mli)
 TEST=test.byte
