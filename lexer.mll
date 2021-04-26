@@ -1,5 +1,7 @@
 {
+open Lexing
 open Parser
+exception SyntaxError of string
 }
 
 let white = [' ' '\t']+
@@ -23,4 +25,5 @@ rule read =
   (String.length str - 1) )) }
    | float { FLOAT (float_of_string (Lexing.lexeme lexbuf)) }
   | variable { VARIABLE (Lexing.lexeme lexbuf) }
+  | _ { raise (SyntaxError ("Illegal string character " )) }
   | eof { EOF }
