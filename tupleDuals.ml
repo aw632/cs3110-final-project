@@ -31,6 +31,13 @@ functor
       let d = get_dual d2 in
       make_t (f_add a c) (f_add b d)
 
+    let exp t a =
+      make_t
+        (f_exp (get_real t) a)
+        (f_mult
+           (f_mult a (get_real t))
+           (f_exp (get_real t) (f_sub a F.one)))
+
     let ( $* ) d1 d2 = mult d1 d2
 
     let ( $+ ) d1 d2 = add d1 d2
