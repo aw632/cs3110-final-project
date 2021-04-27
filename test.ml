@@ -100,6 +100,11 @@ let print_command cmd =
   | FastExp (m, n, bin_list) ->
       "FastExp " ^ string_of_int m ^ " " ^ string_of_int n ^ " "
       ^ print_int_lst bin_list
+  | GCD (m, n) -> "GCD " ^ string_of_int m ^ " " ^ string_of_int n
+  | Mean t -> "Mean" ^ print_cmd_args t
+  | Median t -> "Median" ^ print_cmd_args t
+  | Standard_Dev t -> "Standard Deviation" ^ print_cmd_args t
+  | Lin_Reg -> "Linear Regression"
   | Exit -> "Exit"
 
 let parse_test name expected_output input =

@@ -7,6 +7,7 @@ type command =
   | Divide of basic_arguments
   | Factorial of int
   | FastExp of (int * int * int list)
+  | GCD of (int * int)
   | Mean of basic_arguments
   | Median of basic_arguments
   | Standard_Dev of basic_arguments
@@ -27,6 +28,7 @@ let supported_ops =
     "subtract";
     "factorial";
     "fast_exp";
+    "gcd";
     "mean";
     "median";
     "standard_dev";
@@ -75,6 +77,10 @@ let check_fast_exp arg_list =
       FastExp (int_of_string arg1, int_of_string arg2, bin_to_list arg3)
   | [] | [ _ ] | _ :: _ :: _ :: _ :: _ | [ _; _ ] -> raise Malformed
 
+let check_gcd = function
+  | [ arg1; arg2 ] -> GCD (int_of_string arg1, int_of_string arg2)
+  | _ -> raise Malformed
+
 let parse str =
   let str_list =
     List.filter
@@ -96,6 +102,8 @@ let parse str =
       let str = String.lowercase_ascii h in
       if str = "fastexp" then
         try check_fast_exp t with Failure s -> raise Undefined_Input
+      else if str = "gcd" then
+        try check_gcd t with Failure s -> raise Undefined_Input
       else
         try check_string_input h (t |> List.map float_of_string)
         with Failure s -> raise Undefined_Input)

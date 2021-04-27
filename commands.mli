@@ -14,6 +14,7 @@ type command =
   | Divide of basic_arguments
   | Factorial of int
   | FastExp of (int * int * int list)
+  | GCD of (int * int)
   | Mean of basic_arguments
   | Median of basic_arguments
   | Standard_Dev of basic_arguments

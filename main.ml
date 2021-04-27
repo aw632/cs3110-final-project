@@ -70,6 +70,9 @@ and ask_for_commands () =
     | FastExp (m, n, bin_list) ->
         print_endline ("\n" ^ (fast_exp m n bin_list 1 |> string_of_int));
         new_command_query ()
+    | GCD (m, n) ->
+        print_endline ("\n" ^ (gcd m n |> string_of_int));
+        new_command_query ()
     | Mean arguments ->
         print_endline ("\n" ^ (mean arguments |> Float.to_string));
         new_command_query ()
