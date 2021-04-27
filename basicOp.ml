@@ -26,3 +26,9 @@ let rec factorial_tr (num : int) (acc : int) : int =
   else if num >= 20 then raise Integer_Overflow
   else if num = 0 then acc
   else factorial_tr (num - 1) acc * num
+
+let rec summation_tr floor ceiling f =
+  let rec sum a b f acc =
+    if a <= b then sum (a +. 1.) b f (f a +. acc) else acc
+  in
+  sum floor ceiling f 0.

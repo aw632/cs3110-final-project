@@ -14,12 +14,19 @@ module type Field = sig
       the field Z. *)
   val f_add : t -> t -> t
 
+  (** [f_add t1 t2] defines the binary operation called "subtraction" in
+      the field Z. *)
+  val f_sub : t -> t -> t
+
   (** [f_mult t1 t2] defines the binary operation called "addition" in
       the field Z. *)
   val f_mult : t -> t -> t
 
   (** [f_div t1 t2] defines the multiplicative inverses on the field Z.*)
   val f_div : t -> t -> t
+
+  (** [f_exp t a] is the exponentiation of [t] to the power of [a]. *)
+  val f_exp : t -> t -> t
 
   (** [to_string t] returns the string representation of t. *)
   val to_string : t -> string
@@ -29,8 +36,7 @@ module type Dual = sig
   type elem
 
   (** [t] is the representation of the dual number a + b(epsilon). See
-      dualnumbers explanatory PDF. TODO: take in duals for arbitrary
-      elements from a Field *)
+      dualnumbers explanatory PDF.*)
   type t
 
   (** [make_t x y] forms the dual number a+b(epsilon) *)
@@ -51,6 +57,16 @@ module type Dual = sig
       numbers. Example: (a + be) plus (c + de) should be (a + c) + (b +
       d)e *)
   val add : t -> t -> t
+
+  (** [sub t1 t2] is the subtraction of [t1] and [t2]. *)
+  val sub : t -> t -> t
+
+  (** [div t1 t2] is the division of [t1] and [t2]. (a+be)/(c+de) = a/c
+      \+ ((bc-ad)/c)^2e Requires: c is nonzero.*)
+  val div : t -> t -> t
+
+  (** [exp t a] is the exponentiation of [t] to the power of [a]. *)
+  val exp : t -> t -> t
 
   (** Infix version of [mult t1 t2]. *)
   val ( $* ) : t -> t -> t

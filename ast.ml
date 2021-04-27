@@ -3,6 +3,8 @@ type bop =
   | Add
   | Mult
   | Sub
+  | Divide
+  | Exp
 
 (** The type of the abstract syntax tree (AST). *)
 type expr =

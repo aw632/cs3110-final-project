@@ -38,3 +38,10 @@ val multiply_tr : float list -> float
 
     Ex: factorial_tr 3 1 = 6. *)
 val factorial_tr : int -> int -> int
+
+(** [summation_tr first last f] returns the summation over the range
+    [first, last] using the function defined by f
+
+    Example: summation_tr 1. 5. (fun x -> 2*.x) will return 2(1) + 2(2)
+    \+ 2(3) + 2(4) + 2(5)*)
+val summation_tr : float -> float -> (float -> float) -> float

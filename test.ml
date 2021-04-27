@@ -32,6 +32,10 @@ let factorial_test_exception name exception_raised num acc =
   name >:: fun info ->
   assert_raises exception_raised (fun () -> factorial_tr num acc)
 
+let summation_test name expected_output first last f =
+  name >:: fun info ->
+  assert_equal expected_output (summation_tr first last f)
+
 let basic_op_tests =
   [
     (* add_tr function*)
@@ -82,6 +86,15 @@ let basic_op_tests =
       [ 1; 0; 0; 1; 0; 0; 1; 0; 1 ];
     fast_exp_test "7 ^ 64 mod 2399 is 763" 763 7 2399
       [ 1; 0; 0; 0; 0; 0; 0 ];
+    (*summation function*)
+    summation_test "summation (y = 2*x) 0 to 10 is 110" 110. 0. 10.
+      (fun x -> 2. *. x);
+    summation_test "summation (f = x) 0 to 1 million" 500000500000. 0.
+      1_000_000. (fun x -> x);
+    summation_test "summation (y = x) 3. to 0. is 0." 0. 3. 0. (fun x ->
+        x /. 4.);
+    summation_test "summation (y = x^2) -1 to 9. is 286." 286. (-1.) 9.
+      (fun x -> x *. x);
   ]
 
 let print_cmd_args lst =
@@ -112,9 +125,56 @@ let parse_test name expected_output input =
   assert_equal expected_output (Commands.parse input)
     ~printer:print_command
 
-let function_parse_test n i s = n >:: fun _ -> assert_equal i (interp s)
+let function_parse_test name expected_output str num =
+  name >:: fun _ ->
+  assert_equal expected_output
+    ((str |> parse |> make_polynomial |> get_fun) num)
+    ~printer:string_of_float
 
-let function_parse_tests = []
+let function_parse_tests =
+  [
+    function_parse_test
+      "the string '5x^2 + 3x + 6+ 7x + 34x^3' where x = 1 results in 55"
+      55. "5x^2 + 3x + 6+ 7x + 34x^3" 1.;
+    function_parse_test "the string '6' where x = 100000 results in 6"
+      6. "6" 100000.;
+    function_parse_test
+      "the string 'x+6' where x = 100000 results in 100006" 100006.
+      "x+6" 100000.;
+    function_parse_test
+      "the string 'x+x+13-x^5+7x' where x = 0 results in 13" 13.
+      "x+x+13-x^5+7x" 0.;
+    function_parse_test
+      "the string 'x+x+13-x^5+7x' where x = 2 results in -1" (-1.)
+      "x+x+13-x^5+7x" 2.;
+    function_parse_test
+      "the string 'x+x+13-x^5+7x' where x = -3 results in 229" 229.
+      "x+x+13-x^5+7x" (-3.);
+  ]
+
+let binop_parse_test name expected_output str =
+  name >:: fun _ ->
+  assert_equal expected_output
+    (str |> parse |> reduce_bin_op |> get_float)
+    ~printer:string_of_float
+
+let binop_test_exception name exception_raised str =
+  name >:: fun info ->
+  assert_raises exception_raised (fun () ->
+      str |> parse |> reduce_bin_op |> get_float)
+
+let binop_parse_tests =
+  [
+    binop_parse_test "5*(7+3)*5 is 250" 250. "5*(7+3)*5";
+    binop_parse_test "5*7+3 *  5 is 50" 50. "5*7+3 *  5";
+    binop_parse_test "5/2+2 *  5 is 12.5" 12.5 "5/2+2 *  5";
+    binop_parse_test " (5/2) + 2 ^ 5 is 34.5" 34.5 "(5 / 2) + 2 ^ 5";
+    binop_test_exception
+      "5/0+2 *  5 raises Invalid_Calculation exception"
+      Invalid_Calculation "5/0+2 *  5";
+    binop_test_exception "5++++ raises Undefined_Parse exception"
+      Undefined_Parse "5++++";
+  ]
 
 let command_tests =
   [
@@ -143,6 +203,12 @@ let command_tests =
 
 let suite =
   "test suite for operations"
-  >::: List.flatten [ basic_op_tests; command_tests ]
+  >::: List.flatten
+         [
+           basic_op_tests;
+           command_tests;
+           function_parse_tests;
+           binop_parse_tests;
+         ]
 
 let _ = run_test_tt_main suite
