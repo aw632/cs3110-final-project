@@ -14,7 +14,8 @@ type command =
   | Lin_Reg
   | Poly
   | Sigma
-  | Help
+  | Menu
+  | Help of string
   | Exit
 
 exception Empty
@@ -95,16 +96,20 @@ let parse str =
   | [ h ] ->
       let str = String.lowercase_ascii h in
       if str = "exit" then Exit
-      else if str = "help" then Help
+      else if str = "menu" then Menu
       else if str = "linreg" then Lin_Reg
       else if str = "poly" then Poly
       else if str = "sigma" then Sigma
       else if not (check_supported h) then raise Malformed
       else raise Undefined_Input
   | [ h; t ] ->
-      check_fact h
-        (try match int_of_string t with i -> i
-         with Failure s -> raise Undefined_Input)
+      let str = String.lowercase_ascii h in
+      if str = "factorial" then
+        check_fact h
+          (try match int_of_string t with i -> i
+           with Failure s -> raise Undefined_Input)
+      else if str = "help" then Help t
+      else raise Undefined_Input
   | h :: t -> (
       let str = String.lowercase_ascii h in
       if str = "fastexp" then

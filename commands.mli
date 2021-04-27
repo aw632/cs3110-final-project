@@ -21,7 +21,8 @@ type command =
   | Lin_Reg
   | Poly
   | Sigma
-  | Help
+  | Menu
+  | Help of string
   | Exit
 
 (** [supported_ops] is a list of every operation a user can use. Each

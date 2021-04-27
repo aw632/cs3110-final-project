@@ -2,10 +2,11 @@ open BasicOp
 open Commands
 open EuclideanAlg
 open StatOp
+open Help
 
-(** This help message will be printed when the user types 'help' into
+(** This menu message will be printed when the user types 'menu' into
     the terminal*)
-let help_msg =
+let menu_msg =
   "\n\
   \ \n\
   \ Please enter an operation, followed by a space, followed by \n\
@@ -47,8 +48,8 @@ let rec new_command_query () =
   | "Exit" ->
       print_endline "\n\n Goodbye!";
       exit 0
-  | "Help" ->
-      ANSITerminal.print_string [ ANSITerminal.green ] help_msg;
+  | "Menu" ->
+      ANSITerminal.print_string [ ANSITerminal.green ] menu_msg;
       ask_for_commands ()
   | _ ->
       ANSITerminal.print_string [ ANSITerminal.red ]
@@ -143,8 +144,11 @@ and ask_for_commands () =
         print_endline
           ("Answer: " ^ (summation_tr a b polyFun |> string_of_float));
         new_command_query ()
-    | Help ->
-        ANSITerminal.print_string [ ANSITerminal.green ] help_msg;
+    | Menu ->
+        ANSITerminal.print_string [ ANSITerminal.green ] menu_msg;
+        ask_for_commands ()
+    | Help str ->
+        print_endline (help str);
         ask_for_commands ()
     | Exit ->
         ANSITerminal.print_string [ ANSITerminal.green ] "\nGoodbye!\n";
@@ -201,7 +205,9 @@ let main () =
   | "Exit" ->
       print_endline "Goodbye!";
       exit 0
-  | _ -> ask_for_commands ()
+  | _ ->
+      ANSITerminal.print_string [ ANSITerminal.green ] menu_msg;
+      ask_for_commands ()
 
 (** Execute the game engine. *)
 let () = main ()

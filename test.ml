@@ -118,6 +118,10 @@ let print_command cmd =
   | Median t -> "Median" ^ print_cmd_args t
   | Standard_Dev t -> "Standard Deviation" ^ print_cmd_args t
   | Lin_Reg -> "Linear Regression"
+  | Poly -> "Poly"
+  | Sigma -> "Sigma"
+  | Menu -> "Menu"
+  | Help t -> "Help" ^ t
   | Exit -> "Exit"
 
 let parse_test name expected_output input =
