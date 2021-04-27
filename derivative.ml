@@ -3,11 +3,17 @@ open Dual
 module type Derivative = sig
   module F : Field
 
+  type elt
+
   type t
 
-  val eval_at_f : F.t -> (t -> t) -> F.t
+  val make_var : elt -> t
 
-  val eval_deriv : F.t -> (t -> t) -> F.t
+  val make_constant : elt -> t
+
+  val eval_at_f : elt -> (t -> t) -> elt
+
+  val eval_deriv : elt -> (t -> t) -> elt
 end
 
 module Make =
@@ -18,6 +24,8 @@ functor
   struct
     module F = F
     module DType = DM (F)
+
+    type elt = F.t
 
     type t = DType.t
 

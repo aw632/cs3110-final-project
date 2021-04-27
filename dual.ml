@@ -33,7 +33,11 @@ module type Dual = sig
 
   val add : t -> t -> t
 
-  val exp : t -> elem -> t
+  val sub : t -> t -> t
+
+  val div : t -> t -> t
+
+  val exp : t -> t -> t
 
   val ( $* ) : t -> t -> t
 

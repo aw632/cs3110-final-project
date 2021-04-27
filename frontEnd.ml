@@ -16,6 +16,7 @@ let parse (s : string) : expr =
 
 let is_poly = function PolyFun _ -> true | _ -> false
 
+(** TODO: factor out duplicated code *)
 let get_bop = function
   | Add -> ( +. )
   | Sub -> ( -. )
