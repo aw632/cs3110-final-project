@@ -22,7 +22,10 @@ let menu_msg =
   \   Median (takes in multiple input, returns float)\n\
   \   StdDev (takes in multiple input, returns float)\n\
   \   LinReg (takes in two lists, returns linear regression)\n\
+  \   Poly (takes in a function and a value to evaluate the function at\n\
   \ Enter Exit at any time to exit from the program\n\
+  \ If you want more information, use help and the function you want \
+   to know more about\n\
   \ "
 
 (** [read_float] takes a string input from the user and makes it a
