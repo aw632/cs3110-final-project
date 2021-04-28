@@ -1,7 +1,7 @@
 open Dual
 
 module D = struct
-  type t
+  type t = Dual.t
 
   let make_constant x = Dual.make_t x 0.
 
