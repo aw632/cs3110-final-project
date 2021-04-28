@@ -130,6 +130,20 @@ and ask_for_commands () =
         print_endline
           ("Answer: " ^ (value |> polyFun |> string_of_float));
         new_command_query ()
+    | Derivative ->
+        print_endline "Function: ";
+        print_string "> ";
+        let user_input = read_line () in
+        let polyFunDerivative =
+          user_input |> FrontEnd.parse |> FrontEnd.make_derivative
+          |> FrontEnd.get_fun
+        in
+        print_endline "Value to evaluate: ";
+        print_string "> ";
+        let value = read_float () in
+        print_endline
+          ("Answer: " ^ (value |> polyFunDerivative |> string_of_float));
+        new_command_query ()
     | Sigma ->
         print_endline "First: ";
         print_string "> ";

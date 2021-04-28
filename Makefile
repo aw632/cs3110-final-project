@@ -14,9 +14,6 @@ build:
 frontend:
 	ocamlbuild -use-ocamlfind frontEnd.byte
 
-dualend:
-	ocamlbuild -use-ocamlfind dualEnd.byte
-
 test:
 	$(OCAMLBUILD) -tag 'debug' $(TEST) && ./$(TEST) -runner sequential
 
