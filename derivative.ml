@@ -1,39 +1,17 @@
 open Dual
 
-module type Derivative = sig
-  module F : Field
-
-  type elt
-
+module D = struct
   type t
 
-  val make_var : elt -> t
+  let make_constant x = Dual.make_t x 0.
 
-  val make_constant : elt -> t
+  let make_variable x = Dual.make_t x 1.
 
-  val eval_at_f : elt -> (t -> t) -> elt
+  let eval_at_f f x = make_variable x |> f |> Dual.get_real
 
-  val eval_deriv : elt -> (t -> t) -> elt
-end
+  let eval_deriv f x = make_variable x |> f |> Dual.get_dual
 
-module Make =
-functor
-  (DM : DualMaker)
-  (F : Field)
-  ->
-  struct
-    module F = F
-    module DType = DM (F)
-
-    type elt = F.t
-
-    type t = DType.t
-
-    let make_var x = DType.make_t x F.one
-
-    let make_constant x = DType.make_t x F.zero
-
-    let eval_at_f v f = make_var v |> f |> DType.get_real
-
-    let eval_deriv v f = make_var v |> f |> DType.get_dual
+  module InfixOp = struct
+    include Dual.InfixOp
   end
+end

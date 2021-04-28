@@ -1,4 +1,6 @@
 open Ast
+open Dual
+open Derivative
 
 exception Undefined_Parse
 
@@ -24,6 +26,13 @@ let get_bop = function
   | Divide -> ( /. )
   | Exp -> ( ** )
 
+let get_bop2 = function
+  | Add -> Dual.add
+  | Sub -> Dual.sub
+  | Mult -> Dual.mult
+  | Divide -> Dual.div
+  | Exp -> Dual.exp
+
 (** [poly_linear_combo (exp1,exp2) bop] is the linear combination (using
     bop) of the two polynomial functions of exp1 and exp2
 
@@ -38,6 +47,15 @@ let poly_linear_combo (exp1, exp2) bop =
   match (exp1, exp2) with
   | PolyFun f1, PolyFun f2 ->
       fun variable -> (get_bop bop) (f1 variable) (f2 variable)
+  | _ -> failwith "precondition violated"
+
+let poly_linear_combo2 (exp1, exp2) bop =
+  match (exp1, exp2) with
+  | PolyFun f1, PolyFun f2 ->
+      fun variable ->
+        (get_bop2 bop)
+          (D.make_variable variable)
+          (D.make_variable variable)
   | _ -> failwith "precondition violated"
 
 (** [make_polynomial poly_node] creates an ocaml function to represent

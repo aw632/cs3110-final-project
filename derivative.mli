@@ -1,27 +1,31 @@
-open Dual
-
-module type Derivative = sig
-  module F : Field
-
-  type elt
-
+module D : sig
   (** [t] is the representation of Dual Numbers. *)
-  type t
+  type t = Dual.Dual.t
 
-  val make_var : elt -> t
+  (** [make_constant x] returns the dual number (x + 0e). *)
+  val make_constant : float -> t
 
-  val make_constant : elt -> t
+  (** [make_variable x] returns the dual number (x + 1e), which
+      represents the first derivative. *)
+  val make_variable : float -> t
 
-  (** [eval_at_f v f] returns the value of function [f] at the point
-      [v]. Requires: [f] knows how to take in Duals of the
-      representation specified in DualMaker. *)
-  val eval_at_f : elt -> (t -> t) -> elt
+  (** [eval_at_f f x] returns the value of function [f] at the point
+      [v].*)
+  val eval_at_f : (t -> t) -> float -> float
 
-  (** [eval_at_f v f] returns the value of the derivative of function
-      [f] at the point [v]. Requires: [f] knows how to take in Duals of
-      the representation specified in DualMaker. *)
-  val eval_deriv : elt -> (t -> t) -> elt
+  (** [eval_at_f f x] returns the value of the derivative of function
+      [f] at the point [v].*)
+  val eval_deriv : (t -> t) -> float -> float
+
+  module InfixOp : sig
+    val ( + ) : t -> t -> t
+
+    val ( - ) : t -> t -> t
+
+    val ( * ) : t -> t -> t
+
+    val ( / ) : t -> t -> t
+
+    val ( ** ) : t -> t -> t
+  end
 end
-
-module Make : functor (DM : DualMaker) (F : Field) ->
-  Derivative with type elt = F.t
