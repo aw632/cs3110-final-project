@@ -42,7 +42,7 @@ let poly_linear_combo (exp1, exp2) bop =
       fun variable -> (get_bop2 bop) (f1 variable) (f2 variable)
   | _ -> failwith "precondition violated"
 
-(** [make_polynomial poly_node] creates an OCaml Anonymous function
+(** [make_polynomial poly_node] create s an OCaml Anonymous function
     representing dual operations.
 
     Example: Input of [3x^2] would return the function

@@ -1,6 +1,4 @@
 open Ast
-open Dual
-open Derivative
 
 exception Undefined_Parse
 
