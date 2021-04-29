@@ -1,11 +1,11 @@
 (** CS 3110 Spring 2021 Final Project
 
+    Project Summary: Our project is a calculator simulator that can
+    perform a wide range of basic and complex operations.
+
     @author Andrew Wang (aw632)
     @author Andrew Lou (ayl72)
-    @author Huy Nguyen (hcn9) 
-    
-    Project Summary: Our project is a calculator simulator that can perform a 
-    wide range of basic and complex operations. *)
+    @author Huy Nguyen (hcn9) *)
 
 (************************************************************ 
 
@@ -31,4 +31,4 @@
  ************************************************************)
 
 (** [hours_worked] is the number of hours you worked on this assignment. *)
-val hours_worked : int
+val hours_worked : int list
