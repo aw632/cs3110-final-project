@@ -86,6 +86,8 @@ let rec make_derivative poly_node =
       PolyFun
         (fun variable -> D.make_variable variable |> Dual.get_dual)
   | Binop (bop, exp1, exp2) ->
+      (* if [is_function exp1] is false, i.e. exp1 is not a function,
+         then recurse on it*)
       if not (is_function exp1) then
         make_derivative (Binop (bop, make_derivative exp1, exp2))
       else if not (is_function exp2) then

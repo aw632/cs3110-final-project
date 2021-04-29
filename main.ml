@@ -22,7 +22,10 @@ let menu_msg =
   \   Median (takes in multiple input, returns float)\n\
   \   StdDev (takes in multiple input, returns float)\n\
   \   LinReg (takes in two lists, returns linear regression)\n\
-  \   Poly (takes in a function and a value to evaluate the function at\n\
+  \   Poly (takes in a function and a value to evaluate the function \
+   at the value)\n\
+  \   Derivative (takes in a function and a value to evaluate the \
+   derivative at the value)\n\
   \ Enter Exit at any time to exit from the program\n\
   \ If you want more information, use help and the function you want \
    to know more about\n\
@@ -111,10 +114,10 @@ and ask_for_commands () =
         let list2 = Commands.parse_list input2 in
         let tuple = linear_regression list1 list2 in
         print_endline
-          ("\n In the form y=ax+b, a = "
+          ( "\n In the form y=ax+b, a = "
           ^ string_of_float (fst tuple)
           ^ " and b = "
-          ^ string_of_float (snd tuple));
+          ^ string_of_float (snd tuple) );
         new_command_query ()
     | Poly ->
         print_endline "Function: ";
@@ -131,7 +134,7 @@ and ask_for_commands () =
           ("Answer: " ^ (value |> polyFun |> string_of_float));
         new_command_query ()
     | Derivative ->
-        print_endline "Function: ";
+        print_endline "Function to differentiate: ";
         print_string "> ";
         let user_input = read_line () in
         let polyFunDerivative =
