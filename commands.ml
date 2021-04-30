@@ -13,6 +13,7 @@ type command =
   | Standard_Dev of basic_arguments
   | Lin_Reg
   | Poly
+  | Derivative
   | Sigma
   | Menu
   | Help of string
@@ -99,6 +100,7 @@ let parse str =
       else if str = "menu" then Menu
       else if str = "linreg" then Lin_Reg
       else if str = "poly" then Poly
+      else if str = "derivative" then Derivative
       else if str = "sigma" then Sigma
       else if not (check_supported h) then raise Malformed
       else raise Undefined_Input

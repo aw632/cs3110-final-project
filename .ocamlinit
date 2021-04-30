@@ -1,8 +1,13 @@
 #require "ounit2";;
 #directory "_build";;
 #load "author.cmo";;
+#load "dual.cmo";;
+#load "derivative.cmo";;
 #load "commands.cmo";;
 #load "basicOp.cmo";;
 #load "lexer.cmo";;
+#load "parser.cmo";;
+#load "frontEnd.cmo";;
+#load "dualEnd.cmo";;
 open Ast;;
 open Main;;

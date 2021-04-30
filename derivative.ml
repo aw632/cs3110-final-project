@@ -7,6 +7,7 @@ module D = struct
 
   let make_variable x = Dual.make_t x 1.
 
+  (** TODO: these are unnecessary?? *)
   let eval_at_f f x = make_variable x |> f |> Dual.get_real
 
   let eval_deriv f x = make_variable x |> f |> Dual.get_dual

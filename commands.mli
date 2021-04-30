@@ -20,6 +20,7 @@ type command =
   | Standard_Dev of basic_arguments
   | Lin_Reg
   | Poly
+  | Derivative
   | Sigma
   | Menu
   | Help of string

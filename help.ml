@@ -87,4 +87,9 @@ let help str =
        sum them together. For example, if floor value is 0, ceiling \
        value is 2 and function is x^2+2, the answer will return as \
        11. "
+  | "derivative" ->
+      "The derivative function will prompt for a polynomial function f \
+       as an input and a value v. It will then evalute f'(v) and \
+       return the value. For example, for f(v) = x^2 and v = 3, it \
+       will return f'(3) = 6. "
   | _ -> raise Malformed

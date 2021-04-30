@@ -22,7 +22,15 @@ let menu_msg =
   \   Median (takes in multiple input, returns float)\n\
   \   StdDev (takes in multiple input, returns float)\n\
   \   LinReg (takes in two lists, returns linear regression)\n\
+  \   Poly (takes in a function and a value to evaluate the function \
+   at the value)\n\
+  \   Sigma evaluates the sigma from the first number (floor) to the \
+   second number (ceiling) using the user-inputted polynomial\n\
+  \   Derivative (takes in a function and a value to evaluate the \
+   derivative at the value)\n\
   \ Enter Exit at any time to exit from the program\n\
+  \ If you want more information, use help and the function you want \
+   to know more about\n\
   \ "
 
 (** [read_float] takes a string input from the user and makes it a
@@ -126,6 +134,20 @@ and ask_for_commands () =
         let value = read_float () in
         print_endline
           ("Answer: " ^ (value |> polyFun |> string_of_float));
+        new_command_query ()
+    | Derivative ->
+        print_endline "Function to differentiate: ";
+        print_string "> ";
+        let user_input = read_line () in
+        let polyFunDerivative =
+          user_input |> FrontEnd.parse |> FrontEnd.make_derivative
+          |> FrontEnd.get_fun
+        in
+        print_endline "Value to evaluate: ";
+        print_string "> ";
+        let value = read_float () in
+        print_endline
+          ("Answer: " ^ (value |> polyFunDerivative |> string_of_float));
         new_command_query ()
     | Sigma ->
         print_endline "First: ";
