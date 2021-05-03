@@ -121,6 +121,7 @@ let print_command cmd =
   | Poly -> "Poly"
   | Sigma -> "Sigma"
   | Menu -> "Menu"
+  | Derivative -> "This is a derivative"
   | Help t -> "Help" ^ t
   | Exit -> "Exit"
 
