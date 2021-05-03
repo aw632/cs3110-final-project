@@ -58,7 +58,7 @@ let help str =
        return the middle input if the there is an odd number of \
        inputs. In the case of an even number of inputs, the average of \
        the middle two number is calculated and returned. For example, \
-       [Mean 2 3 4 6] = 3.5"
+       [Median 2 3 4 6] = 3.5"
   | "stddev" ->
       "The standard deviation function takes in multiple inputs as \
        integers or floats. The order does not matter. It will sort the \

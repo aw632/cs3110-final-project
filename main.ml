@@ -29,8 +29,8 @@ let menu_msg =
   \   Derivative (takes in a function and a value to evaluate the \
    derivative at the value)\n\
   \ Enter Exit at any time to exit from the program\n\
-  \ If you want more information, use help and the function you want \
-   to know more about\n\
+  \ If you want more information, use command help followed by the \
+   function you want to know more about\n\
   \ "
 
 (** [read_float] takes a string input from the user and makes it a
@@ -220,7 +220,10 @@ let start_calc x =
 let main () =
   ANSITerminal.print_string
     [ ANSITerminal.green; ANSITerminal.Bold ]
-    "\n\n Welcome to the Caml Calculator.\n";
+    "\n\n\
+    \ Welcome to the ClammyAlpha Calculator. This calculator was \
+     developed by the esteemed AHA corporation. The main developers \
+     are AWang, HuyBear and Kangaroo. Please enjoy. \n";
   print_endline "\n\n Type any key to start, or type Exit to quit.";
   print_string "\n\n > ";
   match read_line () with
