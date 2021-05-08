@@ -125,6 +125,10 @@ let print_command cmd =
   | Help t -> "Help" ^ t
   | Exit -> "Exit"
 
+let stat_op_test = failwith "TODO"
+
+let stat_op_tests = []
+
 let parse_test name expected_output input =
   name >:: fun info ->
   assert_equal expected_output (Commands.parse input)
