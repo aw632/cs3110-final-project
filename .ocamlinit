@@ -10,6 +10,5 @@
 #load "lexer.cmo";;
 #load "parser.cmo";;
 #load "frontEnd.cmo";;
-#load "dualEnd.cmo";;
 open Ast;;
 open Main;;
