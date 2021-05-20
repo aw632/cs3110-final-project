@@ -10,9 +10,10 @@ type command =
   | GCD of (int * int)
   | Mean of basic_arguments
   | Median of basic_arguments
-  | Standard_Dev of basic_arguments
-  | Lin_Reg
+  | StandardDev of basic_arguments
+  | LinReg
   | Poly
+  | MultiVar
   | Derivative
   | Sigma
   | Menu
@@ -36,9 +37,10 @@ let supported_ops =
     "gcd";
     "mean";
     "median";
-    "standard_dev";
-    "lin_reg";
+    "standarddev";
+    "linreg";
     "poly";
+    "multi";
   ]
 
 (** [check_supported str] checks if the input is a supported operation*)
@@ -54,7 +56,7 @@ let check_string_input str args =
   else if str = "subtract" then Subtract args
   else if str = "mean" then Mean args
   else if str = "median" then Median args
-  else if str = "stddev" then Standard_Dev args
+  else if str = "stddev" then StandardDev args
   else raise Malformed
 
 let check_fact str arg =
@@ -98,8 +100,9 @@ let parse str =
       let str = String.lowercase_ascii h in
       if str = "exit" then Exit
       else if str = "menu" then Menu
-      else if str = "linreg" then Lin_Reg
+      else if str = "linreg" then LinReg
       else if str = "poly" then Poly
+      else if str = "multivar" then MultiVar
       else if str = "derivative" then Derivative
       else if str = "sigma" then Sigma
       else if not (check_supported h) then raise Malformed

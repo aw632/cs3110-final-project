@@ -116,8 +116,9 @@ let print_command cmd =
   | GCD (m, n) -> "GCD " ^ string_of_int m ^ " " ^ string_of_int n
   | Mean t -> "Mean" ^ print_cmd_args t
   | Median t -> "Median" ^ print_cmd_args t
-  | Standard_Dev t -> "Standard Deviation" ^ print_cmd_args t
-  | Lin_Reg -> "Linear Regression"
+  | StandardDev t -> "Standard Deviation" ^ print_cmd_args t
+  | LinReg -> "Linear Regression"
+  | MultiVar -> "Multivariable Function"
   | Poly -> "Poly"
   | Sigma -> "Sigma"
   | Menu -> "Menu"
@@ -125,14 +126,7 @@ let print_command cmd =
   | Help t -> "Help" ^ t
   | Exit -> "Exit"
 
-let stat_op_test = failwith "TODO"
-
 let stat_op_tests = []
-
-let parse_test name expected_output input =
-  name >:: fun info ->
-  assert_equal expected_output (Commands.parse input)
-    ~printer:print_command
 
 let function_parse_test name expected_output str num =
   name >:: fun _ ->
@@ -185,6 +179,27 @@ let binop_parse_tests =
       Undefined_Parse "5++++";
   ]
 
+let parser_ast_test name expected_output input =
+  name >:: fun info ->
+  assert_equal expected_output (FrontEnd.parse input)
+
+let parser_ast_tests =
+  [
+    parser_ast_test
+      {|The string "x+y" parses to BinOp ((Add), Var (x), Var (y))|}
+      (Binop (Add, Var "x", Var "y"))
+      "x+y";
+    parser_ast_test
+      {|The string "x^2+y" parses to BinOp ((Add), Poly (1.,x,2.), Var (y))|}
+      (Binop (Add, Poly (1., "x", 2.), Var "y"))
+      "x^2+y";
+  ]
+
+let parse_test name expected_output input =
+  name >:: fun info ->
+  assert_equal expected_output (Commands.parse input)
+    ~printer:print_command
+
 let command_tests =
   [
     parse_test "the command add 3 4 parses to the command Add [3.;4.]"
@@ -217,6 +232,7 @@ let suite =
            basic_op_tests;
            command_tests;
            function_parse_tests;
+           parser_ast_tests;
            binop_parse_tests;
          ]
 

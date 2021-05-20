@@ -17,9 +17,10 @@ type command =
   | GCD of (int * int)
   | Mean of basic_arguments
   | Median of basic_arguments
-  | Standard_Dev of basic_arguments
-  | Lin_Reg
+  | StandardDev of basic_arguments
+  | LinReg
   | Poly
+  | MultiVar
   | Derivative
   | Sigma
   | Menu

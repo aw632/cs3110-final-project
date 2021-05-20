@@ -9,7 +9,7 @@ let digit = ['0'-'9']
 let integer = '-'? digit+
 let decimal = '.' digit*
 let float = ['-']? digit* decimal?
-let variable = ['a'-'z' 'A'-'Z' '_'] ['a'-'z' 'A'-'Z' '0'-'9' '_']*
+let variable = ['a'-'z' 'A'-'Z' ] 
 let exp = '^' 
 
 

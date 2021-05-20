@@ -76,11 +76,11 @@ let rec ask_for_commands () =
     | Median arguments ->
         print_endline ("\n" ^ (median arguments |> Float.to_string));
         ask_for_commands ()
-    | Standard_Dev arguments ->
+    | StandardDev arguments ->
         print_endline
           ("\n" ^ (standard_deviation arguments |> Float.to_string));
         ask_for_commands ()
-    | Lin_Reg ->
+    | LinReg ->
         print_string "First list:";
         print_string "> ";
         let input1 = read_line () in
@@ -110,6 +110,7 @@ let rec ask_for_commands () =
         print_endline
           ("Answer: " ^ (value |> polyFun |> string_of_float));
         ask_for_commands ()
+    | MultiVar -> failwith "not implemented"
     | Derivative ->
         print_endline "Function to differentiate: ";
         print_string "> ";

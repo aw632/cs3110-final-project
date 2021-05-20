@@ -125,3 +125,31 @@ let rec reduce_bin_op binop =
         reduce_bin_op (Binop (bop, exp1, reduce_bin_op exp2))
       else Float (perform_binop (exp1, exp2) bop)
   | _ -> raise Invalid_Calculation
+
+(** [make_multivar node] creates an ocaml function to represent the
+    polynomial expressed by node
+
+    Example: Poly (3.,x,5.) returns MultiFun (fun x-> 3. *. x ** 5.)
+    which is equivalent to 3x^5
+
+    Binary operations with 2 multivariable functions are also handled.
+    For example, Binop (Add, Poly(3.,x,5.), Poly (4.,y,1.)) will parse
+    to:
+
+    MultiFun (fun (x,y)->((fun x -> 3. *. x ** 5.) x +. (fun y -> 4.*.
+    y) y))
+
+    Requires: poly_node is a Var, Float, Binop or Poly(_,_,_)*)
+let make_multivar node =
+  match node with
+  | Poly (coeff, variable, exp) ->
+      PolyFun (fun variable -> coeff *. (variable ** exp))
+  | Float constant -> PolyFun (fun variable -> constant)
+  | Var variable -> PolyFun (fun variable -> variable)
+  | Binop (bop, exp1, exp2) ->
+      if not (is_function exp1) then
+        make_polynomial (Binop (bop, make_polynomial exp1, exp2))
+      else if not (is_function exp2) then
+        make_polynomial (Binop (bop, exp1, make_polynomial exp2))
+      else PolyFun (poly_linear_combo (exp1, exp2) bop)
+  | _ -> raise Undefined_Parse
