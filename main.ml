@@ -41,33 +41,8 @@ let read_float () =
   try read_line () |> String.trim |> float_of_string
   with Failure s -> raise Undefined_Input
 
-(** [new_command_query ()] prints the lines below to the console. *)
-let rec new_command_query () =
-  ANSITerminal.print_string [ ANSITerminal.green ]
-    "\n\n Do you want to enter a new operation? (Y/N) \n\n ";
-  print_string "> ";
-  match read_line () with
-  | "Y" ->
-      print_string "\n ";
-      ask_for_commands ()
-  | "N" ->
-      ANSITerminal.print_string [ ANSITerminal.green ] "\n\n Goodbye!\n";
-      exit 0
-  | "Exit" ->
-      print_endline "\n\n Goodbye!";
-      exit 0
-  | "Menu" ->
-      ANSITerminal.print_string [ ANSITerminal.green ] menu_msg;
-      ask_for_commands ()
-  | _ ->
-      ANSITerminal.print_string [ ANSITerminal.red ]
-        "\n\n\
-        \ You did not enter a valid value. Make sure you type Y or N \
-         exactly. \n";
-      new_command_query ()
-
 (** [ask_for_commands x] performs a calcuation for an inputted command. *)
-and ask_for_commands () =
+let rec ask_for_commands () =
   (* The arguments of ask_for_commands can be edited to support
      history/accumulation *)
   print_string "\n > ";
@@ -75,36 +50,36 @@ and ask_for_commands () =
     match read_line () |> parse with
     | Add arguments ->
         print_endline ("\n" ^ (add_tr arguments |> Float.to_string));
-        new_command_query ()
+        ask_for_commands ()
     | Multiply arguments ->
         print_endline ("\n" ^ (multiply_tr arguments |> Float.to_string));
-        new_command_query ()
+        ask_for_commands ()
     | Subtract arguments ->
         print_endline ("\n" ^ (subtract_tr arguments |> Float.to_string));
-        new_command_query ()
+        ask_for_commands ()
     | Divide arguments ->
         print_endline ("\n" ^ (divide_tr arguments |> Float.to_string));
-        new_command_query ()
+        ask_for_commands ()
     | Factorial arguments ->
         print_endline
           ("\n" ^ (factorial_tr arguments 1 |> string_of_int));
-        new_command_query ()
+        ask_for_commands ()
     | FastExp (m, n, bin_list) ->
         print_endline ("\n" ^ (fast_exp m n bin_list 1 |> string_of_int));
-        new_command_query ()
+        ask_for_commands ()
     | GCD (m, n) ->
         print_endline ("\n" ^ (gcd m n |> string_of_int));
-        new_command_query ()
+        ask_for_commands ()
     | Mean arguments ->
         print_endline ("\n" ^ (mean arguments |> Float.to_string));
-        new_command_query ()
+        ask_for_commands ()
     | Median arguments ->
         print_endline ("\n" ^ (median arguments |> Float.to_string));
-        new_command_query ()
+        ask_for_commands ()
     | Standard_Dev arguments ->
         print_endline
           ("\n" ^ (standard_deviation arguments |> Float.to_string));
-        new_command_query ()
+        ask_for_commands ()
     | Lin_Reg ->
         print_string "First list:";
         print_string "> ";
@@ -120,7 +95,7 @@ and ask_for_commands () =
           ^ string_of_float (fst tuple)
           ^ " and b = "
           ^ string_of_float (snd tuple));
-        new_command_query ()
+        ask_for_commands ()
     | Poly ->
         print_endline "Function: ";
         print_string "> ";
@@ -134,7 +109,7 @@ and ask_for_commands () =
         let value = read_float () in
         print_endline
           ("Answer: " ^ (value |> polyFun |> string_of_float));
-        new_command_query ()
+        ask_for_commands ()
     | Derivative ->
         print_endline "Function to differentiate: ";
         print_string "> ";
@@ -148,7 +123,7 @@ and ask_for_commands () =
         let value = read_float () in
         print_endline
           ("Answer: " ^ (value |> polyFunDerivative |> string_of_float));
-        new_command_query ()
+        ask_for_commands ()
     | Sigma ->
         print_endline "First: ";
         print_string "> ";
@@ -165,7 +140,7 @@ and ask_for_commands () =
         in
         print_endline
           ("Answer: " ^ (summation_tr a b polyFun |> string_of_float));
-        new_command_query ()
+        ask_for_commands ()
     | Menu ->
         ANSITerminal.print_string [ ANSITerminal.green ] menu_msg;
         ask_for_commands ()

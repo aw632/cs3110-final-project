@@ -21,7 +21,7 @@ clean:
 	ocamlbuild -clean
 
 calc:
-	$(OCAMLBUILD) -tag 'debug' $(MAIN) && OCAMLRUNPARAM=b ./$(MAIN)
+	$(OCAMLBUILD) -tag 'debug' $(MAIN) && OCAMLRUNPARAM=b rlwrap ./$(MAIN) 
 
 zip:
 	zip final_project.zip *.ml* *.json *.sh _tags .merlin .ocamlformat .ocamlinit Makefile *.md	
