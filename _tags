@@ -1,1 +1,1 @@
-true: package(ounit2),package(yojson),package(ANSITerminal),use_menhir
+true: package(ounit2),package(yojson),package(ANSITerminal),package(notty),package(notty.unix), use_menhir

@@ -1,5 +1,7 @@
 #require "ounit2";;
 #directory "_build";;
+#require "notty";;
+#require "notty.unix";;
 #load "author.cmo";;
 #load "dual.cmo";;
 #load "derivative.cmo";;

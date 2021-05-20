@@ -4,7 +4,7 @@ MLIS=$(MODULES:=.mli)
 TEST=test.byte
 MAIN=main.byte
 OCAMLBUILD=ocamlbuild -use-ocamlfind 
-
+PKGS=notty, notty.unix
 default: build
 	OCAMLRUNPARAM=b utop
 
