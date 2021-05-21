@@ -13,7 +13,7 @@ let uchars_maker arr =
 
 let time_converter utim =
   let record = utim |> Unix.localtime in
-  "【"
+  "【 "
   ^ string_of_int (record.tm_hour mod 12)
   ^ ":"
   ^ string_of_int record.tm_min
@@ -127,10 +127,10 @@ let rec ask_for_commands () =
         let list2 = Commands.parse_list input2 in
         let tuple = linear_regression list1 list2 in
         print_endline
-          ("\n In the form y=ax+b, a = "
+          ( "\n In the form y=ax+b, a = "
           ^ string_of_float (fst tuple)
           ^ " and b = "
-          ^ string_of_float (snd tuple));
+          ^ string_of_float (snd tuple) );
         ask_for_commands ()
     | Poly ->
         print_endline " Function: ";
