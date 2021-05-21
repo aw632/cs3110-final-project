@@ -13,21 +13,28 @@ let uchars_maker arr =
 
 let time_converter utim =
   let record = utim |> Unix.localtime in
-  string_of_int record.tm_hour
+  "【"
+  ^ string_of_int (record.tm_hour mod 12)
   ^ ":"
   ^ string_of_int record.tm_min
   ^ ":"
   ^ string_of_int record.tm_sec
+  ^ (if record.tm_hour > 12 then " PM" else " AM")
+  ^ " 】"
 
 let make_command_string () =
   let time =
-    I.string A.(fg lightyellow) (Unix.time () |> time_converter)
+    I.string A.(fg (rgb 2 3 5)) (Unix.time () |> time_converter)
   in
   let small_line =
-    [| 0x2500; 0x2500; 0x2500; 0x3010 |] |> uchars_maker
+    I.uchars
+      A.(fg (rgb 1 2 4))
+      (Array.map Uchar.of_int (Array.make 4 0x2500))
   in
   let middle_line =
-    [| 0x3011; 0x2500; 0x2500; 0x2500 |] |> uchars_maker
+    I.uchars
+      A.(fg (rgb 1 2 4))
+      (Array.map Uchar.of_int (Array.make 4 0x2500))
   in
   I.(small_line <|> time <|> middle_line)
 
@@ -120,10 +127,10 @@ let rec ask_for_commands () =
         let list2 = Commands.parse_list input2 in
         let tuple = linear_regression list1 list2 in
         print_endline
-          ( "\n In the form y=ax+b, a = "
+          ("\n In the form y=ax+b, a = "
           ^ string_of_float (fst tuple)
           ^ " and b = "
-          ^ string_of_float (snd tuple) );
+          ^ string_of_float (snd tuple));
         ask_for_commands ()
     | Poly ->
         print_endline " Function: ";
@@ -238,33 +245,52 @@ let main () =
   (* ANSITerminal.print_string [ ANSITerminal.green; ANSITerminal.Bold ]
      "\n\n\ \ Welcome to the ClammyAlpha Calculator. This calculator was
      \ developed by the esteemed AHA corporation. The main developers \
-     are AWang, HuyBear and Kangaroo. Please enjoy. \n"; *)
+     are AWang, HuyBear and Kangaloo. Please enjoy. \n"; *)
   let long_line = Array.make 100 0x2500 in
-  uchars_maker long_line |> Notty_unix.output_image;
+  I.uchars A.(fg (rgb 1 2 4)) (Array.map Uchar.of_int long_line)
+  |> Notty_unix.eol |> Notty_unix.output_image;
 
   let description =
     I.string
-      A.(fg lightyellow ++ bg lightblack ++ st underline ++ st bold)
+      A.(fg (rgb 1 2 4) ++ st bold)
       "Welcome to the ClammyAlpha Calculator!"
   in
   I.(pad ~l:1 ~t:2 ~b:2 description) |> Notty_unix.output_image;
   let company =
     I.string
       A.(fg white)
-      "Developed by the eestemed AHA Corporation with"
+      "Developed by the eestemed AHA Corporation using OCaml."
   in
-  I.(pad ~l:1 ~b:2 company) |> Notty_unix.output_image;
+  I.(pad ~l:1 ~b:1 company) |> Notty_unix.output_image;
+
   let devs =
     I.string
       A.(fg white)
-      "Chief Developers AWang, HuyBear, and Kangaroo."
+      "Chief Developers: AWang, HuyBear, and Kangaroo."
   in
-  I.(pad ~l:1 ~b:2 devs) |> Notty_unix.output_image;
-  I.uchars A.(fg lightred) (Array.map Uchar.of_int long_line)
+  I.(pad ~l:1 ~b:1 devs) |> Notty_unix.output_image;
+
+  let thanks =
+    I.string
+      A.(fg white)
+      "Special thanks to support from the CS 3110 staff! "
+  in
+  I.(pad ~l:1 ~b:2 thanks) |> Notty_unix.output_image;
+
+  I.uchars A.(fg (rgb 1 2 4)) (Array.map Uchar.of_int long_line)
   |> Notty_unix.eol |> Notty_unix.output_image;
-  print_endline "\n\n Type any key to start, or type Exit to quit.\n";
+
+  let instruction =
+    I.string
+      A.(fg white)
+      "Type any key to start, or type Exit to quit. "
+  in
+  I.(pad ~l:1 ~t:1 ~b:2 instruction) |> Notty_unix.output_image;
+
   make_command_string () |> output_image;
+
   print_string "\n\n > ";
+
   match read_line () with
   | "Exit" ->
       print_endline "Goodbye!";
