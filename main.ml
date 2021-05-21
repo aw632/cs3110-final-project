@@ -14,11 +14,15 @@ let uchars_maker arr =
 let time_converter utim =
   let record = utim |> Unix.localtime in
   "【"
-  ^ string_of_int (record.tm_hour mod 12)
+  ^ (if record.tm_hour mod 12 < 10 then
+     "0" ^ string_of_int (record.tm_hour mod 12)
+    else string_of_int (record.tm_hour mod 12))
   ^ ":"
-  ^ string_of_int record.tm_min
+  ^ (if record.tm_min < 10 then "0" ^ string_of_int record.tm_min
+    else string_of_int record.tm_min)
   ^ ":"
-  ^ string_of_int record.tm_sec
+  ^ (if record.tm_sec < 10 then "0" ^ string_of_int record.tm_sec
+    else string_of_int record.tm_sec)
   ^ (if record.tm_hour > 12 then " PM" else " AM")
   ^ " 】"
 
