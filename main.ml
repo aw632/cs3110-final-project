@@ -9,7 +9,7 @@ open Notty
 open Notty_unix
 
 let uchars_maker arr =
-  I.uchars A.(fg lightred) (Array.map Uchar.of_int arr)
+  I.uchars A.(fg (rgb 1 2 5)) (Array.map Uchar.of_int arr)
 
 let time_converter utim =
   let record = utim |> Unix.localtime in
