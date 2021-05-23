@@ -1,3 +1,5 @@
+module VariableMap = Map.Make (String)
+
 (** The type of binary operators. *)
 type bop =
   | Add
@@ -14,3 +16,4 @@ type expr =
   | Poly of float * string * float
   | Var of string
   | PolyFun of (float -> float)
+  | MultiFun of (float VariableMap.t -> float) * float VariableMap.t

@@ -1,6 +1,11 @@
 open Ast
 open Dual
 open Derivative
+module VariableMap = Map.Make (String)
+
+type vars = float VariableMap.t
+
+let (empty_variable_map : vars) = VariableMap.empty
 
 exception Undefined_Parse
 
@@ -16,7 +21,10 @@ let parse (s : string) : expr =
   in
   ast
 
-let is_function = function PolyFun _ -> true | _ -> false
+let is_function = function
+  | PolyFun _ -> true
+  | MultiFun _ -> true
+  | _ -> false
 
 let get_bop = function
   | Add -> ( +. )
@@ -126,30 +134,65 @@ let rec reduce_bin_op binop =
       else Float (perform_binop (exp1, exp2) bop)
   | _ -> raise Invalid_Calculation
 
-(** [make_multivar node] creates an ocaml function to represent the
-    polynomial expressed by node
+(** [multi_linear_combo (exp1,exp2) bop] is the linear combination
+    (using bop) of the two multivariable functions of exp1 and exp2
 
-    Example: Poly (3.,x,5.) returns MultiFun (fun x-> 3. *. x ** 5.)
-    which is equivalent to 3x^5
+    Example: exp1 = PolyFun (fun input_map-> 3. *. (VariableMap.find "x"
+    input_map)) and exp2 = PolyFun (fun input_map-> (VariableMap.find
+    "y" input_map)**2.) and bop = Add then the combined polynomial is
+    PolyFun (fun input_map -> (+.) ((fun input_map-> 3. *.
+    (VariableMap.find "x" input_map)) x) ((fun input_map ->
+    (VariableMap.find "x" input_map) ** 2.) input_map) Abstractly, the
+    linaer combination of 3x and y^2 is 3x + y^2
 
-    Binary operations with 2 multivariable functions are also handled.
-    For example, Binop (Add, Poly(3.,x,5.), Poly (4.,y,1.)) will parse
-    to:
+    Requires: exp1 and exp2 are MultiFun variants i.e represent some
+    multivariable function*)
+let multivar_linear_combo (exp1, exp2) bop =
+  match (exp1, exp2) with
+  | MultiFun f1, MultiFun f2 ->
+      fun input_map -> (get_bop bop) (f1 input_map) (f2 input_map)
+  | _ -> failwith "precondition violated"
 
-    MultiFun (fun (x,y)->((fun x -> 3. *. x ** 5.) x +. (fun y -> 4.*.
-    y) y))
+let check_dupe_vars variable var_map =
+  if VariableMap.mem variable var_map then var_map
+  else VariableMap.add variable 0 var_map
 
-    Requires: poly_node is a Var, Float, Binop or Poly(_,_,_)*)
-let make_multivar node =
-  match node with
+(** [make_multivar multi_node] creates an ocaml function to represent
+    the polynomial expressed by node. The input to the function is a
+    map. The value of the variable is retrieved from the map and used in
+    a calculation to return as the value of the function.
+
+    Example: Poly (3.,x,5.) returns MultiFun (fun input-> 3. *.
+    (VariableMap.find x input) ** 5.) which is equivalent to 3x^5 where
+    the value of x is input into the map input.
+
+    Requires: node is a Var, Float, Binop or Poly(_,_,_) The map input
+    into each function always has a binding for the variable the
+    function represents*)
+let rec make_multivar multi_node var_map =
+  match multi_node with
   | Poly (coeff, variable, exp) ->
-      PolyFun (fun variable -> coeff *. (variable ** exp))
-  | Float constant -> PolyFun (fun variable -> constant)
-  | Var variable -> PolyFun (fun variable -> variable)
+      let unbound_vars = check_dupe_vars variable var_map in
+      ( MultiFun
+          (fun (variable_values : vars) ->
+            coeff *. (VariableMap.find variable variable_values ** exp)),
+        unbound_vars )
+  | Float constant ->
+      (MultiFun (fun variable_values -> constant), var_map)
+  | Var variable ->
+      let unbound_vars = check_dupe_vars variable var_map in
+      ( MultiFun
+          (fun variable_values ->
+            VariableMap.find variable variable_values),
+        unbound_vars )
   | Binop (bop, exp1, exp2) ->
       if not (is_function exp1) then
-        make_polynomial (Binop (bop, make_polynomial exp1, exp2))
+        make_multivar
+          (Binop (bop, make_multivar exp1 var_map |> fst, exp2))
+          var_map
       else if not (is_function exp2) then
-        make_polynomial (Binop (bop, exp1, make_polynomial exp2))
-      else PolyFun (poly_linear_combo (exp1, exp2) bop)
+        make_multivar
+          (Binop (bop, exp1, make_multivar exp2 var_map |> fst))
+          var_map
+      else (MultiFun (multivar_linear_combo (exp1, exp2) bop), var_map)
   | _ -> raise Undefined_Parse
