@@ -46,8 +46,7 @@ module MatrixDual = struct
     z
 
   let matrix_div f t =
-    let dim = Array.length t in
-    matrix_mult (make_scalar dim f) t
+    Array.map (fun x -> Array.map (fun y -> y /. f) x) t
 
   let rec matrix_power orig t n =
     match n with
