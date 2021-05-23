@@ -11,6 +11,10 @@ type command =
   | Mean of basic_arguments
   | Median of basic_arguments
   | StandardDev of basic_arguments
+  | Sin of float
+  | Cos of float
+  | Tan of float
+  | Pythag
   | LinReg
   | Poly
   | MultiVar
@@ -105,6 +109,7 @@ let parse str =
       else if str = "multivar" then MultiVar
       else if str = "derivative" then Derivative
       else if str = "sigma" then Sigma
+      else if str = "pythag" then Pythag
       else if not (check_supported h) then raise Malformed
       else raise Undefined_Input
   | [ h; t ] ->
@@ -113,6 +118,9 @@ let parse str =
         check_fact h
           (try match int_of_string t with i -> i
            with Failure s -> raise Undefined_Input)
+      else if str = "sin" then Sin (float_of_string t)
+      else if str = "cos" then Cos (float_of_string t)
+      else if str = "tan" then Tan (float_of_string t)
       else if str = "help" then Help t
       else raise Undefined_Input
   | h :: t -> (

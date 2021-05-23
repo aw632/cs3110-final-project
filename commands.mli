@@ -18,6 +18,10 @@ type command =
   | Mean of basic_arguments
   | Median of basic_arguments
   | StandardDev of basic_arguments
+  | Sin of float
+  | Cos of float
+  | Tan of float
+  | Pythag
   | LinReg
   | Poly
   | MultiVar
