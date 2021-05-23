@@ -45,7 +45,12 @@ module MatrixDual = struct
     done;
     z
 
-  let matrix_div t1 t2 = failwith "TODO"
+  let matrix_div f t =
+    let dim = Array.length t in
+    matrix_mult (make_scalar dim f) t
 
-  let matrix_power t1 t2 = failwith "TODO"
+  let rec matrix_power orig t n =
+    match n with
+    | 1 -> t
+    | x -> matrix_power orig (matrix_mult orig t) (n - 1)
 end

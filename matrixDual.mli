@@ -16,13 +16,15 @@ module MatrixDual : sig
   (** [matrix_sub t1 t2] is the subtraction of two matrices. *)
   val matrix_sub : t -> t -> t
 
-  (** [matrix_div t1 t2] is the division of two matrices.*)
-  val matrix_div : t -> t -> t
+  (** [matrix_div f t] is the division of two matrices. Division is
+      actually represented naively by a scalar fraction, since we will
+      not be encountering anything more advanced in doing derivatives.*)
+  val matrix_div : float -> t -> t
 
   (** [matrix_mult t1 t2] is the multiplication of two matrices. *)
   val matrix_mult : t -> t -> t
 
-  (** [matrix_mult t n] is the exponentiation of matrix [t] to the power
-      [n]. *)
-  val matrix_power : t -> int -> t
+  (** [matrix_mult orig t n] is the exponentiation of matrix [t] to the
+      power [n]. *)
+  val matrix_power : t -> t -> int -> t
 end
