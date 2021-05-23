@@ -305,6 +305,7 @@ let matrix_op_test name expected_output t1 t2 func =
     match func with
     | "add" -> MatrixDual.MatrixDual.matrix_add t1 t2
     | "sub" -> MatrixDual.MatrixDual.matrix_sub t1 t2
+    | "mult" -> MatrixDual.MatrixDual.matrix_mult t1 t2
     | _ -> failwith "Not done yet!"
   in
   assert_equal expected_output res
@@ -319,14 +320,18 @@ let m0123plus1243 = [| [| 1.; 3. |]; [| 6.; 6. |] |]
 
 let m0123sub1243 = [| [| -1.; -1. |]; [| -2.; 0. |] |]
 
+let m0123mult1243 = [| [| 4.; 3. |]; [| 14.; 13. |] |]
+
 let matrix_tests =
   [
     make_matrix_test "Replacement of a 2x2 matrix with 3"
       expected_matrix 2 3.;
     matrix_op_test "Addition of two simple matrices" m0123plus1243 m0123
       m1243 "add";
-    matrix_op_test "Addition of two simple matrices" m0123sub1243 m0123
-      m1243 "sub";
+    matrix_op_test "Subtraction of two simple matrices" m0123sub1243
+      m0123 m1243 "sub";
+    matrix_op_test "Product of two simple matrices" m0123mult1243 m0123
+      m1243 "mult";
   ]
 
 let suite =

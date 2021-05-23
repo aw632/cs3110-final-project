@@ -35,11 +35,11 @@ module MatrixDual = struct
   let matrix_mult t1 t2 =
     let x0 = Array.length t1 and y0 = Array.length t2 in
     let y1 = if y0 = 0 then 0 else Array.length t1.(0) in
-    let z = Array.make_matrix x0 y1 0 in
+    let z = Array.make_matrix x0 y1 0. in
     for i = 0 to x0 - 1 do
       for j = 0 to y1 - 1 do
         for k = 0 to y0 - 1 do
-          z.(i).(j) <- z.(i).(j) + (t1.(i).(k) * t2.(k).(j))
+          z.(i).(j) <- z.(i).(j) +. (t1.(i).(k) *. t2.(k).(j))
         done
       done
     done;
