@@ -24,6 +24,10 @@ module MatrixDual = struct
     let base_array = Array.make_matrix dim dim 0. in
     replace_elems base_array num dim (dim - 1)
 
+  let get_last_dual t =
+    let dim = Array.length t in
+    t.(0).(dim - 1)
+
   (** [repl_diag t num counter] replaces the diagonals of [t] with
       [num]. *)
   let rec repl_diag t num counter =

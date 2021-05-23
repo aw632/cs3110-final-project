@@ -3,8 +3,12 @@ module MatrixDual : sig
       number a + be is represented as \[\[a, b\]\[0, a\]\]. *)
   type t = float Array.t Array.t
 
+  (** [get_last_dual t] returns the element at the upper right-most
+      corner. *)
+  val get_last_dual : t -> float
+
   (** [make_matrix i input] forms an upper-triangular Toeplitz matrix of
-      size [i+1] given the input number [input]. *)
+      dimensions [i] x [i] given the input number [input]. *)
   val make_matrix : int -> float -> t
 
   (** [make_scalar dim s t] makes a scalar [s] of dimension [dim]. *)
