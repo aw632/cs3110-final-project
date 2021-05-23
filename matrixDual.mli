@@ -16,8 +16,7 @@ module MatrixDual : sig
   (** [matrix_sub t1 t2] is the subtraction of two matrices. *)
   val matrix_sub : t -> t -> t
 
-  (** [matrix_div t1 t2] is the division of two matrices. Requires: [t1]
-      and [t2] are invertible. *)
+  (** [matrix_div t1 t2] is the division of two matrices.*)
   val matrix_div : t -> t -> t
 
   (** [matrix_mult t1 t2] is the multiplication of two matrices. *)

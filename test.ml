@@ -29,10 +29,12 @@ open FrontEnd
     as long as we test the correctness of the operations accessible from
     Main, we can demonstrate the correctness of Main.
 
-    We did not explicitly test anything having to do with Dual Numbers,
-    as the facts and properties about Dual Numbers are mathematically
-    proven to be correct. We only tested that the AST was able to parse
-    a derivative and evaluate it - using dual numbers - successfully. *)
+    We did not explicitly test anything having to do with Dual Numbers
+    (when in Tuple Form), as the facts and properties about Dual Numbers
+    are mathematically proven to be correct. We only tested that the AST
+    was able to parse a derivative and evaluate it - using dual numbers
+    \- successfully. Dual Numbers in matrix form were tested because of
+    the additional complexity of the double array data structure. *)
 
 let basic_op_test name expected_output f input_list =
   name >:: fun info ->
