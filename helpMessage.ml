@@ -109,7 +109,15 @@ let menu_msg () =
   let line21 =
     I.string A.(fg white ++ st italic) "derivative at the value)"
   in
-
+  let line20a =
+    I.string
+      A.(fg white ++ st italic)
+      "HDerivative (takes in a function, the degree of \
+       differentiation, and a value to evaluate the "
+  in
+  let line21a =
+    I.string A.(fg white ++ st italic) "derivative at the value)"
+  in
   let line22 =
     I.string
       A.(fg white ++ st bold)
@@ -150,6 +158,8 @@ let menu_msg () =
   I.(pad ~l:1 ~b:1 line19) |> Notty_unix.output_image;
   I.(pad ~l:1 ~b:1 line20) |> Notty_unix.output_image;
   I.(pad ~l:1 ~b:1 line21) |> Notty_unix.output_image;
+  I.(pad ~l:1 ~b:1 line20a) |> Notty_unix.output_image;
+  I.(pad ~l:1 ~b:1 line21a) |> Notty_unix.output_image;
   I.uchars A.(fg (rgb 1 2 4)) (Array.map Uchar.of_int long_line)
   |> Notty_unix.eol |> Notty_unix.output_image;
   I.(pad ~l:1 ~b:2 line22) |> Notty_unix.output_image;

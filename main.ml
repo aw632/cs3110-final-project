@@ -72,6 +72,10 @@ let rec prompt_variable_input lst (var_map : float VariableMap.t) =
       prompt_variable_input t updated_var_map
   | [] -> var_map
 
+(** [check_degree i] checks if [i] is greater than or equal to 1. Raises
+    [Undefined_Input] otherwise. *)
+let check_degree i = if i >= 1 then i else raise Undefined_Input
+
 (** [ask_for_commands x] performs a calcuation for an inputted command. *)
 let rec ask_for_commands () =
   let print_result computation_str =
@@ -186,6 +190,29 @@ let rec ask_for_commands () =
         print_string " > ";
         let value = read_float () in
         let result = value |> polyFunDerivative |> string_of_float in
+        ans := result;
+        print_endline ("Answer: " ^ result);
+        ask_for_commands ()
+    | HDerivative ->
+        print_endline " Function to differentiate: ";
+        print_string " > ";
+        let user_input = read_line () in
+        print_endline " Degree of Differentiation: ";
+        print_string " > ";
+        let degree = read_int () |> check_degree in
+        let polyFunDerivative =
+          user_input |> FrontEnd.parse
+          |> FrontEnd.make_hderivative degree
+          |> FrontEnd.get_fun
+        in
+        print_endline " Value to evaluate: ";
+        print_string " > ";
+        let value = read_float () in
+        let result =
+          (value |> polyFunDerivative)
+          *. float_of_int (BasicOp.factorial_tr degree 1)
+          |> string_of_float
+        in
         ans := result;
         print_endline ("Answer: " ^ result);
         ask_for_commands ()

@@ -27,6 +27,7 @@ type command =
   | Poly
   | MultiVar
   | Derivative
+  | HDerivative
   | Sigma
   | Menu
   | Help of string

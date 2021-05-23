@@ -36,14 +36,14 @@ let get_bop = function
   | Exp -> ( ** )
 
 (** [poly_linear_combo (exp1,exp2) bop] is the linear combination (using
-    bop) of the two polynomial functions of exp1 and exp2
+    [bop]) of the two polynomial functions of exp1 and exp2
 
     Example: exp1 = PolyFun (fun x-> 3. *. x) and exp2 = PolyFun (fun
     x-> x**2.) and bop = Add then the combined polynomial is PolyFun
     (fun x -> (+.) ((fun x-> 3. *. x) x) ((fun x -> x ** 2.) x)
-    Abstractly, the linaer combination of 3x and x^2 is 3x + x^2
+    Abstractly, the linear combination of 3x and x^2 is 3x + x^2.
 
-    Requires: exp1 and exp2 are PolyFun variants i.e represent some
+    Requires: [exp1] and [exp2] are PolyFun variants i.e represent some
     polynomial function*)
 let poly_linear_combo (exp1, exp2) bop =
   match (exp1, exp2) with
