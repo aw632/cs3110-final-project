@@ -15,7 +15,10 @@
 <link title="Author" rel="Chapter" href="Author.html">
 <link title="Commands" rel="Chapter" href="Commands.html">
 <link title="BasicOp" rel="Chapter" href="BasicOp.html">
-<link title="Main" rel="Chapter" href="Main.html"><title>Commands</title>
+<link title="Main" rel="Chapter" href="Main.html">
+<link title="Derivative" rel="Chapter" href="Derivative.html">
+<link title="Dual" rel="Chapter" href="Dual.html">
+<link title="MatrixDual" rel="Chapter" href="MatrixDual.html"><title>Commands</title>
 </head>
 <body>
 <div class="navbar"><a class="pre" href="Author.html" title="Author">Previous</a>
@@ -84,6 +87,111 @@
 <td align="left" valign="top" >
 <code><span class="keyword">|</span></code></td>
 <td align="left" valign="top" >
+<code><span id="TYPEELTcommand.GCD"><span class="constructor">GCD</span></span> <span class="keyword">of</span> <code class="type">(int * int)</code></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTcommand.Mean"><span class="constructor">Mean</span></span> <span class="keyword">of</span> <code class="type"><a href="Commands.html#TYPEbasic_arguments">basic_arguments</a></code></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTcommand.Median"><span class="constructor">Median</span></span> <span class="keyword">of</span> <code class="type"><a href="Commands.html#TYPEbasic_arguments">basic_arguments</a></code></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTcommand.StandardDev"><span class="constructor">StandardDev</span></span> <span class="keyword">of</span> <code class="type"><a href="Commands.html#TYPEbasic_arguments">basic_arguments</a></code></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTcommand.Sin"><span class="constructor">Sin</span></span> <span class="keyword">of</span> <code class="type">float</code></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTcommand.Cos"><span class="constructor">Cos</span></span> <span class="keyword">of</span> <code class="type">float</code></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTcommand.Tan"><span class="constructor">Tan</span></span> <span class="keyword">of</span> <code class="type">float</code></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTcommand.Pythag"><span class="constructor">Pythag</span></span></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTcommand.LinReg"><span class="constructor">LinReg</span></span></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTcommand.Poly"><span class="constructor">Poly</span></span></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTcommand.MultiVar"><span class="constructor">MultiVar</span></span></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTcommand.Derivative"><span class="constructor">Derivative</span></span></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTcommand.Sigma"><span class="constructor">Sigma</span></span></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTcommand.Menu"><span class="constructor">Menu</span></span></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTcommand.Help"><span class="constructor">Help</span></span> <span class="keyword">of</span> <code class="type">string</code></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
 <code><span id="TYPEELTcommand.Exit"><span class="constructor">Exit</span></span></code></td>
 
 </tr></table>
@@ -124,6 +232,7 @@
 </div>
 </div>
 
+<pre><span id="VALcheck_linear_regression"><span class="keyword">val</span> check_linear_regression</span> : <code class="type">float list -> float list -> unit</code></pre>
 <pre><span id="VALparse"><span class="keyword">val</span> parse</span> : <code class="type">string -> <a href="Commands.html#TYPEcommand">command</a></code></pre><div class="info ">
 <div class="info-desc">
 <p><code class="code">parse str</code> takes the user input and makes it a command. The first
@@ -135,6 +244,18 @@
 
 <p>Raises: <code class="code">Empty</code> if <code class="code">str</code> is the empty string or contains only
     spaces.</p>
+
+<p>Raises: <code class="code">Malformed</code> if the command is malformed. A command is
+    malformed if the mathematical operation is not supported, or if the
+    input is "exit" and there are arguments following it, or if the
+    input is a mathematical operation with no arguments.</p>
+</div>
+</div>
+
+<pre><span id="VALparse_list"><span class="keyword">val</span> parse_list</span> : <code class="type">string -> float list</code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">parse_list str</code> takes the user input and makes it a float list. Any
+    integers passed as agruments are automatically converted to floats.</p>
 
 <p>Raises: <code class="code">Malformed</code> if the command is malformed. A command is
     malformed if the mathematical operation is not supported, or if the

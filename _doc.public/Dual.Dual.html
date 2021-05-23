@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="Start" href="index.html">
+<link rel="Up" href="Dual.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of exceptions" rel=Appendix href="index_exceptions.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Author" rel="Chapter" href="Author.html">
+<link title="Commands" rel="Chapter" href="Commands.html">
+<link title="BasicOp" rel="Chapter" href="BasicOp.html">
+<link title="Main" rel="Chapter" href="Main.html">
+<link title="Derivative" rel="Chapter" href="Derivative.html">
+<link title="Dual" rel="Chapter" href="Dual.html">
+<link title="MatrixDual" rel="Chapter" href="MatrixDual.html"><title>Dual.Dual</title>
+</head>
+<body>
+<div class="navbar">&nbsp;<a class="up" href="Dual.html" title="Dual">Up</a>
+&nbsp;</div>
+<h1>Module <a href="type_Dual.Dual.html">Dual.Dual</a></h1>
+
+<pre><span id="MODULEDual"><span class="keyword">module</span> Dual</span>: <code class="code">sig</code> <a href="Dual.Dual.html">..</a> <code class="code">end</code></pre><hr width="100%">
+
+<pre><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> </pre>
+<div class="info ">
+<div class="info-desc">
+<p><code class="code">t</code> is the representation of the dual number a + b(epsilon). See
+      dualnumbers explanatory PDF.</p>
+</div>
+</div>
+
+
+<pre><span id="VALmake_t"><span class="keyword">val</span> make_t</span> : <code class="type">float -> float -> <a href="Dual.Dual.html#TYPEt">t</a></code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">make_t x y</code> forms the dual number a+b(epsilon)</p>
+</div>
+</div>
+
+<pre><span id="VALget_real"><span class="keyword">val</span> get_real</span> : <code class="type"><a href="Dual.Dual.html#TYPEt">t</a> -> float</code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">get_real t</code> returns the non-dual component of a dual number t.</p>
+</div>
+</div>
+
+<pre><span id="VALget_dual"><span class="keyword">val</span> get_dual</span> : <code class="type"><a href="Dual.Dual.html#TYPEt">t</a> -> float</code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">get_dual t</code> returns the dual component of a dual number t.</p>
+</div>
+</div>
+
+<pre><span id="VALmult"><span class="keyword">val</span> mult</span> : <code class="type"><a href="Dual.Dual.html#TYPEt">t</a> -> <a href="Dual.Dual.html#TYPEt">t</a> -> <a href="Dual.Dual.html#TYPEt">t</a></code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">mult t1 t2</code> is the product of two dual numbers. Example: (a + be)
+      times (c + de) should be ac + (bc +ad)e. A full description can be
+      found in the dual numbers explanatory document.</p>
+</div>
+</div>
+
+<pre><span id="VALadd"><span class="keyword">val</span> add</span> : <code class="type"><a href="Dual.Dual.html#TYPEt">t</a> -> <a href="Dual.Dual.html#TYPEt">t</a> -> <a href="Dual.Dual.html#TYPEt">t</a></code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">add t1 t2</code> is the sum after component-wise addition of two dual
+      numbers. Example: (a + be) plus (c + de) should be (a + c) + (b +
+      d)e</p>
+</div>
+</div>
+
+<pre><span id="VALsub"><span class="keyword">val</span> sub</span> : <code class="type"><a href="Dual.Dual.html#TYPEt">t</a> -> <a href="Dual.Dual.html#TYPEt">t</a> -> <a href="Dual.Dual.html#TYPEt">t</a></code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">sub t1 t2</code> is the subtraction of <code class="code">t1</code> and <code class="code">t2</code>.</p>
+</div>
+</div>
+
+<pre><span id="VALdiv"><span class="keyword">val</span> div</span> : <code class="type"><a href="Dual.Dual.html#TYPEt">t</a> -> <a href="Dual.Dual.html#TYPEt">t</a> -> <a href="Dual.Dual.html#TYPEt">t</a></code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">div t1 t2</code> is the division of <code class="code">t1</code> and <code class="code">t2</code>. (a+be)/(c+de) = a/c
+      \+ ((bc-ad)/c)^2e Requires: c is nonzero.</p>
+</div>
+</div>
+
+<pre><span id="VALexp"><span class="keyword">val</span> exp</span> : <code class="type"><a href="Dual.Dual.html#TYPEt">t</a> -> <a href="Dual.Dual.html#TYPEt">t</a> -> <a href="Dual.Dual.html#TYPEt">t</a></code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">exp t a</code> is the exponentiation of <code class="code">t</code> to the power of <code class="code">a</code>.</p>
+</div>
+</div>
+
+<pre><span id="MODULEInfixOp"><span class="keyword">module</span> <a href="Dual.Dual.InfixOp.html">InfixOp</a></span>: <code class="code">sig</code> <a href="Dual.Dual.InfixOp.html">..</a> <code class="code">end</code></pre></body></html>
