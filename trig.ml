@@ -11,6 +11,6 @@ let pythag part length1 length2 =
   | "hypotenuse" -> sqrt ((length1 *. length1) +. (length2 *. length2))
   | "leg" ->
       if (length1 *. length1) -. (length2 *. length2) > 0. then
-        sqrt ((length1 *. length1) +. (length2 *. length2))
+        sqrt ((length1 *. length1) -. (length2 *. length2))
       else raise TriangleDNE
   | _ -> failwith "Will not be reached"
