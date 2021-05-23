@@ -284,7 +284,7 @@ let main () =
      "\n\n\ \ Welcome to the ClammyAlpha Calculator. This calculator was
      \ developed by the esteemed AHA corporation. The main developers \
      are AWang, HuyBear and Kangaloo. Please enjoy. \n"; *)
-  let long_line = Array.make 100 0x2500 in
+  let long_line = Array.make 100 0x2600 in
   I.uchars A.(fg (rgb 1 2 4)) (Array.map Uchar.of_int long_line)
   |> Notty_unix.eol |> Notty_unix.output_image;
 

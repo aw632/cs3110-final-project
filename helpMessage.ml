@@ -13,7 +13,9 @@ let menu_msg () =
       "the numbers you want to operate on."
   in
 
-  let line3 = I.string A.(fg white) "Functions available: " in
+  let line3 =
+    I.string A.(fg white ++ st bold) "Functions available: "
+  in
   let line4 =
     I.string
       A.(fg white ++ st italic)
@@ -124,32 +126,32 @@ let menu_msg () =
       "by the function you would like to learn more about."
   in
   I.(pad ~l:1 ~t:2 ~b:2 line1) |> Notty_unix.output_image;
-  I.(pad ~l:1 ~b:2 line2) |> Notty_unix.output_image;
+  I.(pad ~l:1 ~b:1 line2) |> Notty_unix.output_image;
   let long_line = Array.make 80 0x2500 in
   I.uchars A.(fg (rgb 1 2 4)) (Array.map Uchar.of_int long_line)
   |> Notty_unix.eol |> Notty_unix.output_image;
-  I.(pad ~l:1 ~t:2 ~b:2 line3) |> Notty_unix.output_image;
-  I.(pad ~l:1 ~b:2 line4) |> Notty_unix.output_image;
-  I.(pad ~l:1 ~b:2 line5) |> Notty_unix.output_image;
-  I.(pad ~l:1 ~b:2 line6) |> Notty_unix.output_image;
-  I.(pad ~l:1 ~b:2 line7) |> Notty_unix.output_image;
-  I.(pad ~l:1 ~b:2 line8) |> Notty_unix.output_image;
-  I.(pad ~l:1 ~b:2 line9) |> Notty_unix.output_image;
-  I.(pad ~l:1 ~b:2 line10) |> Notty_unix.output_image;
-  I.(pad ~l:1 ~b:2 line11) |> Notty_unix.output_image;
-  I.(pad ~l:1 ~b:2 line12) |> Notty_unix.output_image;
-  I.(pad ~l:1 ~b:2 line13) |> Notty_unix.output_image;
-  I.(pad ~l:1 ~b:2 line25) |> Notty_unix.output_image;
-  I.(pad ~l:1 ~b:2 line14) |> Notty_unix.output_image;
-  I.(pad ~l:1 ~b:2 line15) |> Notty_unix.output_image;
-  I.(pad ~l:1 ~b:2 line16) |> Notty_unix.output_image;
-  I.(pad ~l:1 ~b:2 line17) |> Notty_unix.output_image;
-  I.(pad ~l:1 ~b:2 line18) |> Notty_unix.output_image;
-  I.(pad ~l:1 ~b:2 line19) |> Notty_unix.output_image;
-  I.(pad ~l:1 ~b:2 line20) |> Notty_unix.output_image;
-  I.(pad ~l:1 ~b:2 line21) |> Notty_unix.output_image;
+  I.(pad ~l:1 ~b:2 line3) |> Notty_unix.output_image;
+  I.(pad ~l:1 ~b:1 line4) |> Notty_unix.output_image;
+  I.(pad ~l:1 ~b:1 line5) |> Notty_unix.output_image;
+  I.(pad ~l:1 ~b:1 line6) |> Notty_unix.output_image;
+  I.(pad ~l:1 ~b:1 line7) |> Notty_unix.output_image;
+  I.(pad ~l:1 ~b:1 line8) |> Notty_unix.output_image;
+  I.(pad ~l:1 ~b:1 line9) |> Notty_unix.output_image;
+  I.(pad ~l:1 ~b:1 line10) |> Notty_unix.output_image;
+  I.(pad ~l:1 ~b:1 line11) |> Notty_unix.output_image;
+  I.(pad ~l:1 ~b:1 line12) |> Notty_unix.output_image;
+  I.(pad ~l:1 ~b:1 line13) |> Notty_unix.output_image;
+  I.(pad ~l:1 ~b:1 line25) |> Notty_unix.output_image;
+  I.(pad ~l:1 ~b:1 line14) |> Notty_unix.output_image;
+  I.(pad ~l:1 ~b:1 line15) |> Notty_unix.output_image;
+  I.(pad ~l:1 ~b:1 line16) |> Notty_unix.output_image;
+  I.(pad ~l:1 ~b:1 line17) |> Notty_unix.output_image;
+  I.(pad ~l:1 ~b:1 line18) |> Notty_unix.output_image;
+  I.(pad ~l:1 ~b:1 line19) |> Notty_unix.output_image;
+  I.(pad ~l:1 ~b:1 line20) |> Notty_unix.output_image;
+  I.(pad ~l:1 ~b:1 line21) |> Notty_unix.output_image;
   I.uchars A.(fg (rgb 1 2 4)) (Array.map Uchar.of_int long_line)
   |> Notty_unix.eol |> Notty_unix.output_image;
-  I.(pad ~l:1 ~t:2 ~b:2 line22) |> Notty_unix.output_image;
-  I.(pad ~l:1 ~b:2 line23) |> Notty_unix.output_image;
+  I.(pad ~l:1 ~b:2 line22) |> Notty_unix.output_image;
+  I.(pad ~l:1 ~b:1 line23) |> Notty_unix.output_image;
   I.(pad ~l:1 ~b:2 line24) |> Notty_unix.output_image
