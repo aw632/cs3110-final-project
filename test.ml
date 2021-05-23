@@ -306,19 +306,15 @@ let matrix_op_test name expected_output t1 t2 func =
     | "add" -> MatrixDual.MatrixDual.matrix_add t1 t2
     | "sub" -> MatrixDual.MatrixDual.matrix_sub t1 t2
     | "mult" -> MatrixDual.MatrixDual.matrix_mult t1 t2
+    | "div" -> MatrixDual.MatrixDual.matrix_div t1 t2
     | _ -> failwith "None others"
   in
   assert_equal expected_output res
 
-let matrix_divpow_test name expected_output t num func =
+let matrix_pow_test name expected_output t num =
   name >:: fun info ->
-  let res =
-    match func with
-    | "div" -> MatrixDual.MatrixDual.matrix_div (float_of_int num) t
-    | "power" -> MatrixDual.MatrixDual.matrix_power t t num
-    | _ -> failwith "None others"
-  in
-  assert_equal expected_output res
+  assert_equal expected_output
+    (MatrixDual.MatrixDual.matrix_power t t num)
 
 let m3103 = [| [| 3.; 1. |]; [| 0.; 3. |] |]
 
@@ -328,6 +324,10 @@ let m2727027 = [| [| 27.; 27. |]; [| 0.; 27. |] |]
 
 let m0123 = [| [| 0.; 1. |]; [| 2.; 3. |] |]
 
+let m1234 = [| [| 1.; 2. |]; [| 3.; 4. |] |]
+
+let scalar_third = MatrixDual.MatrixDual.make_scalar 2 (1. /. 3.)
+
 let m1243 = [| [| 1.; 2. |]; [| 4.; 3. |] |]
 
 let m0123plus1243 = [| [| 1.; 3. |]; [| 6.; 6. |] |]
@@ -335,6 +335,9 @@ let m0123plus1243 = [| [| 1.; 3. |]; [| 6.; 6. |] |]
 let m0123sub1243 = [| [| -1.; -1. |]; [| -2.; 0. |] |]
 
 let m0123mult1243 = [| [| 4.; 3. |]; [| 14.; 13. |] |]
+
+let scaled_third_m1234 =
+  [| [| 1. /. 3.; 2. /. 3. |]; [| 1.; 4. /. 3. |] |]
 
 let matrix_tests =
   [
@@ -345,8 +348,10 @@ let matrix_tests =
       m0123 m1243 "sub";
     matrix_op_test "Product of two simple matrices" m0123mult1243 m0123
       m1243 "mult";
-    matrix_divpow_test "Cubing a matrix" m2727027 m3103 3 "power";
-    matrix_divpow_test "Squaring a matrix" m9609 m3103 2 "power";
+    matrix_pow_test "Cubing a matrix" m2727027 m3103 3;
+    matrix_pow_test "Squaring a matrix" m9609 m3103 2;
+    matrix_op_test "Scaling by 1/3" scaled_third_m1234 m1234
+      scalar_third "div";
   ]
 
 let suite =

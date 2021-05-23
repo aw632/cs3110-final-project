@@ -24,7 +24,20 @@ module MatrixDual = struct
     let base_array = Array.make_matrix dim dim 0. in
     replace_elems base_array num dim (dim - 1)
 
-  let make_scalar dim s = Array.make_matrix dim dim s
+  (** [repl_diag t num counter] replaces the diagonals of [t] with
+      [num]. *)
+  let rec repl_diag t num counter =
+    match counter with
+    | 0 ->
+        t.(0).(0) <- num;
+        t
+    | x ->
+        t.(x).(x) <- num;
+        repl_diag t num (counter - 1)
+
+  let make_scalar dim s =
+    let base = Array.make_matrix dim dim 0. in
+    repl_diag base s (dim - 1)
 
   let matrix_add t1 t2 =
     Array.map2 (fun x y -> Array.map2 (fun x1 y1 -> x1 +. y1) x y) t1 t2
@@ -45,8 +58,7 @@ module MatrixDual = struct
     done;
     z
 
-  let matrix_div f t =
-    Array.map (fun x -> Array.map (fun y -> y /. f) x) t
+  let matrix_div t1 t2 = matrix_mult t1 t2
 
   let rec matrix_power orig t n =
     match n with
