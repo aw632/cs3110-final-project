@@ -3,6 +3,7 @@ open Commands
 open Notty
 open Notty_unix
 open EuclideanAlg
+open HelpMessage
 open StatOp
 open Trig
 open Help
@@ -43,41 +44,6 @@ let make_command_string () =
       (Array.map Uchar.of_int (Array.make 4 0x2500))
   in
   I.(small_line <|> time <|> middle_line)
-
-(** This menu message will be printed when the user types 'menu' into
-    the terminal*)
-let menu_msg =
-  "\n\
-  \ \n\
-  \ Please enter an operation, followed by a space, followed by \n\
-  \ the numbers you want to operate on.\n\n\
-  \   Functions available:\n\
-  \   Add (takes in multiple inputs, returns float) \n\
-  \   Subtract (takes in multiple inputs, returns float) \n\
-  \   Divide (takes in multiple inputs, returns float)\n\
-  \   Multiply (takes in multiple inputs, returns float)\n\
-  \   Factorial (takes in one input, returns integer)\n\
-  \   FastExp (takes in three inputs, returns integer)\n\
-  \   Sin (takes in one input, returns float)\n\
-  \   Cos (takes in one input, returns float)\n\
-  \   Tan (takes in one input, returns float)\n\
-  \   Pythag (takes in two sides, returns third side as float) \n\
-  \   Mean (takes in multiple input, returns float)\n\
-  \   Median (takes in multiple input, returns float)\n\
-  \   StdDev (takes in multiple input, returns float)\n\
-  \   LinReg (takes in two lists, returns linear regression)\n\
-  \   Poly (takes in a single variable polynomial and a value to \
-   evaluate the function)\n\
-  \   Multi (takes in a multivariable function and the values to \
-   evaluate the function at)\n\
-  \   Sigma (evaluates the sigma from the first number (floor) to the \n\
-  \        second number (ceiling) using the user-inputted polynomial)\n\
-  \   Derivative (takes in a function and a value to evaluate the \n\
-  \        derivative at the value)\n\n\
-  \ Enter Exit at any time to exit from the program\n\
-  \ If you want more information, use command 'help' followed \n\
-  \ by the function you would like to learn more about. \n\
-  \ "
 
 (** [read_float] takes a string input from the user and makes it a
     float.
@@ -244,7 +210,7 @@ let rec ask_for_commands () =
           ("Answer: " ^ (summation_tr a b polyFun |> string_of_float));
         ask_for_commands ()
     | Menu ->
-        ANSITerminal.print_string [ ANSITerminal.green ] menu_msg;
+        menu_msg ();
         ask_for_commands ()
     | Help str ->
         print_endline (help str);
@@ -368,7 +334,7 @@ let main () =
       print_endline "Goodbye!";
       exit 0
   | _ ->
-      ANSITerminal.print_string [ ANSITerminal.green ] menu_msg;
+      menu_msg ();
       ask_for_commands ()
 
 (** Execute the game engine. *)
