@@ -8,6 +8,7 @@ type basic_arguments = float list
 (** The type [command] represents a user input consisting of a
     mathematical operation and the arguments passed it *)
 type command =
+  | Ans
   | Add of basic_arguments
   | Multiply of basic_arguments
   | Subtract of basic_arguments
@@ -46,8 +47,8 @@ exception Undefined_Input
 
 val check_linear_regression : float list -> float list -> unit
 
-(** [parse str] takes the user input and makes it a command. The first
-    word (the first consecutive sequence of non-space characters)
+(** [parse str ans] takes the user input and makes it a command. The
+    first word (the first consecutive sequence of non-space characters)
     indicates the mathematical operation to be performed. The rest of
     the input becomes the arguments passed to the mathematical
     operation. Any integers passed as agruments are automatically
@@ -60,7 +61,7 @@ val check_linear_regression : float list -> float list -> unit
     malformed if the mathematical operation is not supported, or if the
     input is "exit" and there are arguments following it, or if the
     input is a mathematical operation with no arguments.*)
-val parse : string -> command
+val parse : string -> string ref -> command
 
 (** [parse_list str] takes the user input and makes it a float list. Any
     integers passed as agruments are automatically converted to floats.

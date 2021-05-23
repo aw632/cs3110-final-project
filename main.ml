@@ -11,6 +11,8 @@ open Notty
 open Notty_unix
 module VariableMap = Map.Make (String)
 
+let ans = ref "0"
+
 let uchars_maker arr =
   I.uchars A.(fg (rgb 1 2 5)) (Array.map Uchar.of_int arr)
 
@@ -69,45 +71,38 @@ let rec prompt_variable_input lst (var_map : float VariableMap.t) =
 
 (** [ask_for_commands x] performs a calcuation for an inputted command. *)
 let rec ask_for_commands () =
+  let print_result computation_str =
+    let result = computation_str in
+    ans := result;
+    print_endline ("\n" ^ result);
+    ask_for_commands ()
+  in
   (* The arguments of ask_for_commands can be edited to support
      history/accumulation *)
   make_command_string () |> output_image;
-
   print_string "\n > ";
   try
-    match read_line () |> parse with
-    | Add arguments ->
-        print_endline ("\n" ^ (add_tr arguments |> Float.to_string));
+    match parse (read_line ()) ans with
+    | Ans ->
+        print_endline !ans;
         ask_for_commands ()
+    | Add arguments -> print_result (add_tr arguments |> Float.to_string)
     | Multiply arguments ->
-        print_endline ("\n" ^ (multiply_tr arguments |> Float.to_string));
-        ask_for_commands ()
+        print_result (multiply_tr arguments |> Float.to_string)
     | Subtract arguments ->
-        print_endline ("\n" ^ (subtract_tr arguments |> Float.to_string));
-        ask_for_commands ()
+        print_result (subtract_tr arguments |> Float.to_string)
     | Divide arguments ->
-        print_endline ("\n" ^ (divide_tr arguments |> Float.to_string));
-        ask_for_commands ()
+        print_result (divide_tr arguments |> Float.to_string)
     | Factorial arguments ->
-        print_endline
-          ("\n" ^ (factorial_tr arguments 1 |> string_of_int));
-        ask_for_commands ()
+        print_result (factorial_tr arguments 1 |> string_of_int)
     | FastExp (m, n, bin_list) ->
-        print_endline ("\n" ^ (fast_exp m n bin_list 1 |> string_of_int));
-        ask_for_commands ()
-    | GCD (m, n) ->
-        print_endline ("\n" ^ (gcd m n |> string_of_int));
-        ask_for_commands ()
-    | Mean arguments ->
-        print_endline ("\n" ^ (mean arguments |> Float.to_string));
-        ask_for_commands ()
+        print_result (fast_exp m n bin_list 1 |> string_of_int)
+    | GCD (m, n) -> print_result (gcd m n |> string_of_int)
+    | Mean arguments -> print_result (mean arguments |> Float.to_string)
     | Median arguments ->
-        print_endline ("\n" ^ (median arguments |> Float.to_string));
-        ask_for_commands ()
+        print_result (median arguments |> Float.to_string)
     | StandardDev arguments ->
-        print_endline
-          ("\n" ^ (standard_deviation arguments |> Float.to_string));
-        ask_for_commands ()
+        print_result (standard_deviation arguments |> Float.to_string)
     | LinReg ->
         print_string " First list:";
         print_string " > ";

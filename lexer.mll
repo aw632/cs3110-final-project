@@ -22,6 +22,7 @@ rule read =
   | "/" { DIVIDE }
   | "(" { LPAREN }
   | ")" { RPAREN }
+  | "ANS" 
   | float { FLOAT (float_of_string (Lexing.lexeme lexbuf)) }
   | exp { EXP }
   | variable { VARIABLE (Lexing.lexeme lexbuf) }
