@@ -32,16 +32,20 @@ module Dual : sig
   (** [exp t a] is the exponentiation of [t] to the power of [a]. *)
   val exp : t -> t -> t
 
-  (** TODO: FOR DEBUG PURPOSES!! *)
   module InfixOp : sig
+    (** [( + )] is the infix version of dual addition. *)
     val ( + ) : t -> t -> t
 
+    (** [( - )] is the infix version of dual addition. *)
     val ( - ) : t -> t -> t
 
+    (** [( * )] is the infix version of dual addition. *)
     val ( * ) : t -> t -> t
 
+    (** [( / )] is the infix version of dual addition. *)
     val ( / ) : t -> t -> t
 
+    (** [( ** )] is the infix version of dual addition. *)
     val ( ** ) : t -> t -> t
   end
 end

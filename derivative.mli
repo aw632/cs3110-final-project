@@ -18,14 +18,19 @@ module D : sig
   val eval_deriv : (t -> t) -> float -> float
 
   module InfixOp : sig
+    (** [( + )] is the infix version of dual addition. *)
     val ( + ) : t -> t -> t
 
+    (** [( - )] is the infix version of dual addition. *)
     val ( - ) : t -> t -> t
 
+    (** [( * )] is the infix version of dual addition. *)
     val ( * ) : t -> t -> t
 
+    (** [( / )] is the infix version of dual addition. *)
     val ( / ) : t -> t -> t
 
+    (** [( ** )] is the infix version of dual addition. *)
     val ( ** ) : t -> t -> t
   end
 end
