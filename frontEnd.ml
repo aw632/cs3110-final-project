@@ -1,6 +1,8 @@
 open Ast
 open Dual
 open Derivative
+open MatrixDual
+open HDerivative
 module VariableMap = Map.Make (String)
 
 type vars = float VariableMap.t
@@ -75,7 +77,7 @@ let rec make_polynomial ans_ref poly_node =
       else PolyFun (poly_linear_combo (exp1, exp2) bop)
   | _ -> raise Undefined_Parse
 
-(** [make_derivative poly_node] create s an OCaml Anonymous function
+(** [make_derivative poly_node] creates an OCaml Anonymous function
     representing dual operations.
 
     Example: Input of [3x^2] would return the function
@@ -108,6 +110,44 @@ let rec make_derivative poly_node =
       else PolyFun (poly_linear_combo (exp1, exp2) bop)
   | _ -> raise Undefined_Parse
 
+(** [make_hderivative poly_node] creates an OCaml Anonymous function
+    representing dual operations of the nth degree.
+
+    Requires: poly_node is a Var, Float, Binop or Poly(_,_,_). Requires:
+    exponent input is integer.*)
+let rec make_hderivative degree poly_node =
+  let dim = degree + 1 in
+  match poly_node with
+  | Poly (coeff, _, exp) ->
+      let coeff = H.make_constant coeff dim in
+      PolyFun
+        (fun s ->
+          MatrixDual.matrix_mult coeff
+            (MatrixDual.matrix_power (H.make_variable s dim)
+               (H.make_variable s dim) (int_of_float exp))
+          |> MatrixDual.get_last_dual)
+  | Float constant ->
+      PolyFun
+        (fun variable ->
+          H.make_constant constant dim |> MatrixDual.get_last_dual)
+  | Var variable ->
+      PolyFun
+        (fun variable ->
+          H.make_variable variable dim |> MatrixDual.get_last_dual)
+  | Binop (bop, exp1, exp2) ->
+      (* if [is_function exp1] is false, i.e. exp1 is not a function,
+         then recurse on it*)
+      if not (is_function exp1) then
+        make_hderivative degree
+          (Binop (bop, make_hderivative degree exp1, exp2))
+      else if not (is_function exp2) then
+        make_hderivative degree
+          (Binop (bop, exp1, make_hderivative degree exp2))
+      else PolyFun (poly_linear_combo (exp1, exp2) bop)
+  | _ -> raise Undefined_Parse
+
+(** [get_fun f] unrwaps [PolyFun f] and returns [f]. Requires: [f] is of
+    type [PolyFun]. *)
 let get_fun = function
   | PolyFun f -> f
   | _ -> failwith "precondition violated"
@@ -116,6 +156,8 @@ let get_fun = function
     expression is fully reduced when it is a float*)
 let is_reduced = function Float _ -> true | _ -> false
 
+(** [get_float f] unrwaps [Float f] and returns [f]. Requires: [f] is of
+    type [Float]. *)
 let get_float = function
   | Float num -> num
   | _ -> failwith "precondition violated"
@@ -158,10 +200,14 @@ let multivar_linear_combo (exp1, exp2) bop =
       fun input_map -> (get_bop bop) (f1 input_map) (f2 input_map)
   | _ -> failwith "precondition violated"
 
+(** [get_multi_fun k] unrwaps [MultiFun (j, l)] and returns [f].
+    Requires: [k] is of type [MultiFun]. *)
 let get_multi_fun = function
   | MultiFun (f, _) -> f
   | _ -> failwith "not multifun"
 
+(** [get_multi_fun k] unrwaps [MultiFun (j, l)] and returns [l].
+    Requires: [k] is of type [MultiFun]. *)
 let get_var_lst = function
   | MultiFun (_, l) -> l
   | _ -> failwith "not multifun"
