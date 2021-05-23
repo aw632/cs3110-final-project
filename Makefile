@@ -1,4 +1,4 @@
-MODULES=author commands basicOp main derivative dual
+MODULES=author commands basicOp main derivative dual matrixDual
 OBJECTS=$(MODULES:=.cmo)
 MLIS=$(MODULES:=.mli)
 TEST=test.byte

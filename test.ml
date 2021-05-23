@@ -17,7 +17,7 @@ open FrontEnd
     not used.
 
     The OUnit below tests the following modules directly or indirectly:
-    BasicOp Commands EuclideanAlg Dual Derviative StatOp
+    BasicOp Commands EuclideanAlg Dual Derviative StatOp MatrixDual
 
     The OUnit does not test the following modules: Author Main Help
 
@@ -29,10 +29,12 @@ open FrontEnd
     as long as we test the correctness of the operations accessible from
     Main, we can demonstrate the correctness of Main.
 
-    We did not explicitly test anything having to do with Dual Numbers,
-    as the facts and properties about Dual Numbers are mathematically
-    proven to be correct. We only tested that the AST was able to parse
-    a derivative and evaluate it - using dual numbers - successfully. *)
+    We did not explicitly test anything having to do with Dual Numbers
+    (when in Tuple Form), as the facts and properties about Dual Numbers
+    are mathematically proven to be correct. We only tested that the AST
+    was able to parse a derivative and evaluate it - using dual numbers
+    \- successfully. Dual Numbers in matrix form were tested because of
+    the additional complexity of the double array data structure. *)
 
 let basic_op_test name expected_output f input_list =
   name >:: fun info ->
@@ -155,6 +157,10 @@ let print_command cmd =
   | Derivative -> "This is a derivative"
   | Help t -> "Help" ^ t
   | Exit -> "Exit"
+  | Pythag -> "Pythagorean"
+  | Sin x -> "Sine"
+  | Cos x -> "Cosine"
+  | Tan x -> "Tangent"
 
 let stat_op_tests = []
 
@@ -288,6 +294,46 @@ let derivative_tests =
     deriv_test "derivative of simple function" "900." "900x" 3.;
   ]
 
+let make_matrix_test name expected_output dim num =
+  name >:: fun info ->
+  assert_equal expected_output
+    (MatrixDual.MatrixDual.make_matrix dim num)
+
+let matrix_op_test name expected_output t1 t2 func =
+  name >:: fun info ->
+  let res =
+    match func with
+    | "add" -> MatrixDual.MatrixDual.matrix_add t1 t2
+    | "sub" -> MatrixDual.MatrixDual.matrix_sub t1 t2
+    | "mult" -> MatrixDual.MatrixDual.matrix_mult t1 t2
+    | _ -> failwith "Not done yet!"
+  in
+  assert_equal expected_output res
+
+let expected_matrix = [| [| 3.; 1. |]; [| 0.; 3. |] |]
+
+let m0123 = [| [| 0.; 1. |]; [| 2.; 3. |] |]
+
+let m1243 = [| [| 1.; 2. |]; [| 4.; 3. |] |]
+
+let m0123plus1243 = [| [| 1.; 3. |]; [| 6.; 6. |] |]
+
+let m0123sub1243 = [| [| -1.; -1. |]; [| -2.; 0. |] |]
+
+let m0123mult1243 = [| [| 4.; 3. |]; [| 14.; 13. |] |]
+
+let matrix_tests =
+  [
+    make_matrix_test "Replacement of a 2x2 matrix with 3"
+      expected_matrix 2 3.;
+    matrix_op_test "Addition of two simple matrices" m0123plus1243 m0123
+      m1243 "add";
+    matrix_op_test "Subtraction of two simple matrices" m0123sub1243
+      m0123 m1243 "sub";
+    matrix_op_test "Product of two simple matrices" m0123mult1243 m0123
+      m1243 "mult";
+  ]
+
 let suite =
   "test suite for operations"
   >::: List.flatten
@@ -298,6 +344,7 @@ let suite =
            parser_ast_tests;
            binop_parse_tests;
            derivative_tests;
+           matrix_tests;
          ]
 
 let _ = run_test_tt_main suite
