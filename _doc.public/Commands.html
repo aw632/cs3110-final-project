@@ -18,7 +18,8 @@
 <link title="Main" rel="Chapter" href="Main.html">
 <link title="Derivative" rel="Chapter" href="Derivative.html">
 <link title="Dual" rel="Chapter" href="Dual.html">
-<link title="MatrixDual" rel="Chapter" href="MatrixDual.html"><title>Commands</title>
+<link title="MatrixDual" rel="Chapter" href="MatrixDual.html">
+<link title="HDerivative" rel="Chapter" href="HDerivative.html"><title>Commands</title>
 </head>
 <body>
 <div class="navbar"><a class="pre" href="Author.html" title="Author">Previous</a>
@@ -41,6 +42,13 @@
 
 
 <pre><code><span id="TYPEcommand"><span class="keyword">type</span> <code class="type"></code>command</span> = </code></pre><table class="typetable">
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTcommand.Ans"><span class="constructor">Ans</span></span></code></td>
+
+</tr>
 <tr>
 <td align="left" valign="top" >
 <code><span class="keyword">|</span></code></td>
@@ -171,6 +179,13 @@
 <td align="left" valign="top" >
 <code><span class="keyword">|</span></code></td>
 <td align="left" valign="top" >
+<code><span id="TYPEELTcommand.HDerivative"><span class="constructor">HDerivative</span></span></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
 <code><span id="TYPEELTcommand.Sigma"><span class="constructor">Sigma</span></span></code></td>
 
 </tr>
@@ -233,10 +248,10 @@
 </div>
 
 <pre><span id="VALcheck_linear_regression"><span class="keyword">val</span> check_linear_regression</span> : <code class="type">float list -> float list -> unit</code></pre>
-<pre><span id="VALparse"><span class="keyword">val</span> parse</span> : <code class="type">string -> <a href="Commands.html#TYPEcommand">command</a></code></pre><div class="info ">
+<pre><span id="VALparse"><span class="keyword">val</span> parse</span> : <code class="type">string -> string Stdlib.ref -> <a href="Commands.html#TYPEcommand">command</a></code></pre><div class="info ">
 <div class="info-desc">
-<p><code class="code">parse str</code> takes the user input and makes it a command. The first
-    word (the first consecutive sequence of non-space characters)
+<p><code class="code">parse str ans</code> takes the user input and makes it a command. The
+    first word (the first consecutive sequence of non-space characters)
     indicates the mathematical operation to be performed. The rest of
     the input becomes the arguments passed to the mathematical
     operation. Any integers passed as agruments are automatically
