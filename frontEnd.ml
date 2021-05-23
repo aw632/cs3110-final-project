@@ -149,8 +149,8 @@ let rec reduce_bin_op binop =
     multivariable function*)
 let multivar_linear_combo (exp1, exp2) bop =
   match (exp1, exp2) with
-  | MultiFun f1, MultiFun f2 ->
-      fun input_map -> (get_bop bop) (f1 input_map) (f2 input_map)
+  (*| MultiFun f1, MultiFun f2 -> fun input_map -> (get_bop bop) (f1
+    input_map) (f2 input_map)*)
   | _ -> failwith "precondition violated"
 
 let check_dupe_vars variable var_map =
@@ -171,28 +171,16 @@ let check_dupe_vars variable var_map =
     function represents*)
 let rec make_multivar multi_node var_map =
   match multi_node with
-  | Poly (coeff, variable, exp) ->
-      let unbound_vars = check_dupe_vars variable var_map in
-      ( MultiFun
-          (fun (variable_values : vars) ->
-            coeff *. (VariableMap.find variable variable_values ** exp)),
-        unbound_vars )
-  | Float constant ->
-      (MultiFun (fun variable_values -> constant), var_map)
-  | Var variable ->
-      let unbound_vars = check_dupe_vars variable var_map in
-      ( MultiFun
-          (fun variable_values ->
-            VariableMap.find variable variable_values),
-        unbound_vars )
-  | Binop (bop, exp1, exp2) ->
-      if not (is_function exp1) then
-        make_multivar
-          (Binop (bop, make_multivar exp1 var_map |> fst, exp2))
-          var_map
-      else if not (is_function exp2) then
-        make_multivar
-          (Binop (bop, exp1, make_multivar exp2 var_map |> fst))
-          var_map
-      else (MultiFun (multivar_linear_combo (exp1, exp2) bop), var_map)
+  (*| Poly (coeff, variable, exp) -> let unbound_vars = check_dupe_vars
+    variable var_map in ( MultiFun (fun (variable_values : vars) ->
+    coeff *. (VariableMap.find variable variable_values ** exp)),
+    unbound_vars ) | Float constant -> (MultiFun (fun variable_values ->
+    constant), var_map) | Var variable -> let unbound_vars =
+    check_dupe_vars variable var_map in ( MultiFun (fun variable_values
+    -> VariableMap.find variable variable_values), unbound_vars ) |
+    Binop (bop, exp1, exp2) -> if not (is_function exp1) then
+    make_multivar (Binop (bop, make_multivar exp1 var_map |> fst, exp2))
+    var_map else if not (is_function exp2) then make_multivar (Binop
+    (bop, exp1, make_multivar exp2 var_map |> fst)) var_map else
+    (MultiFun (multivar_linear_combo (exp1, exp2) bop), var_map)*)
   | _ -> raise Undefined_Parse

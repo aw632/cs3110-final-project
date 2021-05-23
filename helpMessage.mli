@@ -1,2 +1,2 @@
 (** [helpmsg] will be returned when user types "menu" into terminal*)
-val helpmsg : string
+val menu_msg : unit -> unit

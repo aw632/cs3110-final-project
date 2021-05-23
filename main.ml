@@ -3,6 +3,7 @@ open Commands
 open Notty
 open Notty_unix
 open EuclideanAlg
+open HelpMessage
 open StatOp
 open Trig
 open Help
@@ -180,7 +181,7 @@ let rec ask_for_commands () =
           ("Answer: " ^ (summation_tr a b polyFun |> string_of_float));
         ask_for_commands ()
     | Menu ->
-        ANSITerminal.print_string [ ANSITerminal.green ] menu_msg;
+        menu_msg ();
         ask_for_commands ()
     | Help str ->
         print_endline (help str);
@@ -254,7 +255,7 @@ let main () =
      "\n\n\ \ Welcome to the ClammyAlpha Calculator. This calculator was
      \ developed by the esteemed AHA corporation. The main developers \
      are AWang, HuyBear and Kangaloo. Please enjoy. \n"; *)
-  let long_line = Array.make 100 0x2500 in
+  let long_line = Array.make 100 0x2600 in
   I.uchars A.(fg (rgb 1 2 4)) (Array.map Uchar.of_int long_line)
   |> Notty_unix.eol |> Notty_unix.output_image;
 
@@ -303,7 +304,9 @@ let main () =
   | "Exit" ->
       print_endline "Goodbye!";
       exit 0
-  | _ -> ask_for_commands ()
+  | _ ->
+      menu_msg ();
+      ask_for_commands ()
 
 (** Execute the game engine. *)
 let () = main ()
