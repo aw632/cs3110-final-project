@@ -158,14 +158,14 @@ let rec ask_for_commands () =
     | Cos t -> print_result (cos t |> string_of_float)
     | Tan t -> print_result (tan t |> string_of_float)
     | Pythag ->
-        print_endline " Side you are looking for: ";
+        print_endline
+          " Side you are looking for (type \"hypotenuse\" or \"leg\"): ";
         print_string " > ";
         let user_input = read_line () in
-        print_endline
-          "Please insert remaining side 1 (hypotenuse or leg)";
+        print_endline "Length of remaining side 1 (hypotenuse or leg)";
         print_string " > ";
         let user_input1 = float_of_string (read_line ()) in
-        print_endline "Please insert remaining side 2 (leg)";
+        print_endline "Length of remaining side 2 (leg)";
         print_string " > ";
         let user_input2 = float_of_string (read_line ()) in
         let result =
@@ -218,6 +218,11 @@ let rec ask_for_commands () =
         ANSITerminal.print_string [ ANSITerminal.green ] "\nGoodbye!\n";
         exit 0
   with
+  | Failure _ ->
+      ANSITerminal.print_string
+        [ ANSITerminal.red; ANSITerminal.Bold ]
+        "\n Did not recognize the command given! Please try again!\n";
+      ask_for_commands ()
   | Malformed ->
       ANSITerminal.print_string
         [ ANSITerminal.red; ANSITerminal.Bold ]
@@ -296,7 +301,7 @@ let main () =
   let company =
     I.string
       A.(fg white)
-      "Developed by the eestemed AHA Corporation using OCaml."
+      "Developed by the esteemed AHA Corporation using OCaml."
   in
   I.(pad ~l:1 ~b:1 company) |> Notty_unix.output_image;
 
