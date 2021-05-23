@@ -10,5 +10,4 @@ val fast_exp : int -> int -> int list -> int -> int
     Requires m and n are positive.
 
     Ex: gcd 10 5 = 5 *)
-
 val gcd : int -> int -> int

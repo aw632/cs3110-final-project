@@ -1,4 +1,4 @@
-MODULES=author commands basicOp main derivative dual matrixDual hDerivative
+MODULES=author commands basicOp main derivative dual matrixDual hDerivative euclideanAlg help helpMessage trig statOp
 OBJECTS=$(MODULES:=.cmo)
 MLIS=$(MODULES:=.mli)
 TEST=test.byte
