@@ -80,6 +80,11 @@ let help str =
        as an input and then a value (integer or float) to evaluate \
        that function at. It will return a float. For example, with \
        function x^2+1 and value 1, the answer would return 2. "
+  | "multivar" ->
+      "The multivariable function will prompt for a function as an \
+       input which can have mutliple variables. The user then inputs \
+       the values (integer or float) to evaluate the function at. It \
+       will return a float. "
   | "sigma" ->
       "The sigma function will prompt for a floor value and ceiling \
        value as integers and then a function. It will evaluate the \

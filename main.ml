@@ -8,6 +8,7 @@ open Trig
 open Help
 open Notty
 open Notty_unix
+module VariableMap = Map.Make (String)
 
 let uchars_maker arr =
   I.uchars A.(fg (rgb 1 2 5)) (Array.map Uchar.of_int arr)
@@ -65,7 +66,10 @@ let menu_msg =
   \   Median (takes in multiple input, returns float)\n\
   \   StdDev (takes in multiple input, returns float)\n\
   \   LinReg (takes in two lists, returns linear regression)\n\
-  \   Poly (takes in a function and a value to evaluate the function)\n\
+  \   Poly (takes in a single variable polynomial and a value to \
+   evaluate the function)\n\
+  \   Multi (takes in a multivariable function and the values to \
+   evaluate the function at)\n\
   \   Sigma (evaluates the sigma from the first number (floor) to the \n\
   \        second number (ceiling) using the user-inputted polynomial)\n\
   \   Derivative (takes in a function and a value to evaluate the \n\
@@ -82,6 +86,20 @@ let menu_msg =
 let read_float () =
   try read_line () |> String.trim |> float_of_string
   with Failure s -> raise Undefined_Input
+
+(**[prompt_variable_input lst] will prompt the user to input a value for
+   every variable in the list. It returns a map where the keys are the
+   variables in the list and the values are the floats inputted from the
+   terminal bound bound to the specific variable*)
+let rec prompt_variable_input lst (var_map : float VariableMap.t) =
+  match lst with
+  | var :: t ->
+      print_endline ("The value of " ^ var ^ ": ");
+      print_string " > ";
+      let user_input = read_float () in
+      let updated_var_map = VariableMap.add var user_input var_map in
+      prompt_variable_input t updated_var_map
+  | [] -> var_map
 
 (** [ask_for_commands x] performs a calcuation for an inputted command. *)
 let rec ask_for_commands () =
@@ -154,6 +172,21 @@ let rec ask_for_commands () =
         print_endline
           ("Answer: " ^ (value |> polyFun |> string_of_float));
         ask_for_commands ()
+    | MultiVar ->
+        print_endline " Function: ";
+        print_string " > ";
+        let user_input = read_line () in
+        let multivar =
+          FrontEnd.make_multivar (user_input |> FrontEnd.parse) []
+        in
+        let var_lst =
+          multivar |> FrontEnd.get_var_lst |> List.sort_uniq compare
+        in
+        let multi_fun = multivar |> FrontEnd.get_multi_fun in
+        let var_map = prompt_variable_input var_lst VariableMap.empty in
+        print_endline
+          ("Answer: " ^ (var_map |> multi_fun |> string_of_float));
+        ask_for_commands ()
     | Sin t ->
         print_endline ("\n" ^ (sin t |> string_of_float));
         ask_for_commands ()
@@ -179,7 +212,6 @@ let rec ask_for_commands () =
           ^ string_of_float (pythag user_input user_input1 user_input2)
           );
         ask_for_commands ()
-    | MultiVar -> failwith "not implemented"
     | Derivative ->
         print_endline " Function to differentiate: ";
         print_string " > ";

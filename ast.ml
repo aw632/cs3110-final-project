@@ -16,4 +16,4 @@ type expr =
   | Poly of float * string * float
   | Var of string
   | PolyFun of (float -> float)
-  | MultiFun of (float VariableMap.t -> float) * float VariableMap.t
+  | MultiFun of (float VariableMap.t -> float) * string list
