@@ -1,6 +1,7 @@
 type basic_arguments = float list
 
 type command =
+  | Ans
   | Add of basic_arguments
   | Multiply of basic_arguments
   | Subtract of basic_arguments
@@ -87,31 +88,40 @@ let check_fast_exp arg_list =
   match arg_list with
   | [ arg1; arg2; arg3 ] ->
       FastExp (int_of_string arg1, int_of_string arg2, bin_to_list arg3)
-  | [] | [ _ ] | _ :: _ :: _ :: _ :: _ | [ _; _ ] -> raise Malformed
+  | _ -> raise Malformed
 
 let check_gcd = function
   | [ arg1; arg2 ] -> GCD (int_of_string arg1, int_of_string arg2)
   | _ -> raise Malformed
 
-let parse str =
+(**[replace_ans str_lst] replaces all instances of "ANS" in the list
+   with the string bound to the ans_ref*)
+let replace_ans str_lst ans_ref =
+  List.map (fun x -> if x = "ANS" then !ans_ref else x) str_lst
+
+let parse str ans_ref =
   let str_list =
-    List.filter
-      (function "" -> false | _ -> true)
-      (String.split_on_char ' ' str)
+    replace_ans
+      (List.filter
+         (function "" -> false | _ -> true)
+         (String.split_on_char ' ' str))
+      ans_ref
   in
   match str_list with
   | [ h ] ->
-      let str = String.lowercase_ascii h in
-      if str = "exit" then Exit
-      else if str = "menu" then Menu
-      else if str = "linreg" then LinReg
-      else if str = "poly" then Poly
-      else if str = "multivar" then MultiVar
-      else if str = "derivative" then Derivative
-      else if str = "sigma" then Sigma
-      else if str = "pythag" then Pythag
-      else if not (check_supported h) then raise Malformed
-      else raise Undefined_Input
+      if str = "ANS" then Ans
+      else
+        let str = String.lowercase_ascii h in
+        if str = "exit" then Exit
+        else if str = "menu" then Menu
+        else if str = "linreg" then LinReg
+        else if str = "poly" then Poly
+        else if str = "multivar" then MultiVar
+        else if str = "derivative" then Derivative
+        else if str = "sigma" then Sigma
+        else if str = "pythag" then Pythag
+        else if not (check_supported h) then raise Malformed
+        else raise Undefined_Input
   | [ h; t ] ->
       let str = String.lowercase_ascii h in
       if str = "factorial" then
@@ -134,6 +144,7 @@ let parse str =
         with Failure s -> raise Undefined_Input)
   | [] -> raise Empty
 
+(** [parse_list str] will try to create a list of floats from a string *)
 let parse_list str =
   let str_list =
     List.filter

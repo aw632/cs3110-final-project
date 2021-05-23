@@ -15,7 +15,10 @@
 <link title="Author" rel="Chapter" href="Author.html">
 <link title="Commands" rel="Chapter" href="Commands.html">
 <link title="BasicOp" rel="Chapter" href="BasicOp.html">
-<link title="Main" rel="Chapter" href="Main.html"><title>BasicOp</title>
+<link title="Main" rel="Chapter" href="Main.html">
+<link title="Derivative" rel="Chapter" href="Derivative.html">
+<link title="Dual" rel="Chapter" href="Dual.html">
+<link title="MatrixDual" rel="Chapter" href="MatrixDual.html"><title>BasicOp</title>
 </head>
 <body>
 <div class="navbar"><a class="pre" href="Commands.html" title="Commands">Previous</a>
@@ -67,7 +70,7 @@
 <p><code class="code">divide_tr numlist</code> divides each element from its previous elements
     in <code class="code">numlist</code>. Function is left associative.</p>
 
-<p>Raises <code class="code">Division_by_zero</code> if any element except for the first is 0.</p>
+<p>Raises: <code class="code">Division_by_zero</code> if any element except for the first is 0.</p>
 
 <p>Ex: divide_tr <code class="code">3.0; 2.0; 3.0</code> = (3.0 /. 2.0) /. 3.0 = 0.5.</p>
 </div>
@@ -90,6 +93,16 @@
     if output is out of range</p>
 
 <p>Ex: factorial_tr 3 1 = 6.</p>
+</div>
+</div>
+
+<pre><span id="VALsummation_tr"><span class="keyword">val</span> summation_tr</span> : <code class="type">float -> float -> (float -> float) -> float</code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">summation_tr first last f</code> returns the summation over the range
+    <code class="code">first, last</code> using the function defined by f</p>
+
+<p>Example: summation_tr 1. 5. (fun x -&gt; 2*.x) will return 2(1) + 2(2)
+    \+ 2(3) + 2(4) + 2(5)</p>
 </div>
 </div>
 </body></html>

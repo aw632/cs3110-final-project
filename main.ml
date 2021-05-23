@@ -11,6 +11,8 @@ open Notty
 open Notty_unix
 module VariableMap = Map.Make (String)
 
+let ans = ref "0"
+
 let uchars_maker arr =
   I.uchars A.(fg (rgb 1 2 5)) (Array.map Uchar.of_int arr)
 
@@ -50,8 +52,11 @@ let make_command_string () =
 
     Raises Undefined_Input if the string cannot be made a float*)
 let read_float () =
-  try read_line () |> String.trim |> float_of_string
-  with Failure s -> raise Undefined_Input
+  let user_input = read_line () in
+  if user_input = "ANS" then !ans |> float_of_string
+  else
+    try user_input |> String.trim |> float_of_string
+    with Failure s -> raise Undefined_Input
 
 (**[prompt_variable_input lst] will prompt the user to input a value for
    every variable in the list. It returns a map where the keys are the
@@ -69,45 +74,38 @@ let rec prompt_variable_input lst (var_map : float VariableMap.t) =
 
 (** [ask_for_commands x] performs a calcuation for an inputted command. *)
 let rec ask_for_commands () =
+  let print_result computation_str =
+    let result = computation_str in
+    ans := result;
+    print_endline ("\n" ^ result);
+    ask_for_commands ()
+  in
   (* The arguments of ask_for_commands can be edited to support
      history/accumulation *)
   make_command_string () |> output_image;
-
   print_string "\n > ";
   try
-    match read_line () |> parse with
-    | Add arguments ->
-        print_endline ("\n" ^ (add_tr arguments |> Float.to_string));
+    match parse (read_line ()) ans with
+    | Ans ->
+        print_endline !ans;
         ask_for_commands ()
+    | Add arguments -> print_result (add_tr arguments |> Float.to_string)
     | Multiply arguments ->
-        print_endline ("\n" ^ (multiply_tr arguments |> Float.to_string));
-        ask_for_commands ()
+        print_result (multiply_tr arguments |> Float.to_string)
     | Subtract arguments ->
-        print_endline ("\n" ^ (subtract_tr arguments |> Float.to_string));
-        ask_for_commands ()
+        print_result (subtract_tr arguments |> Float.to_string)
     | Divide arguments ->
-        print_endline ("\n" ^ (divide_tr arguments |> Float.to_string));
-        ask_for_commands ()
+        print_result (divide_tr arguments |> Float.to_string)
     | Factorial arguments ->
-        print_endline
-          ("\n" ^ (factorial_tr arguments 1 |> string_of_int));
-        ask_for_commands ()
+        print_result (factorial_tr arguments 1 |> string_of_int)
     | FastExp (m, n, bin_list) ->
-        print_endline ("\n" ^ (fast_exp m n bin_list 1 |> string_of_int));
-        ask_for_commands ()
-    | GCD (m, n) ->
-        print_endline ("\n" ^ (gcd m n |> string_of_int));
-        ask_for_commands ()
-    | Mean arguments ->
-        print_endline ("\n" ^ (mean arguments |> Float.to_string));
-        ask_for_commands ()
+        print_result (fast_exp m n bin_list 1 |> string_of_int)
+    | GCD (m, n) -> print_result (gcd m n |> string_of_int)
+    | Mean arguments -> print_result (mean arguments |> Float.to_string)
     | Median arguments ->
-        print_endline ("\n" ^ (median arguments |> Float.to_string));
-        ask_for_commands ()
+        print_result (median arguments |> Float.to_string)
     | StandardDev arguments ->
-        print_endline
-          ("\n" ^ (standard_deviation arguments |> Float.to_string));
-        ask_for_commands ()
+        print_result (standard_deviation arguments |> Float.to_string)
     | LinReg ->
         print_string " First list:";
         print_string " > ";
@@ -129,14 +127,16 @@ let rec ask_for_commands () =
         print_string " > ";
         let user_input = read_line () in
         let polyFun =
-          user_input |> FrontEnd.parse |> FrontEnd.make_polynomial
+          user_input |> FrontEnd.parse
+          |> FrontEnd.make_polynomial ans
           |> FrontEnd.get_fun
         in
         print_endline " Value to evaluate: ";
         print_string " > ";
         let value = read_float () in
-        print_endline
-          ("Answer: " ^ (value |> polyFun |> string_of_float));
+        let result = value |> polyFun |> string_of_float in
+        ans := result;
+        print_endline ("Answer: " ^ result);
         ask_for_commands ()
     | MultiVar ->
         print_endline " Function: ";
@@ -150,33 +150,29 @@ let rec ask_for_commands () =
         in
         let multi_fun = multivar |> FrontEnd.get_multi_fun in
         let var_map = prompt_variable_input var_lst VariableMap.empty in
-        print_endline
-          ("Answer: " ^ (var_map |> multi_fun |> string_of_float));
+        let result = var_map |> multi_fun |> string_of_float in
+        ans := result;
+        print_endline ("Answer: " ^ result);
         ask_for_commands ()
-    | Sin t ->
-        print_endline ("\n" ^ (sin t |> string_of_float));
-        ask_for_commands ()
-    | Cos t ->
-        print_endline ("\n" ^ (cos t |> string_of_float));
-        ask_for_commands ()
-    | Tan t ->
-        print_endline ("\n" ^ (tan t |> string_of_float));
-        ask_for_commands ()
+    | Sin t -> print_result (sin t |> string_of_float)
+    | Cos t -> print_result (cos t |> string_of_float)
+    | Tan t -> print_result (tan t |> string_of_float)
     | Pythag ->
-        print_endline " Side you are looking for: ";
+        print_endline
+          " Side you are looking for (type \"hypotenuse\" or \"leg\"): ";
         print_string " > ";
         let user_input = read_line () in
-        print_endline
-          "Please insert remaining side 1 (hypotenuse or leg)";
+        print_endline "Length of remaining side 1 (hypotenuse or leg)";
         print_string " > ";
         let user_input1 = float_of_string (read_line ()) in
-        print_endline "Please insert remaining side 2 (leg)";
+        print_endline "Length of remaining side 2 (leg)";
         print_string " > ";
         let user_input2 = float_of_string (read_line ()) in
-        print_endline
-          ("\n"
-          ^ string_of_float (pythag user_input user_input1 user_input2)
-          );
+        let result =
+          pythag user_input user_input1 user_input2 |> string_of_float
+        in
+        ans := result;
+        print_endline ("\n" ^ result);
         ask_for_commands ()
     | Derivative ->
         print_endline " Function to differentiate: ";
@@ -189,8 +185,9 @@ let rec ask_for_commands () =
         print_endline " Value to evaluate: ";
         print_string " > ";
         let value = read_float () in
-        print_endline
-          ("Answer: " ^ (value |> polyFunDerivative |> string_of_float));
+        let result = value |> polyFunDerivative |> string_of_float in
+        ans := result;
+        print_endline ("Answer: " ^ result);
         ask_for_commands ()
     | Sigma ->
         print_endline " First: ";
@@ -203,11 +200,13 @@ let rec ask_for_commands () =
         print_string " > ";
         let user_input = read_line () in
         let polyFun =
-          user_input |> FrontEnd.parse |> FrontEnd.make_polynomial
+          user_input |> FrontEnd.parse
+          |> FrontEnd.make_polynomial ans
           |> FrontEnd.get_fun
         in
-        print_endline
-          ("Answer: " ^ (summation_tr a b polyFun |> string_of_float));
+        let result = summation_tr a b polyFun |> string_of_float in
+        ans := result;
+        print_endline ("Answer: " ^ result);
         ask_for_commands ()
     | Menu ->
         menu_msg ();
@@ -219,6 +218,11 @@ let rec ask_for_commands () =
         ANSITerminal.print_string [ ANSITerminal.green ] "\nGoodbye!\n";
         exit 0
   with
+  | Failure _ ->
+      ANSITerminal.print_string
+        [ ANSITerminal.red; ANSITerminal.Bold ]
+        "\n Did not recognize the command given! Please try again!\n";
+      ask_for_commands ()
   | Malformed ->
       ANSITerminal.print_string
         [ ANSITerminal.red; ANSITerminal.Bold ]
@@ -297,7 +301,7 @@ let main () =
   let company =
     I.string
       A.(fg white)
-      "Developed by the eestemed AHA Corporation using OCaml."
+      "Developed by the esteemed AHA Corporation using OCaml."
   in
   I.(pad ~l:1 ~b:1 company) |> Notty_unix.output_image;
 

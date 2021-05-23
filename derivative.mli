@@ -10,11 +10,11 @@ module D : sig
   val make_variable : float -> t
 
   (** [eval_at_f f x] returns the value of function [f] at the point
-      [v].*)
+      [x].*)
   val eval_at_f : (t -> t) -> float -> float
 
   (** [eval_at_f f x] returns the value of the derivative of function
-      [f] at the point [v].*)
+      [f] at the point [x].*)
   val eval_deriv : (t -> t) -> float -> float
 
   module InfixOp : sig

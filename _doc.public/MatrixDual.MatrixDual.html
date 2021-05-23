@@ -1,0 +1,82 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="Start" href="index.html">
+<link rel="Up" href="MatrixDual.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of exceptions" rel=Appendix href="index_exceptions.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Author" rel="Chapter" href="Author.html">
+<link title="Commands" rel="Chapter" href="Commands.html">
+<link title="BasicOp" rel="Chapter" href="BasicOp.html">
+<link title="Main" rel="Chapter" href="Main.html">
+<link title="Derivative" rel="Chapter" href="Derivative.html">
+<link title="Dual" rel="Chapter" href="Dual.html">
+<link title="MatrixDual" rel="Chapter" href="MatrixDual.html"><title>MatrixDual.MatrixDual</title>
+</head>
+<body>
+<div class="navbar">&nbsp;<a class="up" href="MatrixDual.html" title="MatrixDual">Up</a>
+&nbsp;</div>
+<h1>Module <a href="type_MatrixDual.MatrixDual.html">MatrixDual.MatrixDual</a></h1>
+
+<pre><span id="MODULEMatrixDual"><span class="keyword">module</span> MatrixDual</span>: <code class="code">sig</code> <a href="MatrixDual.MatrixDual.html">..</a> <code class="code">end</code></pre><hr width="100%">
+
+<pre><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = <code class="type">float Stdlib.Array.t Stdlib.Array.t</code> </pre>
+<div class="info ">
+<div class="info-desc">
+<p><code class="code">t</code> is dual numbers represented as a matrix. For example, the dual
+      number a + be is represented as [[a, b][0, a]].</p>
+</div>
+</div>
+
+
+<pre><span id="VALmake_matrix"><span class="keyword">val</span> make_matrix</span> : <code class="type">int -> float -> <a href="MatrixDual.MatrixDual.html#TYPEt">t</a></code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">make_matrix i input</code> forms an upper-triangular Toeplitz matrix of
+      size <code class="code">i+1</code> given the input number <code class="code">input</code>.</p>
+</div>
+</div>
+
+<pre><span id="VALmake_scalar"><span class="keyword">val</span> make_scalar</span> : <code class="type">int -> float -> <a href="MatrixDual.MatrixDual.html#TYPEt">t</a></code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">make_scalar dim s t</code> makes a scalar <code class="code">s</code> of dimension <code class="code">dim</code>.</p>
+</div>
+</div>
+
+<pre><span id="VALmatrix_add"><span class="keyword">val</span> matrix_add</span> : <code class="type"><a href="MatrixDual.MatrixDual.html#TYPEt">t</a> -> <a href="MatrixDual.MatrixDual.html#TYPEt">t</a> -> <a href="MatrixDual.MatrixDual.html#TYPEt">t</a></code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">matrix_add t1 t2</code> is the summation of two matrices.</p>
+</div>
+</div>
+
+<pre><span id="VALmatrix_sub"><span class="keyword">val</span> matrix_sub</span> : <code class="type"><a href="MatrixDual.MatrixDual.html#TYPEt">t</a> -> <a href="MatrixDual.MatrixDual.html#TYPEt">t</a> -> <a href="MatrixDual.MatrixDual.html#TYPEt">t</a></code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">matrix_sub t1 t2</code> is the subtraction of two matrices.</p>
+</div>
+</div>
+
+<pre><span id="VALmatrix_div"><span class="keyword">val</span> matrix_div</span> : <code class="type">float -> <a href="MatrixDual.MatrixDual.html#TYPEt">t</a> -> <a href="MatrixDual.MatrixDual.html#TYPEt">t</a></code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">matrix_div f t</code> is the division of two matrices. Division is
+      actually represented naively by a scalar fraction, since we will
+      not be encountering anything more advanced in doing derivatives.</p>
+</div>
+</div>
+
+<pre><span id="VALmatrix_mult"><span class="keyword">val</span> matrix_mult</span> : <code class="type"><a href="MatrixDual.MatrixDual.html#TYPEt">t</a> -> <a href="MatrixDual.MatrixDual.html#TYPEt">t</a> -> <a href="MatrixDual.MatrixDual.html#TYPEt">t</a></code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">matrix_mult t1 t2</code> is the multiplication of two matrices.</p>
+</div>
+</div>
+
+<pre><span id="VALmatrix_power"><span class="keyword">val</span> matrix_power</span> : <code class="type"><a href="MatrixDual.MatrixDual.html#TYPEt">t</a> -><br>       <a href="MatrixDual.MatrixDual.html#TYPEt">t</a> -> int -> <a href="MatrixDual.MatrixDual.html#TYPEt">t</a></code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">matrix_mult orig t n</code> is the exponentiation of matrix <code class="code">t</code> to the
+      power <code class="code">n</code>.</p>
+</div>
+</div>
+</body></html>

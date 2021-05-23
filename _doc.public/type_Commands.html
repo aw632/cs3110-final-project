@@ -10,7 +10,10 @@
 <link title="Author" rel="Chapter" href="Author.html">
 <link title="Commands" rel="Chapter" href="Commands.html">
 <link title="BasicOp" rel="Chapter" href="BasicOp.html">
-<link title="Main" rel="Chapter" href="Main.html"><title>Commands</title>
+<link title="Main" rel="Chapter" href="Main.html">
+<link title="Derivative" rel="Chapter" href="Derivative.html">
+<link title="Dual" rel="Chapter" href="Dual.html">
+<link title="MatrixDual" rel="Chapter" href="MatrixDual.html"><title>Commands</title>
 </head>
 <body>
 <code class="code"><span class="keyword">sig</span><br>
@@ -22,10 +25,27 @@
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Divide</span>&nbsp;<span class="keyword">of</span>&nbsp;<span class="constructor">Commands</span>.basic_arguments<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Factorial</span>&nbsp;<span class="keyword">of</span>&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">FastExp</span>&nbsp;<span class="keyword">of</span>&nbsp;(int&nbsp;*&nbsp;int&nbsp;*&nbsp;int&nbsp;list)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">GCD</span>&nbsp;<span class="keyword">of</span>&nbsp;(int&nbsp;*&nbsp;int)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Mean</span>&nbsp;<span class="keyword">of</span>&nbsp;<span class="constructor">Commands</span>.basic_arguments<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Median</span>&nbsp;<span class="keyword">of</span>&nbsp;<span class="constructor">Commands</span>.basic_arguments<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">StandardDev</span>&nbsp;<span class="keyword">of</span>&nbsp;<span class="constructor">Commands</span>.basic_arguments<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Sin</span>&nbsp;<span class="keyword">of</span>&nbsp;float<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Cos</span>&nbsp;<span class="keyword">of</span>&nbsp;float<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Tan</span>&nbsp;<span class="keyword">of</span>&nbsp;float<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Pythag</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">LinReg</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Poly</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">MultiVar</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Derivative</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Sigma</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Menu</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Help</span>&nbsp;<span class="keyword">of</span>&nbsp;string<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Exit</span><br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;supported_ops&nbsp;:&nbsp;string&nbsp;list<br>
 &nbsp;&nbsp;<span class="keyword">exception</span>&nbsp;<span class="constructor">Empty</span><br>
 &nbsp;&nbsp;<span class="keyword">exception</span>&nbsp;<span class="constructor">Malformed</span><br>
 &nbsp;&nbsp;<span class="keyword">exception</span>&nbsp;<span class="constructor">Undefined_Input</span><br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;check_linear_regression&nbsp;:&nbsp;float&nbsp;list&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;float&nbsp;list&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;unit<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;parse&nbsp;:&nbsp;string&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Commands</span>.command<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;parse_list&nbsp;:&nbsp;string&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;float&nbsp;list<br>
 <span class="keyword">end</span></code></body></html>
