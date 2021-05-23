@@ -19,15 +19,15 @@ let uchars_maker arr =
 let time_converter utim =
   let record = utim |> Unix.localtime in
   "【"
-  ^ (if record.tm_hour mod 12 < 10 then
-     "0" ^ string_of_int (record.tm_hour mod 12)
-    else string_of_int (record.tm_hour mod 12))
+  ^ ( if record.tm_hour mod 12 < 10 then
+      "0" ^ string_of_int (record.tm_hour mod 12)
+    else string_of_int (record.tm_hour mod 12) )
   ^ ":"
-  ^ (if record.tm_min < 10 then "0" ^ string_of_int record.tm_min
-    else string_of_int record.tm_min)
+  ^ ( if record.tm_min < 10 then "0" ^ string_of_int record.tm_min
+    else string_of_int record.tm_min )
   ^ ":"
-  ^ (if record.tm_sec < 10 then "0" ^ string_of_int record.tm_sec
-    else string_of_int record.tm_sec)
+  ^ ( if record.tm_sec < 10 then "0" ^ string_of_int record.tm_sec
+    else string_of_int record.tm_sec )
   ^ (if record.tm_hour > 12 then " PM" else " AM")
   ^ " 】"
 
@@ -114,10 +114,10 @@ let rec ask_for_commands () =
         let list2 = Commands.parse_list input2 in
         let tuple = linear_regression list1 list2 in
         print_endline
-          ("\n In the form y=ax+b, a = "
+          ( "\n In the form y=ax+b, a = "
           ^ string_of_float (fst tuple)
           ^ " and b = "
-          ^ string_of_float (snd tuple));
+          ^ string_of_float (snd tuple) );
         ask_for_commands ()
     | Poly ->
         print_endline " Function: ";
@@ -158,18 +158,18 @@ let rec ask_for_commands () =
         print_endline ("\n" ^ (tan t |> string_of_float));
         ask_for_commands ()
     | Pythag ->
-        print_endline " Side you are looking for: ";
+        print_endline
+          " Side you are looking for (type \"hypotenuse\" or \"leg\"): ";
         print_string " > ";
         let user_input = read_line () in
-        print_endline
-          "Please insert remaining side 1 (hypotenuse or leg)";
+        print_endline "Length of remaining side 1 (hypotenuse or leg)";
         print_string " > ";
         let user_input1 = float_of_string (read_line ()) in
-        print_endline "Please insert remaining side 2 (leg)";
+        print_endline "Length of remaining side 2 (leg)";
         print_string " > ";
         let user_input2 = float_of_string (read_line ()) in
         print_endline
-          ("\n"
+          ( "\n"
           ^ string_of_float (pythag user_input user_input1 user_input2)
           );
         ask_for_commands ()
@@ -214,6 +214,11 @@ let rec ask_for_commands () =
         ANSITerminal.print_string [ ANSITerminal.green ] "\nGoodbye!\n";
         exit 0
   with
+  | Failure _ ->
+      ANSITerminal.print_string
+        [ ANSITerminal.red; ANSITerminal.Bold ]
+        "\n Did not recognize the command given! Please try again!\n";
+      ask_for_commands ()
   | Malformed ->
       ANSITerminal.print_string
         [ ANSITerminal.red; ANSITerminal.Bold ]
@@ -292,7 +297,7 @@ let main () =
   let company =
     I.string
       A.(fg white)
-      "Developed by the eestemed AHA Corporation using OCaml."
+      "Developed by the esteemed AHA Corporation using OCaml."
   in
   I.(pad ~l:1 ~b:1 company) |> Notty_unix.output_image;
 
