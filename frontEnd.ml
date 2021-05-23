@@ -5,7 +5,7 @@ module VariableMap = Map.Make (String)
 
 type vars = float VariableMap.t
 
-let (empty_variable_map : vars) = VariableMap.empty
+let empty_variable_map = VariableMap.empty
 
 exception Undefined_Parse
 
