@@ -52,8 +52,11 @@ let make_command_string () =
 
     Raises Undefined_Input if the string cannot be made a float*)
 let read_float () =
-  try read_line () |> String.trim |> float_of_string
-  with Failure s -> raise Undefined_Input
+  let user_input = read_line () in
+  if user_input = "ANS" then !ans |> float_of_string
+  else
+    try user_input |> String.trim |> float_of_string
+    with Failure s -> raise Undefined_Input
 
 (**[prompt_variable_input lst] will prompt the user to input a value for
    every variable in the list. It returns a map where the keys are the
@@ -124,14 +127,16 @@ let rec ask_for_commands () =
         print_string " > ";
         let user_input = read_line () in
         let polyFun =
-          user_input |> FrontEnd.parse |> FrontEnd.make_polynomial
+          user_input |> FrontEnd.parse
+          |> FrontEnd.make_polynomial ans
           |> FrontEnd.get_fun
         in
         print_endline " Value to evaluate: ";
         print_string " > ";
         let value = read_float () in
-        print_endline
-          ("Answer: " ^ (value |> polyFun |> string_of_float));
+        let result = value |> polyFun |> string_of_float in
+        ans := result;
+        print_endline ("Answer: " ^ result);
         ask_for_commands ()
     | MultiVar ->
         print_endline " Function: ";
@@ -145,18 +150,13 @@ let rec ask_for_commands () =
         in
         let multi_fun = multivar |> FrontEnd.get_multi_fun in
         let var_map = prompt_variable_input var_lst VariableMap.empty in
-        print_endline
-          ("Answer: " ^ (var_map |> multi_fun |> string_of_float));
+        let result = var_map |> multi_fun |> string_of_float in
+        ans := result;
+        print_endline ("Answer: " ^ result);
         ask_for_commands ()
-    | Sin t ->
-        print_endline ("\n" ^ (sin t |> string_of_float));
-        ask_for_commands ()
-    | Cos t ->
-        print_endline ("\n" ^ (cos t |> string_of_float));
-        ask_for_commands ()
-    | Tan t ->
-        print_endline ("\n" ^ (tan t |> string_of_float));
-        ask_for_commands ()
+    | Sin t -> print_result (sin t |> string_of_float)
+    | Cos t -> print_result (cos t |> string_of_float)
+    | Tan t -> print_result (tan t |> string_of_float)
     | Pythag ->
         print_endline " Side you are looking for: ";
         print_string " > ";
@@ -168,10 +168,11 @@ let rec ask_for_commands () =
         print_endline "Please insert remaining side 2 (leg)";
         print_string " > ";
         let user_input2 = float_of_string (read_line ()) in
-        print_endline
-          ("\n"
-          ^ string_of_float (pythag user_input user_input1 user_input2)
-          );
+        let result =
+          pythag user_input user_input1 user_input2 |> string_of_float
+        in
+        ans := result;
+        print_endline ("\n" ^ result);
         ask_for_commands ()
     | Derivative ->
         print_endline " Function to differentiate: ";
@@ -184,8 +185,9 @@ let rec ask_for_commands () =
         print_endline " Value to evaluate: ";
         print_string " > ";
         let value = read_float () in
-        print_endline
-          ("Answer: " ^ (value |> polyFunDerivative |> string_of_float));
+        let result = value |> polyFunDerivative |> string_of_float in
+        ans := result;
+        print_endline ("Answer: " ^ result);
         ask_for_commands ()
     | Sigma ->
         print_endline " First: ";
@@ -198,11 +200,13 @@ let rec ask_for_commands () =
         print_string " > ";
         let user_input = read_line () in
         let polyFun =
-          user_input |> FrontEnd.parse |> FrontEnd.make_polynomial
+          user_input |> FrontEnd.parse
+          |> FrontEnd.make_polynomial ans
           |> FrontEnd.get_fun
         in
-        print_endline
-          ("Answer: " ^ (summation_tr a b polyFun |> string_of_float));
+        let result = summation_tr a b polyFun |> string_of_float in
+        ans := result;
+        print_endline ("Answer: " ^ result);
         ask_for_commands ()
     | Menu ->
         menu_msg ();

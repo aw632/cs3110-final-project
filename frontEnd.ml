@@ -56,17 +56,22 @@ let poly_linear_combo (exp1, exp2) bop =
     which is equivalent to 3x^5
 
     Requires: poly_node is a Var, Float, Binop or Poly(_,_,_)*)
-let rec make_polynomial poly_node =
+let rec make_polynomial ans_ref poly_node =
   match poly_node with
   | Poly (coeff, variable, exp) ->
       PolyFun (fun variable -> coeff *. (variable ** exp))
   | Float constant -> PolyFun (fun variable -> constant)
-  | Var variable -> PolyFun (fun variable -> variable)
+  | Var variable ->
+      if variable = "ANS" then
+        PolyFun (fun variable -> !ans_ref |> float_of_string)
+      else PolyFun (fun variable -> variable)
   | Binop (bop, exp1, exp2) ->
       if not (is_function exp1) then
-        make_polynomial (Binop (bop, make_polynomial exp1, exp2))
+        make_polynomial ans_ref
+          (Binop (bop, make_polynomial ans_ref exp1, exp2))
       else if not (is_function exp2) then
-        make_polynomial (Binop (bop, exp1, make_polynomial exp2))
+        make_polynomial ans_ref
+          (Binop (bop, exp1, make_polynomial ans_ref exp2))
       else PolyFun (poly_linear_combo (exp1, exp2) bop)
   | _ -> raise Undefined_Parse
 
