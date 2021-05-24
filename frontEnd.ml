@@ -168,27 +168,6 @@ let get_float = function
   | Float num -> num
   | _ -> failwith "precondition violated"
 
-(** [perform_binop] performs the binary operation of the two expressions
-    Requires exp1 and exp2 are Float variants*)
-let perform_binop (exp1, exp2) bop =
-  match (exp1, exp2) with
-  | Float float1, Float float2 ->
-      let result = (get_bop bop) float1 float2 in
-      if result = infinity then raise Invalid_calculation else result
-  | _ -> failwith "precondition violated"
-
-(** [reduce_bin_op binop] reduces the expressions to their most
-    simplified values. *)
-let rec reduce_bin_op binop =
-  match binop with
-  | Binop (bop, exp1, exp2) ->
-      if not (is_reduced exp1) then
-        reduce_bin_op (Binop (bop, reduce_bin_op exp1, exp2))
-      else if not (is_reduced exp2) then
-        reduce_bin_op (Binop (bop, exp1, reduce_bin_op exp2))
-      else Float (perform_binop (exp1, exp2) bop)
-  | _ -> raise Invalid_calculation
-
 (** [multi_linear_combo (exp1,exp2) bop] is the linear combination
     (using bop) of the two multivariable functions of exp1 and exp2
 
