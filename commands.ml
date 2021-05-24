@@ -30,7 +30,7 @@ exception Empty
 
 exception Malformed
 
-exception Undefined_Input
+exception Undefined_input
 
 let supported_ops =
   [
@@ -68,7 +68,7 @@ let check_string_input str args =
 let check_fact str arg =
   let str = String.lowercase_ascii str in
   if str = "factorial" && arg > 0 then Factorial arg
-  else if arg < 0 then raise Undefined_Input
+  else if arg < 0 then raise Undefined_input
   else raise Malformed
 
 let check_linear_regression lst1 lst2 =
@@ -76,7 +76,7 @@ let check_linear_regression lst1 lst2 =
   let lst2_length = List.length lst2 in
   if
     lst1_length < 2 || lst2_length < 2 || not (lst1_length = lst2_length)
-  then raise Undefined_Input
+  then raise Undefined_input
 
 let bin_to_list str =
   let rec to_list num acc =
@@ -100,14 +100,19 @@ let check_gcd = function
 let replace_ans str_lst ans_ref =
   List.map (fun x -> if x = "ANS" then !ans_ref else x) str_lst
 
+(**[str_to_arg_lst str and_ref] takes a single string input and converts
+   it to a list of strings. List elements are substrings of str split by
+   spaces. All instances of the string "ANS" are replaced by the string
+   in the ref ans_ref *)
+let str_to_arg_lst str ans_ref =
+  replace_ans
+    (List.filter
+       (function "" -> false | _ -> true)
+       (String.split_on_char ' ' str))
+    ans_ref
+
 let parse str ans_ref =
-  let str_list =
-    replace_ans
-      (List.filter
-         (function "" -> false | _ -> true)
-         (String.split_on_char ' ' str))
-      ans_ref
-  in
+  let str_list = str_to_arg_lst str ans_ref in
   match str_list with
   | [ h ] ->
       if str = "ANS" then Ans
@@ -123,27 +128,27 @@ let parse str ans_ref =
         else if str = "sigma" then Sigma
         else if str = "pythag" then Pythag
         else if not (check_supported h) then raise Malformed
-        else raise Undefined_Input
+        else raise Undefined_input
   | [ h; t ] ->
       let str = String.lowercase_ascii h in
       if str = "factorial" then
         check_fact h
-          ( try match int_of_string t with i -> i
-            with Failure s -> raise Undefined_Input )
+          (try match int_of_string t with i -> i
+           with Failure s -> raise Undefined_input)
       else if str = "sin" then Sin (float_of_string t)
       else if str = "cos" then Cos (float_of_string t)
       else if str = "tan" then Tan (float_of_string t)
       else if str = "help" then Help t
-      else raise Undefined_Input
+      else raise Undefined_input
   | h :: t -> (
       let str = String.lowercase_ascii h in
       if str = "fastexp" then
-        try check_fast_exp t with Failure s -> raise Undefined_Input
+        try check_fast_exp t with Failure s -> raise Undefined_input
       else if str = "gcd" then
-        try check_gcd t with Failure s -> raise Undefined_Input
+        try check_gcd t with Failure s -> raise Undefined_input
       else
         try check_string_input h (t |> List.map float_of_string)
-        with Failure s -> raise Undefined_Input )
+        with Failure s -> raise Undefined_input)
   | [] -> raise Empty
 
 (** [parse_list str] will try to create a list of floats from a string *)
@@ -154,4 +159,4 @@ let parse_list str =
       (String.split_on_char ' ' str)
   in
   try match str_list |> List.map float_of_string with list -> list
-  with Failure s -> raise Undefined_Input
+  with Failure s -> raise Undefined_input

@@ -1,10 +1,10 @@
 (** This module consists of basic operations for the calculator *)
 
 (** raised when a command input is not in domain of function*)
-exception Undefined_Input
+exception Undefined_input
 
 (** raised when a command ouput is too large*)
-exception Integer_Overflow
+exception Integer_overflow
 
 (** [add_tr numlist] sums all elements in [numlist].
 
@@ -33,7 +33,7 @@ val multiply_tr : float list -> float
 
 (** [factorial_tr num acc] returns the factorial of [num].
 
-    Raises: [Undefined_Input] if [num] is negative. [Integer_Overflow]
+    Raises: [Undefined_input] if [num] is negative. [Integer_overflow]
     if output is out of range
 
     Ex: factorial_tr 3 1 = 6. *)

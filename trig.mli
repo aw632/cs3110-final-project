@@ -1,7 +1,7 @@
 (** This module consists of trig operations for the calculator *)
 
 (** raised when a input creates an impossible triangle*)
-exception TriangleDNE
+exception Triangle_DNE
 
 (** [sin arg] returns the sine function at degree [arg].
 
@@ -21,7 +21,7 @@ val tan : float -> float
 (** [pythag part length1 length2] returns the third side of a right
     angle triangle, depending on if [part] is a leg or hypotenuse.
 
-    Raises: [TriangleDNE] if inputs create an impossible triangle.
+    Raises: [Triangle_DNE] if inputs create an impossible triangle.
 
     Ex: pythag "hypotenuse" 3. 4. = 5. *)
 val pythag : string -> float -> float -> float

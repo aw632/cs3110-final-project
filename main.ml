@@ -50,13 +50,13 @@ let make_command_string () =
 (** [read_float] takes a string input from the user and makes it a
     float.
 
-    Raises Undefined_Input if the string cannot be made a float*)
+    Raises Undefined_input if the string cannot be made a float*)
 let read_float () =
   let user_input = read_line () in
   if user_input = "ANS" then !ans |> float_of_string
   else
     try user_input |> String.trim |> float_of_string
-    with Failure s -> raise Undefined_Input
+    with Failure s -> raise Undefined_input
 
 (**[prompt_variable_input lst] will prompt the user to input a value for
    every variable in the list. It returns a map where the keys are the
@@ -73,8 +73,8 @@ let rec prompt_variable_input lst (var_map : float VariableMap.t) =
   | [] -> var_map
 
 (** [check_degree i] checks if [i] is greater than or equal to 1. Raises
-    [Undefined_Input] otherwise. *)
-let check_degree i = if i >= 1 then i else raise Undefined_Input
+    [Undefined_input] otherwise. *)
+let check_degree i = if i >= 1 then i else raise Undefined_input
 
 let print_linreg_result prompt =
   print_string " First list:";
@@ -288,34 +288,24 @@ let rec ask_for_commands () =
         [ ANSITerminal.red; ANSITerminal.Bold ]
         "\n Did not recognize the command given! Please try again!\n";
       ask_for_commands ()
-  | Malformed ->
+  | Help.Malformed | Commands.Malformed ->
       ANSITerminal.print_string
         [ ANSITerminal.red; ANSITerminal.Bold ]
         "\n Did not recognize the command given! Please try again!\n";
       ask_for_commands ()
-  | Commands.Malformed ->
-      ANSITerminal.print_string
-        [ ANSITerminal.red; ANSITerminal.Bold ]
-        "\n Did not recognize the command given! Please try again!\n";
-      ask_for_commands ()
-  | Undefined_Input ->
+  | Commands.Undefined_input | BasicOp.Undefined_input ->
       ANSITerminal.print_string
         [ ANSITerminal.red; ANSITerminal.Bold ]
         "\n Input is undefined for this operation! Please try again!\n";
       ask_for_commands ()
-  | BasicOp.Undefined_Input ->
-      ANSITerminal.print_string
-        [ ANSITerminal.red; ANSITerminal.Bold ]
-        "\n Input is undefined for this operation! Please try again!\n";
-      ask_for_commands ()
-  | FrontEnd.Undefined_Parse ->
+  | FrontEnd.Undefined_parse ->
       ANSITerminal.print_string
         [ ANSITerminal.red; ANSITerminal.Bold ]
         "\n\
         \ This is not a valid polynomial function or binary operation. \
          Please try again! \n";
       ask_for_commands ()
-  | Integer_Overflow ->
+  | Integer_overflow ->
       ANSITerminal.print_string
         [ ANSITerminal.red; ANSITerminal.Bold ]
         "\n\
@@ -331,7 +321,7 @@ let rec ask_for_commands () =
         [ ANSITerminal.red; ANSITerminal.Bold ]
         "\n This command is empty. Please try again!\n";
       ask_for_commands ()
-  | TriangleDNE ->
+  | Triangle_DNE ->
       ANSITerminal.print_string
         [ ANSITerminal.red; ANSITerminal.Bold ]
         "\n\

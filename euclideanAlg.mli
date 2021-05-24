@@ -1,7 +1,8 @@
 (** [fast_exp m n bin_list acc] gives the result of m ^ e mod n.
     [bin_list] is the binary representation going left to right of e.
 
-    Requires e,m and n are positive. *)
+    Requires e,m and n are positive. Raises [Undefined_input] if
+    bin_list is not binary*)
 val fast_exp : int -> int -> int list -> int -> int
 
 (** [gcd m n] returns the greatest common denominator of m and n. If m

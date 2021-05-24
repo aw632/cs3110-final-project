@@ -9,17 +9,17 @@ type vars = float VariableMap.t
 
 let empty_variable_map = VariableMap.empty
 
-exception Undefined_Parse
+exception Undefined_parse
 
-exception Invalid_Calculation
+exception Invalid_calculation
 
 (** [parse s] parses [s] into an AST. *)
 let parse (s : string) : expr =
   let lexbuf = Lexing.from_string s in
   let ast =
     try Parser.prog Lexer.read lexbuf with
-    | Lexer.SyntaxError msg -> raise Undefined_Parse
-    | Parser.Error -> raise Undefined_Parse
+    | Lexer.SyntaxError msg -> raise Undefined_parse
+    | Parser.Error -> raise Undefined_parse
   in
   ast
 
@@ -75,7 +75,7 @@ let rec make_polynomial ans_ref poly_node =
         make_polynomial ans_ref
           (Binop (bop, exp1, make_polynomial ans_ref exp2))
       else PolyFun (poly_linear_combo (exp1, exp2) bop)
-  | _ -> raise Undefined_Parse
+  | _ -> raise Undefined_parse
 
 (** [make_derivative poly_node] creates an OCaml Anonymous function
     representing dual operations.
@@ -108,7 +108,7 @@ let rec make_derivative poly_node =
       else if not (is_function exp2) then
         make_derivative (Binop (bop, exp1, make_derivative exp2))
       else PolyFun (poly_linear_combo (exp1, exp2) bop)
-  | _ -> raise Undefined_Parse
+  | _ -> raise Undefined_parse
 
 (** [make_hderivative poly_node] creates an OCaml Anonymous function
     representing dual operations of the nth degree.
@@ -144,7 +144,7 @@ let rec make_hderivative degree poly_node =
         make_hderivative degree
           (Binop (bop, exp1, make_hderivative degree exp2))
       else PolyFun (poly_linear_combo (exp1, exp2) bop)
-  | _ -> raise Undefined_Parse
+  | _ -> raise Undefined_parse
 
 (** [get_fun f] unrwaps [PolyFun f] and returns [f]. Requires: [f] is of
     type [PolyFun]. *)
@@ -168,7 +168,7 @@ let perform_binop (exp1, exp2) bop =
   match (exp1, exp2) with
   | Float float1, Float float2 ->
       let result = (get_bop bop) float1 float2 in
-      if result = infinity then raise Invalid_Calculation else result
+      if result = infinity then raise Invalid_calculation else result
   | _ -> failwith "precondition violated"
 
 let rec reduce_bin_op binop =
@@ -179,7 +179,7 @@ let rec reduce_bin_op binop =
       else if not (is_reduced exp2) then
         reduce_bin_op (Binop (bop, exp1, reduce_bin_op exp2))
       else Float (perform_binop (exp1, exp2) bop)
-  | _ -> raise Invalid_Calculation
+  | _ -> raise Invalid_calculation
 
 (** [multi_linear_combo (exp1,exp2) bop] is the linear combination
     (using bop) of the two multivariable functions of exp1 and exp2
@@ -252,4 +252,4 @@ let rec make_multivar multi_node (var_lst : string list) =
           (Binop (bop, exp1, multifun2))
           (multifun2 |> get_var_lst)
       else MultiFun (multivar_linear_combo (exp1, exp2) bop, var_lst)
-  | _ -> raise Undefined_Parse
+  | _ -> raise Undefined_parse

@@ -25,7 +25,7 @@ let linear_regression list1 list2 =
   let lst2_length = List.length list2 in
   if
     lst1_length < 2 || lst2_length < 2 || not (lst1_length = lst2_length)
-  then raise Undefined_Input
+  then raise Undefined_input
   else
     let sum_x = BasicOp.add_tr list1 in
     let sum_y = BasicOp.add_tr list2 in

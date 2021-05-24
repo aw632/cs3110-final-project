@@ -44,7 +44,7 @@ exception Empty
 exception Malformed
 
 (** raised when input is not well-defined *)
-exception Undefined_Input
+exception Undefined_input
 
 val check_linear_regression : float list -> float list -> unit
 

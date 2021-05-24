@@ -110,10 +110,10 @@ let basic_op_tests =
     factorial_test_exception
       "Factorial of negative numbers raises an Undefined_Input \
        exception"
-      BasicOp.Undefined_Input (-4) 1;
+      BasicOp.Undefined_input (-4) 1;
     factorial_test_exception
       "Factorial of 23 raises an Integer_Overflow exception"
-      Integer_Overflow 23 1;
+      Integer_overflow 23 1;
     fast_exp_test "480272 ^ 293 mod 487001 is 2024" 2024 480272 487001
       [ 1; 0; 0; 1; 0; 0; 1; 0; 1 ];
     fast_exp_test "7 ^ 64 mod 2399 is 763" 763 7 2399
@@ -212,9 +212,9 @@ let binop_parse_tests =
     binop_parse_test " (5/2) + 2 ^ 5 is 34.5" 34.5 "(5 / 2) + 2 ^ 5";
     binop_test_exception
       "5/0+2 *  5 raises Invalid_Calculation exception"
-      Invalid_Calculation "5/0+2 *  5";
+      Invalid_calculation "5/0+2 *  5";
     binop_test_exception "5++++ raises Undefined_Parse exception"
-      Undefined_Parse "5++++";
+      Undefined_parse "5++++";
   ]
 
 let parser_ast_test name expected_output input =
