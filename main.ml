@@ -269,6 +269,11 @@ let rec ask_for_commands () =
         [ ANSITerminal.red; ANSITerminal.Bold ]
         "\n Did not recognize the command given! Please try again!\n";
       ask_for_commands ()
+  | Commands.Malformed ->
+      ANSITerminal.print_string
+        [ ANSITerminal.red; ANSITerminal.Bold ]
+        "\n Did not recognize the command given! Please try again!\n";
+      ask_for_commands ()
   | Undefined_Input ->
       ANSITerminal.print_string
         [ ANSITerminal.red; ANSITerminal.Bold ]
