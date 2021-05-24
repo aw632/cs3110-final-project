@@ -19,15 +19,15 @@ let uchars_maker arr =
 let time_converter utim =
   let record = utim |> Unix.localtime in
   "【"
-  ^ (if record.tm_hour mod 12 < 10 then
-     "0" ^ string_of_int (record.tm_hour mod 12)
-    else string_of_int (record.tm_hour mod 12))
+  ^ ( if record.tm_hour mod 12 < 10 then
+      "0" ^ string_of_int (record.tm_hour mod 12)
+    else string_of_int (record.tm_hour mod 12) )
   ^ ":"
-  ^ (if record.tm_min < 10 then "0" ^ string_of_int record.tm_min
-    else string_of_int record.tm_min)
+  ^ ( if record.tm_min < 10 then "0" ^ string_of_int record.tm_min
+    else string_of_int record.tm_min )
   ^ ":"
-  ^ (if record.tm_sec < 10 then "0" ^ string_of_int record.tm_sec
-    else string_of_int record.tm_sec)
+  ^ ( if record.tm_sec < 10 then "0" ^ string_of_int record.tm_sec
+    else string_of_int record.tm_sec )
   ^ (if record.tm_hour > 12 then " PM" else " AM")
   ^ " 】"
 
@@ -87,10 +87,10 @@ let print_linreg_result prompt =
   let list2 = Commands.parse_list input2 in
   let tuple = linear_regression list1 list2 in
   print_endline
-    ("\n In the form y=ax+b, a = "
+    ( "\n In the form y=ax+b, a = "
     ^ string_of_float (fst tuple)
     ^ " and b = "
-    ^ string_of_float (snd tuple));
+    ^ string_of_float (snd tuple) );
   prompt
 
 let print_poly_result prompt =
@@ -289,7 +289,7 @@ let rec ask_for_commands () =
   | Failure _ ->
       let excep_f =
         I.string
-          A.(fg (rgb 3 0 1) ++ st bold)
+          A.(fg lightred ++ st bold)
           "Did not recognize the command given! Please try again!"
       in
       I.(pad ~l:1 ~b:1 excep_f) |> Notty_unix.output_image;
@@ -297,7 +297,7 @@ let rec ask_for_commands () =
   | Help.Malformed | Commands.Malformed ->
       let excep_f2 =
         I.string
-          A.(fg white ++ st bold)
+          A.(fg lightred ++ st bold)
           "Did not recognize the command given! Please try again!"
       in
       I.(pad ~l:1 ~b:1 excep_f2) |> Notty_unix.output_image;
@@ -305,7 +305,7 @@ let rec ask_for_commands () =
   | Commands.Undefined_input | BasicOp.Undefined_input ->
       let excep_u =
         I.string
-          A.(fg white ++ st bold)
+          A.(fg lightred ++ st bold)
           "Input is undefined for this operation! Please try again!"
       in
       I.(pad ~l:1 ~b:1 excep_u) |> Notty_unix.output_image;
@@ -313,11 +313,13 @@ let rec ask_for_commands () =
   | FrontEnd.Undefined_parse ->
       let excep_up =
         I.string
-          A.(fg white ++ st bold)
+          A.(fg lightred ++ st bold)
           "This is not a valid polynomial function or binary"
       in
       let excep_up2 =
-        I.string A.(fg white ++ st bold) "operation. Please try again!"
+        I.string
+          A.(fg lightred ++ st bold)
+          "operation. Please try again!"
       in
       I.(pad ~l:1 ~b:1 excep_up) |> Notty_unix.output_image;
       I.(pad ~l:1 ~b:1 excep_up2) |> Notty_unix.output_image;
@@ -325,17 +327,17 @@ let rec ask_for_commands () =
   | Integer_overflow ->
       let excep_i =
         I.string
-          A.(fg white ++ st bold)
+          A.(fg lightred ++ st bold)
           "The output for this operation is too large. Please try"
       in
-      let excep_i2 = I.string A.(fg white ++ st bold) "again! " in
+      let excep_i2 = I.string A.(fg lightred ++ st bold) "again! " in
       I.(pad ~l:1 ~b:1 excep_i) |> Notty_unix.output_image;
       I.(pad ~l:1 ~b:1 excep_i2) |> Notty_unix.output_image;
       ask_for_commands ()
   | Division_by_zero ->
       let excep_d =
         I.string
-          A.(fg white ++ st bold)
+          A.(fg lightred ++ st bold)
           "You cannot divide by zero. Please try again!"
       in
       I.(pad ~l:1 ~b:1 excep_d) |> Notty_unix.output_image;
@@ -343,7 +345,7 @@ let rec ask_for_commands () =
   | Empty ->
       let excep_3 =
         I.string
-          A.(fg white ++ st bold)
+          A.(fg lightred ++ st bold)
           "This command is empty. Please try again!"
       in
       I.(pad ~l:1 ~b:1 excep_3) |> Notty_unix.output_image;
@@ -351,7 +353,7 @@ let rec ask_for_commands () =
   | Triangle_DNE ->
       let excep_t =
         I.string
-          A.(fg white ++ st bold)
+          A.(fg lightred ++ st bold)
           "These two sides do not form a plausible triangle. Please try"
       in
       let excep_t2 = I.string A.(fg white ++ st bold) "again! " in
