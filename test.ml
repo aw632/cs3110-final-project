@@ -17,11 +17,11 @@ open FrontEnd
     not used.
 
     The OUnit below tests the following modules directly or indirectly:
-    BasicOp Commands EuclideanAlg Dual Derviative StatOp MatrixDual
+    BasicOp Commands EuclideanAlg Dual Derviative StatOp MatrixDual Trig
 
     The OUnit does not test the following modules: Author Main Help
 
-    The following modules were tested manually: Main
+    The following modules were tested manually: Main HDerivative
 
     We manually tested the REPL, as it is quite difficult to test it
     with OUnit. However, the Main module (which is the REPL) is mainly a
@@ -34,7 +34,10 @@ open FrontEnd
     are mathematically proven to be correct. We only tested that the AST
     was able to parse a derivative and evaluate it - using dual numbers
     \- successfully. Dual Numbers in matrix form were tested because of
-    the additional complexity of the double array data structure. *)
+    the additional complexity of the double array data structure.
+
+    Higher order derivatives were tested manually due to some
+    difficulties scaling the Taylor Expansion in test cases. *)
 
 let basic_op_test name expected_output f input_list =
   name >:: fun info ->
