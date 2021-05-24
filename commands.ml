@@ -100,6 +100,32 @@ let check_gcd = function
 let replace_ans str_lst ans_ref =
   List.map (fun x -> if x = "ANS" then !ans_ref else x) str_lst
 
+let parse_noinput_helper h =
+  let str = String.lowercase_ascii h in
+  if str = "exit" then Exit
+  else if str = "menu" then Menu
+  else if str = "linreg" then LinReg
+  else if str = "poly" then Poly
+  else if str = "multivar" then MultiVar
+  else if str = "derivative" then Derivative
+  else if str = "hderivative" then HDerivative
+  else if str = "sigma" then Sigma
+  else if str = "pythag" then Pythag
+  else if not (check_supported h) then raise Malformed
+  else raise Undefined_Input
+
+let parse_trig_helper h t =
+  let str = String.lowercase_ascii h in
+  if str = "factorial" then
+    check_fact h
+      (try match int_of_string t with i -> i
+       with Failure s -> raise Undefined_Input)
+  else if str = "sin" then Sin (float_of_string t)
+  else if str = "cos" then Cos (float_of_string t)
+  else if str = "tan" then Tan (float_of_string t)
+  else if str = "help" then Help t
+  else raise Undefined_Input
+
 let parse str ans_ref =
   let str_list =
     replace_ans
@@ -109,32 +135,8 @@ let parse str ans_ref =
       ans_ref
   in
   match str_list with
-  | [ h ] ->
-      if str = "ANS" then Ans
-      else
-        let str = String.lowercase_ascii h in
-        if str = "exit" then Exit
-        else if str = "menu" then Menu
-        else if str = "linreg" then LinReg
-        else if str = "poly" then Poly
-        else if str = "multivar" then MultiVar
-        else if str = "derivative" then Derivative
-        else if str = "hderivative" then HDerivative
-        else if str = "sigma" then Sigma
-        else if str = "pythag" then Pythag
-        else if not (check_supported h) then raise Malformed
-        else raise Undefined_Input
-  | [ h; t ] ->
-      let str = String.lowercase_ascii h in
-      if str = "factorial" then
-        check_fact h
-          (try match int_of_string t with i -> i
-           with Failure s -> raise Undefined_Input)
-      else if str = "sin" then Sin (float_of_string t)
-      else if str = "cos" then Cos (float_of_string t)
-      else if str = "tan" then Tan (float_of_string t)
-      else if str = "help" then Help t
-      else raise Undefined_Input
+  | [ h ] -> if str = "ANS" then Ans else parse_noinput_helper h
+  | [ h; t ] -> parse_trig_helper h t
   | h :: t -> (
       let str = String.lowercase_ascii h in
       if str = "fastexp" then
