@@ -23,11 +23,14 @@ let parse (s : string) : expr =
   in
   ast
 
+(** [is_function f] returns [true] if [f] is a function, and [false]
+    otherwise. *)
 let is_function = function
   | PolyFun _ -> true
   | MultiFun _ -> true
   | _ -> false
 
+(** [get_bop f] returns the appropriate [bop] of [f]. *)
 let get_bop = function
   | Add -> ( +. )
   | Sub -> ( -. )
@@ -135,16 +138,19 @@ let rec make_hderivative degree poly_node =
         (fun variable ->
           H.make_variable variable dim |> MatrixDual.get_last_dual)
   | Binop (bop, exp1, exp2) ->
-      (* if [is_function exp1] is false, i.e. exp1 is not a function,
-         then recurse on it*)
-      if not (is_function exp1) then
-        make_hderivative degree
-          (Binop (bop, make_hderivative degree exp1, exp2))
-      else if not (is_function exp2) then
-        make_hderivative degree
-          (Binop (bop, exp1, make_hderivative degree exp2))
-      else PolyFun (poly_linear_combo (exp1, exp2) bop)
+      make_hderivative_helper bop exp1 exp2 degree
   | _ -> raise Undefined_Parse
+
+and make_hderivative_helper bop exp1 exp2 degree =
+  (* if [is_function exp1] is false, i.e. exp1 is not a function, then
+     recurse on it*)
+  if not (is_function exp1) then
+    make_hderivative degree
+      (Binop (bop, make_hderivative degree exp1, exp2))
+  else if not (is_function exp2) then
+    make_hderivative degree
+      (Binop (bop, exp1, make_hderivative degree exp2))
+  else PolyFun (poly_linear_combo (exp1, exp2) bop)
 
 (** [get_fun f] unrwaps [PolyFun f] and returns [f]. Requires: [f] is of
     type [PolyFun]. *)
@@ -171,6 +177,8 @@ let perform_binop (exp1, exp2) bop =
       if result = infinity then raise Invalid_Calculation else result
   | _ -> failwith "precondition violated"
 
+(** [reduce_bin_op binop] reduces the expressions to their most
+    simplified values. *)
 let rec reduce_bin_op binop =
   match binop with
   | Binop (bop, exp1, exp2) ->
@@ -241,15 +249,18 @@ let rec make_multivar multi_node (var_lst : string list) =
             VariableMap.find variable variable_values),
           new_var_lst )
   | Binop (bop, exp1, exp2) ->
-      if not (is_function exp1) then
-        let multifun1 = make_multivar exp1 var_lst in
-        make_multivar
-          (Binop (bop, multifun1, exp2))
-          (multifun1 |> get_var_lst)
-      else if not (is_function exp2) then
-        let multifun2 = make_multivar exp2 var_lst in
-        make_multivar
-          (Binop (bop, exp1, multifun2))
-          (multifun2 |> get_var_lst)
-      else MultiFun (multivar_linear_combo (exp1, exp2) bop, var_lst)
+      multivar_binop_helper bop exp1 exp2 var_lst
   | _ -> raise Undefined_Parse
+
+and multivar_binop_helper bop exp1 exp2 var_lst =
+  if not (is_function exp1) then
+    let multifun1 = make_multivar exp1 var_lst in
+    make_multivar
+      (Binop (bop, multifun1, exp2))
+      (multifun1 |> get_var_lst)
+  else if not (is_function exp2) then
+    let multifun2 = make_multivar exp2 var_lst in
+    make_multivar
+      (Binop (bop, exp1, multifun2))
+      (multifun2 |> get_var_lst)
+  else MultiFun (multivar_linear_combo (exp1, exp2) bop, var_lst)
