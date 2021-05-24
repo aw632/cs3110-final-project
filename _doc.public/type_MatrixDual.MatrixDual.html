@@ -13,11 +13,18 @@
 <link title="Main" rel="Chapter" href="Main.html">
 <link title="Derivative" rel="Chapter" href="Derivative.html">
 <link title="Dual" rel="Chapter" href="Dual.html">
-<link title="MatrixDual" rel="Chapter" href="MatrixDual.html"><title>MatrixDual.MatrixDual</title>
+<link title="MatrixDual" rel="Chapter" href="MatrixDual.html">
+<link title="HDerivative" rel="Chapter" href="HDerivative.html">
+<link title="EuclideanAlg" rel="Chapter" href="EuclideanAlg.html">
+<link title="Help" rel="Chapter" href="Help.html">
+<link title="HelpMessage" rel="Chapter" href="HelpMessage.html">
+<link title="Trig" rel="Chapter" href="Trig.html">
+<link title="StatOp" rel="Chapter" href="StatOp.html"><title>MatrixDual.MatrixDual</title>
 </head>
 <body>
 <code class="code"><span class="keyword">sig</span><br>
 &nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;float&nbsp;<span class="constructor">Stdlib</span>.<span class="constructor">Array</span>.t&nbsp;<span class="constructor">Stdlib</span>.<span class="constructor">Array</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;get_last_dual&nbsp;:&nbsp;<span class="constructor">MatrixDual</span>.<span class="constructor">MatrixDual</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;float<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;make_matrix&nbsp;:&nbsp;int&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;float&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">MatrixDual</span>.<span class="constructor">MatrixDual</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;make_scalar&nbsp;:&nbsp;int&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;float&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">MatrixDual</span>.<span class="constructor">MatrixDual</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;matrix_add&nbsp;:<br>
@@ -27,7 +34,8 @@
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">MatrixDual</span>.<span class="constructor">MatrixDual</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">MatrixDual</span>.<span class="constructor">MatrixDual</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">MatrixDual</span>.<span class="constructor">MatrixDual</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;matrix_div&nbsp;:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;float&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">MatrixDual</span>.<span class="constructor">MatrixDual</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">MatrixDual</span>.<span class="constructor">MatrixDual</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">MatrixDual</span>.<span class="constructor">MatrixDual</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">MatrixDual</span>.<span class="constructor">MatrixDual</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">MatrixDual</span>.<span class="constructor">MatrixDual</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;matrix_mult&nbsp;:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">MatrixDual</span>.<span class="constructor">MatrixDual</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">MatrixDual</span>.<span class="constructor">MatrixDual</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">MatrixDual</span>.<span class="constructor">MatrixDual</span>.t<br>

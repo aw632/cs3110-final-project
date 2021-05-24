@@ -94,7 +94,13 @@ let help str =
        11. "
   | "derivative" ->
       "The derivative function will prompt for a polynomial function f \
-       as an input and a value v. It will then evalute f'(v) and \
+       as an input and a value v. It will then evaluate f'(v) and \
        return the value. For example, for f(v) = x^2 and v = 3, it \
        will return f'(3) = 6. "
+  | "hderivative" ->
+      "The higher order derivative function will prompt for a \
+       polynomial function f as an input, a degree of differentiation \
+       h, and a value v. It will then f'(v) h times and return the \
+       value. For example, for f(v) = x^3, degree h = 2, and value v = \
+       3, it will return f''(3) = 18. "
   | _ -> raise Malformed

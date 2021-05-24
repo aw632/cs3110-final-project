@@ -20,6 +20,7 @@ type command =
   | Poly
   | MultiVar
   | Derivative
+  | HDerivative
   | Sigma
   | Menu
   | Help of string
@@ -118,6 +119,7 @@ let parse str ans_ref =
         else if str = "poly" then Poly
         else if str = "multivar" then MultiVar
         else if str = "derivative" then Derivative
+        else if str = "hderivative" then HDerivative
         else if str = "sigma" then Sigma
         else if str = "pythag" then Pythag
         else if not (check_supported h) then raise Malformed
@@ -126,8 +128,8 @@ let parse str ans_ref =
       let str = String.lowercase_ascii h in
       if str = "factorial" then
         check_fact h
-          (try match int_of_string t with i -> i
-           with Failure s -> raise Undefined_Input)
+          ( try match int_of_string t with i -> i
+            with Failure s -> raise Undefined_Input )
       else if str = "sin" then Sin (float_of_string t)
       else if str = "cos" then Cos (float_of_string t)
       else if str = "tan" then Tan (float_of_string t)
@@ -141,7 +143,7 @@ let parse str ans_ref =
         try check_gcd t with Failure s -> raise Undefined_Input
       else
         try check_string_input h (t |> List.map float_of_string)
-        with Failure s -> raise Undefined_Input)
+        with Failure s -> raise Undefined_Input )
   | [] -> raise Empty
 
 (** [parse_list str] will try to create a list of floats from a string *)

@@ -72,14 +72,147 @@ let rec prompt_variable_input lst (var_map : float VariableMap.t) =
       prompt_variable_input t updated_var_map
   | [] -> var_map
 
+(** [check_degree i] checks if [i] is greater than or equal to 1. Raises
+    [Undefined_Input] otherwise. *)
+let check_degree i = if i >= 1 then i else raise Undefined_Input
+
+let print_linreg_result prompt =
+  print_string " First list:";
+  print_string " > ";
+  let input1 = read_line () in
+  let list1 = Commands.parse_list input1 in
+  print_string " Second list:";
+  print_string " > ";
+  let input2 = read_line () in
+  let list2 = Commands.parse_list input2 in
+  let tuple = linear_regression list1 list2 in
+  print_endline
+    ("\n In the form y=ax+b, a = "
+    ^ string_of_float (fst tuple)
+    ^ " and b = "
+    ^ string_of_float (snd tuple));
+  prompt
+
+let print_poly_result prompt =
+  print_endline " Function: ";
+  print_string " > ";
+  let user_input = read_line () in
+  let polyFun =
+    user_input |> FrontEnd.parse
+    |> FrontEnd.make_polynomial ans
+    |> FrontEnd.get_fun
+  in
+  print_endline " Value to evaluate: ";
+  print_string " > ";
+  let value = read_float () in
+  let result = value |> polyFun |> string_of_float in
+  ans := result;
+  print_endline ("Answer: " ^ result);
+  prompt
+
+let print_multivar_result prompt =
+  print_endline " Function: ";
+  print_string " > ";
+  let user_input = read_line () in
+  let multivar =
+    FrontEnd.make_multivar (user_input |> FrontEnd.parse) []
+  in
+  let var_lst =
+    multivar |> FrontEnd.get_var_lst |> List.sort_uniq compare
+  in
+  let multi_fun = multivar |> FrontEnd.get_multi_fun in
+  let var_map = prompt_variable_input var_lst VariableMap.empty in
+  let result = var_map |> multi_fun |> string_of_float in
+  ans := result;
+  print_endline ("Answer: " ^ result);
+  prompt
+
+let print_derivative_result prompt =
+  print_endline " Function to differentiate: ";
+  print_string " > ";
+  let user_input = read_line () in
+  let polyFunDerivative =
+    user_input |> FrontEnd.parse |> FrontEnd.make_derivative
+    |> FrontEnd.get_fun
+  in
+  print_endline " Value to evaluate: ";
+  print_string " > ";
+  let value = read_float () in
+  let result = value |> polyFunDerivative |> string_of_float in
+  ans := result;
+  print_endline ("Answer: " ^ result);
+  prompt
+
+let print_hderivative_result prompt =
+  print_endline " Function to differentiate: ";
+  print_string " > ";
+  let user_input = read_line () in
+  print_endline " Degree of Differentiation: ";
+  print_string " > ";
+  let degree = read_int () |> check_degree in
+  let polyFunDerivative =
+    user_input |> FrontEnd.parse
+    |> FrontEnd.make_hderivative degree
+    |> FrontEnd.get_fun
+  in
+  print_endline " Value to evaluate: ";
+  print_string " > ";
+  let value = read_float () in
+  let result =
+    (value |> polyFunDerivative)
+    *. float_of_int (BasicOp.factorial_tr degree 1)
+    |> string_of_float
+  in
+  ans := result;
+  print_endline ("Answer: " ^ result);
+  prompt
+
+let print_pythag_result prompt =
+  print_endline
+    " Side you are looking for (type \"hypotenuse\" or \"leg\"): ";
+  print_string " > ";
+  let user_input = read_line () in
+  print_endline "Length of remaining side 1 (hypotenuse or leg)";
+  print_string " > ";
+  let user_input1 = float_of_string (read_line ()) in
+  print_endline "Length of remaining side 2 (leg)";
+  print_string " > ";
+  let user_input2 = float_of_string (read_line ()) in
+  let result =
+    pythag user_input user_input1 user_input2 |> string_of_float
+  in
+  ans := result;
+  print_endline ("\n" ^ result);
+  prompt
+
+let print_sigma_result prompt =
+  print_endline " First: ";
+  print_string " > ";
+  let a = read_float () in
+  print_endline " Second: ";
+  print_string " > ";
+  let b = read_float () in
+  print_endline " Function: ";
+  print_string " > ";
+  let user_input = read_line () in
+  let polyFun =
+    user_input |> FrontEnd.parse
+    |> FrontEnd.make_polynomial ans
+    |> FrontEnd.get_fun
+  in
+  let result = summation_tr a b polyFun |> string_of_float in
+  ans := result;
+  print_endline ("Answer: " ^ result);
+  prompt
+
+let print_result computation_str prompt =
+  let result = computation_str in
+  ans := result;
+  print_endline ("\n" ^ result);
+  prompt
+
 (** [ask_for_commands x] performs a calcuation for an inputted command. *)
 let rec ask_for_commands () =
-  let print_result computation_str =
-    let result = computation_str in
-    ans := result;
-    print_endline ("\n" ^ result);
-    ask_for_commands ()
-  in
   (* The arguments of ask_for_commands can be edited to support
      history/accumulation *)
   make_command_string () |> output_image;
@@ -89,125 +222,57 @@ let rec ask_for_commands () =
     | Ans ->
         print_endline !ans;
         ask_for_commands ()
-    | Add arguments -> print_result (add_tr arguments |> Float.to_string)
+    | Add arguments ->
+        print_result
+          (add_tr arguments |> Float.to_string)
+          ask_for_commands ()
     | Multiply arguments ->
-        print_result (multiply_tr arguments |> Float.to_string)
+        print_result
+          (multiply_tr arguments |> Float.to_string)
+          ask_for_commands ()
     | Subtract arguments ->
-        print_result (subtract_tr arguments |> Float.to_string)
+        print_result
+          (subtract_tr arguments |> Float.to_string)
+          ask_for_commands ()
     | Divide arguments ->
-        print_result (divide_tr arguments |> Float.to_string)
+        print_result
+          (divide_tr arguments |> Float.to_string)
+          ask_for_commands ()
     | Factorial arguments ->
-        print_result (factorial_tr arguments 1 |> string_of_int)
+        print_result
+          (factorial_tr arguments 1 |> string_of_int)
+          ask_for_commands ()
     | FastExp (m, n, bin_list) ->
-        print_result (fast_exp m n bin_list 1 |> string_of_int)
-    | GCD (m, n) -> print_result (gcd m n |> string_of_int)
-    | Mean arguments -> print_result (mean arguments |> Float.to_string)
+        print_result
+          (fast_exp m n bin_list 1 |> string_of_int)
+          ask_for_commands ()
+    | GCD (m, n) ->
+        print_result (gcd m n |> string_of_int) ask_for_commands ()
+    | Mean arguments ->
+        print_result
+          (mean arguments |> Float.to_string)
+          ask_for_commands ()
     | Median arguments ->
-        print_result (median arguments |> Float.to_string)
+        print_result
+          (median arguments |> Float.to_string)
+          ask_for_commands ()
     | StandardDev arguments ->
-        print_result (standard_deviation arguments |> Float.to_string)
-    | LinReg ->
-        print_string " First list:";
-        print_string " > ";
-        let input1 = read_line () in
-        let list1 = Commands.parse_list input1 in
-        print_string " Second list:";
-        print_string " > ";
-        let input2 = read_line () in
-        let list2 = Commands.parse_list input2 in
-        let tuple = linear_regression list1 list2 in
-        print_endline
-          ("\n In the form y=ax+b, a = "
-          ^ string_of_float (fst tuple)
-          ^ " and b = "
-          ^ string_of_float (snd tuple));
-        ask_for_commands ()
-    | Poly ->
-        print_endline " Function: ";
-        print_string " > ";
-        let user_input = read_line () in
-        let polyFun =
-          user_input |> FrontEnd.parse
-          |> FrontEnd.make_polynomial ans
-          |> FrontEnd.get_fun
-        in
-        print_endline " Value to evaluate: ";
-        print_string " > ";
-        let value = read_float () in
-        let result = value |> polyFun |> string_of_float in
-        ans := result;
-        print_endline ("Answer: " ^ result);
-        ask_for_commands ()
-    | MultiVar ->
-        print_endline " Function: ";
-        print_string " > ";
-        let user_input = read_line () in
-        let multivar =
-          FrontEnd.make_multivar (user_input |> FrontEnd.parse) []
-        in
-        let var_lst =
-          multivar |> FrontEnd.get_var_lst |> List.sort_uniq compare
-        in
-        let multi_fun = multivar |> FrontEnd.get_multi_fun in
-        let var_map = prompt_variable_input var_lst VariableMap.empty in
-        let result = var_map |> multi_fun |> string_of_float in
-        ans := result;
-        print_endline ("Answer: " ^ result);
-        ask_for_commands ()
-    | Sin t -> print_result (sin t |> string_of_float)
-    | Cos t -> print_result (cos t |> string_of_float)
-    | Tan t -> print_result (tan t |> string_of_float)
-    | Pythag ->
-        print_endline
-          " Side you are looking for (type \"hypotenuse\" or \"leg\"): ";
-        print_string " > ";
-        let user_input = read_line () in
-        print_endline "Length of remaining side 1 (hypotenuse or leg)";
-        print_string " > ";
-        let user_input1 = float_of_string (read_line ()) in
-        print_endline "Length of remaining side 2 (leg)";
-        print_string " > ";
-        let user_input2 = float_of_string (read_line ()) in
-        let result =
-          pythag user_input user_input1 user_input2 |> string_of_float
-        in
-        ans := result;
-        print_endline ("\n" ^ result);
-        ask_for_commands ()
-    | Derivative ->
-        print_endline " Function to differentiate: ";
-        print_string " > ";
-        let user_input = read_line () in
-        let polyFunDerivative =
-          user_input |> FrontEnd.parse |> FrontEnd.make_derivative
-          |> FrontEnd.get_fun
-        in
-        print_endline " Value to evaluate: ";
-        print_string " > ";
-        let value = read_float () in
-        let result = value |> polyFunDerivative |> string_of_float in
-        ans := result;
-        print_endline ("Answer: " ^ result);
-        ask_for_commands ()
-    | Sigma ->
-        print_endline " First: ";
-        print_string " > ";
-        let a = read_float () in
-        print_endline " Second: ";
-        print_string " > ";
-        let b = read_float () in
-        print_endline " Function: ";
-        print_string " > ";
-        let user_input = read_line () in
-        let polyFun =
-          user_input |> FrontEnd.parse
-          |> FrontEnd.make_polynomial ans
-          |> FrontEnd.get_fun
-        in
-        let result = summation_tr a b polyFun |> string_of_float in
-        ans := result;
-        print_endline ("Answer: " ^ result);
-        ask_for_commands ()
+        print_result
+          (standard_deviation arguments |> Float.to_string)
+          ask_for_commands ()
+    | LinReg -> print_linreg_result ask_for_commands ()
+    | Poly -> print_poly_result ask_for_commands ()
+    | MultiVar -> print_multivar_result ask_for_commands ()
+    | Sin t ->
+        print_result (sin t |> string_of_float) ask_for_commands ()
+    | Cos t ->
+        print_result (cos t |> string_of_float) ask_for_commands ()
+    | Tan t ->
+        print_result (tan t |> string_of_float) ask_for_commands ()
+    | Pythag -> print_pythag_result ask_for_commands ()
+    | Derivative -> print_derivative_result ask_for_commands ()
+    | HDerivative -> print_hderivative_result ask_for_commands ()
+    | Sigma -> print_sigma_result ask_for_commands ()
     | Menu ->
         menu_msg ();
         ask_for_commands ()
@@ -228,7 +293,17 @@ let rec ask_for_commands () =
         [ ANSITerminal.red; ANSITerminal.Bold ]
         "\n Did not recognize the command given! Please try again!\n";
       ask_for_commands ()
+  | Commands.Malformed ->
+      ANSITerminal.print_string
+        [ ANSITerminal.red; ANSITerminal.Bold ]
+        "\n Did not recognize the command given! Please try again!\n";
+      ask_for_commands ()
   | Undefined_Input ->
+      ANSITerminal.print_string
+        [ ANSITerminal.red; ANSITerminal.Bold ]
+        "\n Input is undefined for this operation! Please try again!\n";
+      ask_for_commands ()
+  | BasicOp.Undefined_Input ->
       ANSITerminal.print_string
         [ ANSITerminal.red; ANSITerminal.Bold ]
         "\n Input is undefined for this operation! Please try again!\n";

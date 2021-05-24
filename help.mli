@@ -3,5 +3,6 @@
 
     Raises [Malformed] if [str] is not found to be one of the available
     function. *)
+exception Malformed
 
 val help : string -> string
