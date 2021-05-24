@@ -52,6 +52,28 @@ let help str =
       "The mean function takes in multiple inputs as integers or \
        floats. The order does not matter. It will return the average \
        of all inputs as a float. For example, [Mean 2 2 2 6] = 3."
+  | "sin" ->
+      "The sine function takes in one input as an integer or float. It \
+       will return a float that is the sine function evaluated at that \
+       input, treated as an degree. For example, [Sin 90] = 1."
+  | "cos" ->
+      "The cosine function takes in one input as an integer or float. \
+       It will return a float that is the cosine function evaluated at \
+       that input, treated as an degree. For example, [Cos 90] = 0."
+  | "tan" ->
+      "The tangent function takes in one input as an integer or float. \
+       It will return a float that is the tangent function evaluated \
+       at that input, treated as an degree. For example, [Tan 0] = 0."
+  | "pythag" ->
+      "The pythagorean function will find the third side of a right \
+       angle triangle. It will prompt for the side you are looking \
+       for, either a hypotenuse of leg. It will then proceed to ask \
+       for the remaining two sides. The order of input does matter as \
+       it will influence how the calculator treats the input. An \
+       exception will be raised if two sides don't form a plausible \
+       triangle in the order the inputs were received. For example, if \
+       you were looking for the hypotenuse and input 3 and 4, the \
+       function will return 5."
   | "median" ->
       "The median function takes in multiple inputs as integers or \
        floats. The order does not matter. It will sort the inputs and \
