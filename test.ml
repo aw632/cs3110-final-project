@@ -154,7 +154,9 @@ let print_command cmd =
   | Poly -> "Poly"
   | Sigma -> "Sigma"
   | Menu -> "Menu"
+  | Ans -> "Ans"
   | Derivative -> "This is a derivative"
+  | HDerivative -> "This is a derivative to a higher order"
   | Help t -> "Help" ^ t
   | Exit -> "Exit"
   | Pythag -> "Pythagorean"
@@ -167,7 +169,7 @@ let stat_op_tests = []
 let function_parse_test name expected_output str num =
   name >:: fun _ ->
   assert_equal expected_output
-    ((str |> parse |> make_polynomial |> get_fun) num)
+    ((str |> parse |> make_polynomial (ref "0") |> get_fun) num)
     ~printer:string_of_float
 
 let function_parse_tests =
@@ -229,11 +231,20 @@ let parser_ast_tests =
       {|The string "x^2+y" parses to BinOp ((Add), Poly (1.,x,2.), Var (y))|}
       (Binop (Add, Poly (1., "x", 2.), Var "y"))
       "x^2+y";
+    parser_ast_test
+      {|The string "x^2*81" parses to BinOp ((Binop (Mult, Poly (1., "x", 2.), Float 81.))|}
+      (Binop (Mult, Poly (1., "x", 2.), Float 81.))
+      "x^2 * 81";
+    parser_ast_test {|The string "x" parses to  Var ("x")|} (Var "x")
+      "x";
+    parser_ast_test {|The string "21" parses to  Float ("21")|}
+      (Float 21.) "21";
   ]
 
 let parse_test name expected_output input =
   name >:: fun info ->
-  assert_equal expected_output (Commands.parse input)
+  assert_equal expected_output
+    (Commands.parse input (ref "0"))
     ~printer:print_command
 
 let command_tests =
