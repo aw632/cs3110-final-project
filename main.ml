@@ -19,15 +19,15 @@ let uchars_maker arr =
 let time_converter utim =
   let record = utim |> Unix.localtime in
   "【"
-  ^ (if record.tm_hour mod 12 < 10 then
-     "0" ^ string_of_int (record.tm_hour mod 12)
-    else string_of_int (record.tm_hour mod 12))
+  ^ ( if record.tm_hour mod 12 < 10 then
+      "0" ^ string_of_int (record.tm_hour mod 12)
+    else string_of_int (record.tm_hour mod 12) )
   ^ ":"
-  ^ (if record.tm_min < 10 then "0" ^ string_of_int record.tm_min
-    else string_of_int record.tm_min)
+  ^ ( if record.tm_min < 10 then "0" ^ string_of_int record.tm_min
+    else string_of_int record.tm_min )
   ^ ":"
-  ^ (if record.tm_sec < 10 then "0" ^ string_of_int record.tm_sec
-    else string_of_int record.tm_sec)
+  ^ ( if record.tm_sec < 10 then "0" ^ string_of_int record.tm_sec
+    else string_of_int record.tm_sec )
   ^ (if record.tm_hour > 12 then " PM" else " AM")
   ^ " 】"
 
@@ -87,10 +87,10 @@ let print_linreg_result prompt =
   let list2 = Commands.parse_list input2 in
   let tuple = linear_regression list1 list2 in
   print_endline
-    ("\n In the form y=ax+b, a = "
+    ( "\n In the form y=ax+b, a = "
     ^ string_of_float (fst tuple)
     ^ " and b = "
-    ^ string_of_float (snd tuple));
+    ^ string_of_float (snd tuple) );
   prompt
 
 let print_poly_result prompt =
@@ -329,25 +329,7 @@ let rec ask_for_commands () =
          again! \n";
       ask_for_commands ()
 
-(** [start_calc x] starts the calculator with initial command [x]. *)
-let start_calc x =
-  (* Fill in this function later; its intention is to be used as an
-     intermediate loading screen when more complex operations are added. *)
-  failwith "unimplemented"
-
-(* let square = "\xe2\x96\xaa"
-
-   let rec sierp n = if n > 1 then let ss = sierp (pred n) in I.(ss <->
-   (ss <|> ss)) else I.(string A.(fg magenta) square |> hpad 1 0)
-
-   let rad n color = let a1 = A.fg color in let a2 = A.(st blink ++ a1)
-   in I.( string a2 "Rad" |> hpad n 0 <-> (string a1 "(⌐■_■)" |> hpad (n
-   + 7) 0)) *)
-
-(* let colors = A.[ red; green; yellow; blue; magenta; cyan ] *)
-
 (** [main ()] prompts for the game to play, then starts it. *)
-
 let main () =
   (* ANSITerminal.print_string [ ANSITerminal.green; ANSITerminal.Bold ]
      "\n\n\ \ Welcome to the ClammyAlpha Calculator. This calculator was

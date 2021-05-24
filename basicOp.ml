@@ -5,7 +5,7 @@ exception Integer_overflow
 let rec basic_op_tr op (lst : float list) (acc : float) : float =
   match lst with [] -> acc | hd :: tl -> basic_op_tr op tl (op acc hd)
 
-let add_tr (lst : float list) : float = basic_op_tr ( +. ) lst 0.
+let add_tr (lst : float list) : float = List.fold_left ( +. ) 0. lst
 
 let subtract_tr (lst : float list) : float =
   basic_op_tr ( -. ) (List.tl lst) (List.hd lst)
