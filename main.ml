@@ -205,14 +205,14 @@ let print_sigma_result prompt =
   print_endline ("Answer: " ^ result);
   prompt
 
+let print_result computation_str prompt =
+  let result = computation_str in
+  ans := result;
+  print_endline ("\n" ^ result);
+  prompt
+
 (** [ask_for_commands x] performs a calcuation for an inputted command. *)
 let rec ask_for_commands () =
-  let print_result computation_str =
-    let result = computation_str in
-    ans := result;
-    print_endline ("\n" ^ result);
-    ask_for_commands ()
-  in
   (* The arguments of ask_for_commands can be edited to support
      history/accumulation *)
   make_command_string () |> output_image;
@@ -222,29 +222,53 @@ let rec ask_for_commands () =
     | Ans ->
         print_endline !ans;
         ask_for_commands ()
-    | Add arguments -> print_result (add_tr arguments |> Float.to_string)
+    | Add arguments ->
+        print_result
+          (add_tr arguments |> Float.to_string)
+          ask_for_commands ()
     | Multiply arguments ->
-        print_result (multiply_tr arguments |> Float.to_string)
+        print_result
+          (multiply_tr arguments |> Float.to_string)
+          ask_for_commands ()
     | Subtract arguments ->
-        print_result (subtract_tr arguments |> Float.to_string)
+        print_result
+          (subtract_tr arguments |> Float.to_string)
+          ask_for_commands ()
     | Divide arguments ->
-        print_result (divide_tr arguments |> Float.to_string)
+        print_result
+          (divide_tr arguments |> Float.to_string)
+          ask_for_commands ()
     | Factorial arguments ->
-        print_result (factorial_tr arguments 1 |> string_of_int)
+        print_result
+          (factorial_tr arguments 1 |> string_of_int)
+          ask_for_commands ()
     | FastExp (m, n, bin_list) ->
-        print_result (fast_exp m n bin_list 1 |> string_of_int)
-    | GCD (m, n) -> print_result (gcd m n |> string_of_int)
-    | Mean arguments -> print_result (mean arguments |> Float.to_string)
+        print_result
+          (fast_exp m n bin_list 1 |> string_of_int)
+          ask_for_commands ()
+    | GCD (m, n) ->
+        print_result (gcd m n |> string_of_int) ask_for_commands ()
+    | Mean arguments ->
+        print_result
+          (mean arguments |> Float.to_string)
+          ask_for_commands ()
     | Median arguments ->
-        print_result (median arguments |> Float.to_string)
+        print_result
+          (median arguments |> Float.to_string)
+          ask_for_commands ()
     | StandardDev arguments ->
-        print_result (standard_deviation arguments |> Float.to_string)
+        print_result
+          (standard_deviation arguments |> Float.to_string)
+          ask_for_commands ()
     | LinReg -> print_linreg_result ask_for_commands ()
     | Poly -> print_poly_result ask_for_commands ()
     | MultiVar -> print_multivar_result ask_for_commands ()
-    | Sin t -> print_result (sin t |> string_of_float)
-    | Cos t -> print_result (cos t |> string_of_float)
-    | Tan t -> print_result (tan t |> string_of_float)
+    | Sin t ->
+        print_result (sin t |> string_of_float) ask_for_commands ()
+    | Cos t ->
+        print_result (cos t |> string_of_float) ask_for_commands ()
+    | Tan t ->
+        print_result (tan t |> string_of_float) ask_for_commands ()
     | Pythag -> print_pythag_result ask_for_commands ()
     | Derivative -> print_derivative_result ask_for_commands ()
     | HDerivative -> print_hderivative_result ask_for_commands ()
@@ -275,6 +299,11 @@ let rec ask_for_commands () =
         "\n Did not recognize the command given! Please try again!\n";
       ask_for_commands ()
   | Undefined_Input ->
+      ANSITerminal.print_string
+        [ ANSITerminal.red; ANSITerminal.Bold ]
+        "\n Input is undefined for this operation! Please try again!\n";
+      ask_for_commands ()
+  | BasicOp.Undefined_Input ->
       ANSITerminal.print_string
         [ ANSITerminal.red; ANSITerminal.Bold ]
         "\n Input is undefined for this operation! Please try again!\n";
