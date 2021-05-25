@@ -135,6 +135,9 @@ let parse_trig_helper h t =
   else if str = "cos" then Cos (float_of_string t)
   else if str = "tan" then Tan (float_of_string t)
   else if str = "help" then Help t
+  else if str = "mean" then Mean [ float_of_string t ]
+  else if str = "median" then Median [ float_of_string t ]
+  else if str = "stddev" then StandardDev [ float_of_string t ]
   else raise Undefined_input
 
 let parse str ans_ref =

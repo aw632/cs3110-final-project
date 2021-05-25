@@ -55,15 +55,21 @@ let help str =
   | "sin" ->
       "The sine function takes in one input as an integer or float. It \
        will return a float that is the sine function evaluated at that \
-       input, treated as an degree. For example, [Sin 90] = 1."
+       input, treated as an degree. Due to pi being approximated as a \
+       float, some inputs may yield values that are very close \
+       approximations.  For example, [Sin 0] = 0."
   | "cos" ->
       "The cosine function takes in one input as an integer or float. \
        It will return a float that is the cosine function evaluated at \
-       that input, treated as an degree. For example, [Cos 90] = 0."
+       that input, treated as an degree. Due to pi being approximated \
+       as a float, some inputs may yield values that are very close \
+       approximations.  For example, [Cos 0] = 1."
   | "tan" ->
       "The tangent function takes in one input as an integer or float. \
        It will return a float that is the tangent function evaluated \
-       at that input, treated as an degree. For example, [Tan 0] = 0."
+       at that input, treated as an degree. Due to pi being \
+       approximated as a float, some inputs may yield values that are \
+       very close approximations. For example, [Tan 0] = 0."
   | "pythag" ->
       "The pythagorean function will find the third side of a right \
        angle triangle. It will prompt for the side you are looking \
@@ -84,8 +90,9 @@ let help str =
   | "stddev" ->
       "The standard deviation function takes in multiple inputs as \
        integers or floats. The order does not matter. It will sort the \
-       inputs and return the standard deviation of all the inputs. For \
-       example, [StdDev 1 2 3 4 ] = 0.745"
+       inputs and return the standard deviation of all the inputs, \
+       treating the list as a sample. For example, [StdDev 1 2 3 4 ] = \
+       0.745"
   | "linreg" ->
       "The linear regression function will prompt for two lists of \
        integers or floats as inputs. Order of lists and order within \

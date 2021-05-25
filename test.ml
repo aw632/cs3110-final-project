@@ -173,13 +173,38 @@ let print_command cmd =
   | Cos x -> "Cosine"
   | Tan x -> "Tangent"
 
-let stat_op_tests = []
+let stat_op_tests =
+  [
+    list_test "Mean of float list is 3." 3. mean [ 2.; 3.; 4. ];
+    list_test "Mean of another float list is 4." 4. mean [ 3.5; 4.5 ];
+    list_test "Mean of length one list" 10. mean [ 10. ];
+    list_test "Median of odd length list is 5." 5. median
+      [ -1.; 5.; 6. ];
+    list_test "Median of even length list is 5.5" 5.5 median
+      [ -1.; 5.; 6.; 7.5 ];
+    list_test "Median of unarranged even length list is 5.5" 5.5 median
+      [ 5.; -1.; 6.; 7.5 ];
+    list_test "Median of length one list" 10. median [ 10. ];
+    list_test "Standard deviation test for list with same numbers" 0.
+      standard_deviation [ 1.; 1. ];
+    list_test "Standard deviation test for regular list" 1.
+      standard_deviation [ 1.; 2.; 3. ];
+    list_test "Standard deviation test for list of length 1" 0.
+      standard_deviation [ -1. ];
+  ]
 
 let trig_test name expected_output f input =
   name >:: fun info ->
   assert_equal expected_output (f input) ~printer:string_of_float
 
-let trig_tests = []
+let trig_tests =
+  [
+    trig_test "sine at 0 degrees is 0." 0. sin 0.;
+    trig_test "sine at 90 degrees is 1." 1. sin 90.;
+    trig_test "cosine at 0 degrees is 1." 1. cos 0.;
+    trig_test "cosine at 180 degrees is -1." (-1.) cos 180.;
+    trig_test "tangent at 0 degrees is 0." 0. tan 0.;
+  ]
 
 let function_parse_test name expected_output str num =
   name >:: fun _ ->
