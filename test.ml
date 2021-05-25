@@ -42,8 +42,9 @@ open Trig
 
     Higher order derivatives were tested manually due to some
     difficulties scaling the Taylor Expansion in test cases. In
-    addition, any function that required prompting and not direct input
-    were not tested manually instead of through OUnit. *)
+    addition, any function (such as those StatOp and Trig noted above)
+    that required prompting and not direct input were not tested
+    manually instead of through OUnit. *)
 
 let list_test name expected_output f input_list =
   name >:: fun info ->
