@@ -43,7 +43,11 @@ open Trig
     Higher order derivatives were tested manually due to some
     difficulties scaling the Taylor Expansion in test cases. In
     addition, any function that required prompting and not direct input
-    were not tested manually instead of through OUnit. *)
+    were not tested manually instead of through OUnit. In addition, any
+    function (such as those StatOp and Trig noted above) that required
+    prompting and not direct input were not tested manually instead of
+    through OUnit. *)
+
 module VariableMap = Map.Make (String)
 
 let list_test name expected_output f input_list =
