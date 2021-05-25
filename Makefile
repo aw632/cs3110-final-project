@@ -12,7 +12,7 @@ build:
 	$(OCAMLBUILD) $(OBJECTS)
 
 frontend:
-	ocamlbuild -use-ocamlfind frontEnd.byte
+	$(OCAMLBUILD) frontEnd.byte
 
 test:
 	$(OCAMLBUILD) -tag 'debug' $(TEST) && ./$(TEST) -runner sequential
@@ -21,8 +21,8 @@ clean:
 	ocamlbuild -clean
 
 calc:
-	$(OCAMLBUILD) -tag 'debug' $(MAIN) && OCAMLRUNPARAM=b rlwrap ./$(MAIN) 
-
+	$(OCAMLBUILD) -tag 'debug' $(MAIN) && OCAMLRUNPARAM=b rlwrap ./$(MAIN)
+	
 zip:
 	zip final_project.zip *.ml* *.json *.sh _tags .merlin .ocamlformat .ocamlinit Makefile *.md	
 
@@ -32,3 +32,4 @@ docs-public: build
 	mkdir -p _doc.public
 	ocamlfind ocamldoc -I _build -package ANSITerminal \
 		-html -stars -d _doc.public $(MLIS)
+

@@ -44,6 +44,7 @@ open Trig
     difficulties scaling the Taylor Expansion in test cases. In
     addition, any function that required prompting and not direct input
     were not tested manually instead of through OUnit. *)
+module VariableMap = Map.Make (String)
 
 let list_test name expected_output f input_list =
   name >:: fun info ->
@@ -287,6 +288,14 @@ let parse_test name expected_output input =
     (Commands.parse input (ref "0"))
     ~printer:print_command
 
+let multivar_test name expected_output input arg_map =
+  name >:: fun info ->
+  assert_equal expected_output
+    ((make_multivar (FrontEnd.parse input) [] |> get_multi_fun) arg_map)
+
+let arg_map1 =
+  VariableMap.add "y" 2. (VariableMap.add "x" 3. VariableMap.empty)
+
 let command_tests =
   [
     parse_test "the command add 3 4 parses to the command Add [3.;4.]"
@@ -310,6 +319,9 @@ let command_tests =
        [1;1;0;1]) "
       (FastExp (21, 2, [ 1; 1; 0; 1 ]))
       "fastexp 21 2 1101";
+    multivar_test "multivar test adding x y" 5. "x+y" arg_map1;
+    multivar_test "multivar test multiply x y" 6. "x*y" arg_map1;
+    multivar_test "multivar test multiply 3x y" 18. "3x*y" arg_map1;
   ]
 
 let deriv_test name expected_output input value =
