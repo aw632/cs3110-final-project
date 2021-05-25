@@ -3,6 +3,8 @@ open BasicOp
 open Commands
 open EuclideanAlg
 open FrontEnd
+open StatOp
+open Trig
 
 (** ====================================
 
@@ -17,11 +19,13 @@ open FrontEnd
     not used.
 
     The OUnit below tests the following modules directly or indirectly:
-    BasicOp Commands EuclideanAlg Dual Derviative StatOp MatrixDual Trig
+    BasicOp Commands EuclideanAlg Dual Derviative StatOp (partially)
+    MatrixDual Trig (partially)
 
     The OUnit does not test the following modules: Author Main Help
 
-    The following modules were tested manually: Main HDerivative
+    The following modules were tested manually: Main HDerivative StatOp
+    (partially) Trig (partially)
 
     We manually tested the REPL, as it is quite difficult to test it
     with OUnit. However, the Main module (which is the REPL) is mainly a
@@ -37,9 +41,11 @@ open FrontEnd
     the additional complexity of the double array data structure.
 
     Higher order derivatives were tested manually due to some
-    difficulties scaling the Taylor Expansion in test cases. *)
+    difficulties scaling the Taylor Expansion in test cases. In
+    addition, any function that required prompting and not direct input
+    were not tested manually instead of through OUnit. *)
 
-let basic_op_test name expected_output f input_list =
+let list_test name expected_output f input_list =
   name >:: fun info ->
   assert_equal expected_output (f input_list) ~printer:string_of_float
 
@@ -74,21 +80,21 @@ let summation_test name expected_output first last f =
 let basic_op_tests =
   [
     (* add_tr function*)
-    basic_op_test "the sum of the list [2.;3.;4.] is 9." 9. add_tr
+    list_test "the sum of the list [2.;3.;4.] is 9." 9. add_tr
       [ 2.; 3.; 4. ];
-    basic_op_test "the sum of the list [-2.;-3.;4.] is -1." (-1.) add_tr
+    list_test "the sum of the list [-2.;-3.;4.] is -1." (-1.) add_tr
       [ -2.; -3.; 4. ];
     (* multiply_tr function*)
-    basic_op_test
+    list_test
       "the result of multiplying all floats in the list [2.;3.;4.] is \
        24."
       24. multiply_tr [ 2.; 3.; 4. ];
     (* divide_tr function*)
-    basic_op_test "the result of dividing 6 and 3 is 2." 2. divide_tr
+    list_test "the result of dividing 6 and 3 is 2." 2. divide_tr
       [ 6.; 3. ];
-    basic_op_test "the result of dividing (3/2)/3 is .5" 0.5 divide_tr
+    list_test "the result of dividing (3/2)/3 is .5" 0.5 divide_tr
       [ 3.; 2.; 3. ];
-    basic_op_test "the result of dividing (3/2) is 1.5." 1.5 divide_tr
+    list_test "the result of dividing (3/2) is 1.5." 1.5 divide_tr
       [ 3.; 2. ];
     basic_op_test_exception
       "Trying to divide by zero results in a Divide_by_zero exception"
@@ -96,14 +102,14 @@ let basic_op_tests =
     basic_op_test_exception
       "Trying to divide by zero results in a Divide_by_zero exception"
       Division_by_zero divide_tr [ 0.; 3.; 2.; 0. ];
-    basic_op_test "Dividing 0. by any integer is always 0" 0. divide_tr
+    list_test "Dividing 0. by any integer is always 0" 0. divide_tr
       [ 0.; 2.; 3. ];
     (* subtract_tr function*)
-    basic_op_test
+    list_test
       "Subtracting the list [60.;90.;40.] equals 60. -. 90. -. 40. = \
        -70."
       (-70.) subtract_tr [ 60.; 90.; 40. ];
-    basic_op_test
+    list_test
       "Subtracting the list [-60.;-90.;40.] equals -60. +. 90. -. 40. \
        = -70."
       (-10.) subtract_tr [ -60.; -90.; 40. ];
@@ -168,6 +174,12 @@ let print_command cmd =
   | Tan x -> "Tangent"
 
 let stat_op_tests = []
+
+let trig_test name expected_output f input =
+  name >:: fun info ->
+  assert_equal expected_output (f input) ~printer:string_of_float
+
+let trig_tests = []
 
 let function_parse_test name expected_output str num =
   name >:: fun _ ->
@@ -375,6 +387,8 @@ let suite =
            basic_op_tests;
            command_tests;
            function_parse_tests;
+           stat_op_tests;
+           trig_tests;
            parser_ast_tests;
            binop_parse_tests;
            derivative_tests;
