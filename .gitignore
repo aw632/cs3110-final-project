@@ -7,3 +7,4 @@
 *.native
 *.byte
 _build
+_doc.public
